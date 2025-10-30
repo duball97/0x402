@@ -7,12 +7,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/create-paywall': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },
-      '/verify-payment': {
-        target: 'http://localhost:8080',
+      '/api': {
+        target: 'http://localhost:3000',
         changeOrigin: true,
       },
     },

@@ -19,7 +19,7 @@ async function createPaywall() {
   
   try {
     // Send request to backend
-    const res = await fetch("http://localhost:8080/create-paywall", {
+    const res = await fetch("/api/create-paywall", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
