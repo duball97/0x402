@@ -6,17 +6,26 @@
   "type": "module",
   "scripts": {
     "start": "node api/paywall.js",
-    "dev": "nodemon api/paywall.js"
+    "dev": "nodemon api/paywall.js",
+    "frontend:dev": "vite",
+    "frontend:build": "vite build",
+    "frontend:preview": "vite preview",
+    "dev:all": "concurrently \"npm run dev\" \"npm run frontend:dev\""
   },
   "dependencies": {
-    "express": "^4.18.2",
     "axios": "^1.5.0",
-    "dotenv": "^16.3.1",
     "cors": "^2.8.5",
-    "open": "^10.0.2"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "open": "^10.0.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.0.1",
+    "vite": "^7.1.12"
   },
   "author": "Payfirst",
   "license": "MIT"

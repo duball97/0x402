@@ -12,10 +12,16 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors());
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, "../frontend")));
+// CORS configuration - allow Vite dev server
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
+
+// Serve frontend static files (production build)
+const distPath = path.join(__dirname, "../dist");
+app.use(express.static(distPath));
 
 app.get("/", (req, res) => {
   res.json({
@@ -45,9 +51,11 @@ app.post("/create-paywall", (req, res) => {
     };
   }
   
+  const baseDomain = process.env.BASE_DOMAIN || `http://localhost:${PORT}`;
+
   res.json({
     paywall_id: id,
-    paywall_link: `https://payfirst.app/${id}`,
+    paywall_link: `${baseDomain}/paywall/${id}`,
     price,
     currency: "USDC",
     status: "created",
@@ -72,12 +80,6 @@ app.post("/verify-payment", (req, res) => {
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`🚀 Payfirst API running on port ${PORT}`);
-  console.log(`🌐 Frontend: http://localhost:${PORT}`);
-  
-  // Auto-open browser
-  import("open").then(open => {
-    open.default(`http://localhost:${PORT}`);
-  }).catch(() => {
-    console.log("💡 Open http://localhost:8080 in your browser");
-  });
+  console.log(`💡 For development, run: npm run frontend:dev`);
+  console.log(`🌐 Frontend will be available at: http://localhost:5173`);
 });

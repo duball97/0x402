@@ -5,10 +5,10 @@ Turn any link into instant crypto revenue with Payfirst!
 ## TL;DR - Quickest Start
 
 1. **Install:** `npm install`
-2. **Create `.env` file:** Just `PORT=8080` and `NODE_ENV=development` (no API keys needed!)
-3. **Run backend:** `npm start` 
-4. **Open frontend:** Double-click `frontend/index.html` or use Live Server
-5. **Test:** Click "Try Demo" button!
+2. **Create `.env` file:** Copy `.env.example` and update `BASE_DOMAIN` to your domain
+3. **Run both:** `npm run dev:all` (runs both backend and frontend)
+4. **Open:** Browser opens automatically at `http://localhost:5173`
+5. **Test:** Create a paywall!
 
 ---
 
@@ -33,12 +33,21 @@ cp .env.example .env
 Create a `.env` file in the project root with these contents:
 
 ```env
-# Minimum to run (everything is simulated)
+# Server configuration
 PORT=8080
-NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+
+# Your domain (change this to your actual domain)
+BASE_DOMAIN=https://yourdomain.com
+
+# Your BNB Chain wallet address for receiving payments
+WALLET_ADDRESS=your_bnb_chain_wallet_address_here
 ```
 
-**That's it!** The current code simulates everything, so it will run without API keys.
+**Important:**
+- Change `BASE_DOMAIN` to your actual domain to avoid using `payfirst.app`
+- Add your wallet address to receive payments
+- All payments will go to the wallet address you specify
 
 For production, see [ENV_KEYS.md](./ENV_KEYS.md) for what you need:
 - Coinbase CDP keys (for real wallets)
@@ -47,17 +56,25 @@ For production, see [ENV_KEYS.md](./ENV_KEYS.md) for what you need:
 
 📖 **Full env guide:** See `ENV_KEYS.md` for details on each variable.
 
-### 4. Run the Server
+### 4. Run the Application
 
 ```bash
-# Development mode (with auto-reload)
+# Run both backend and frontend together (recommended)
+npm run dev:all
+
+# OR run them separately:
+# Terminal 1 - Backend with auto-reload
 npm run dev
 
-# OR production mode
+# Terminal 2 - Frontend (React + Vite)
+npm run frontend:dev
+
+# Production mode (backend only - requires built frontend)
 npm start
 ```
 
 The API will be available at: `http://localhost:8080`
+The frontend will be available at: `http://localhost:5173`
 
 ---
 
@@ -108,18 +125,39 @@ curl -i http://localhost:8080/x402
 
 ## Frontend Setup
 
-The frontend is a simple HTML page. Just **double-click `frontend/index.html`** to open it in your browser!
+The frontend is now built with **React + Vite** for a modern development experience!
 
-Or use VS Code Live Server:
-1. Install **"Live Server"** extension
-2. Right-click `frontend/index.html` → **"Open with Live Server"**
+### Development Mode
+
+```bash
+# Run frontend dev server
+npm run frontend:dev
+```
+
+The Vite dev server will:
+- Auto-reload on file changes
+- Proxy API requests to the backend
+- Provide fast HMR (Hot Module Replacement)
+
+### Build for Production
+
+```bash
+# Build the frontend
+npm run frontend:build
+
+# Preview the production build
+npm run frontend:preview
+```
+
+The built files will be in the `dist` folder, which the backend serves in production.
 
 ### Test the Frontend
 
-1. Make sure your backend API is running (run `npm start`)
-2. Open `frontend/index.html` in your browser
-3. Click **"Try Demo"** button
-4. You should see a JSON response with a paywall ID and link
+1. Make sure your backend API is running: `npm run dev`
+2. Start the frontend: `npm run frontend:dev` (or use `npm run dev:all` to run both)
+3. Open `http://localhost:5173` in your browser
+4. Fill in the form and create a paywall
+5. You should see your paywall link with your configured domain
 
 ---
 
