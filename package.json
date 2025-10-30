@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Turn any link into instant crypto revenue. Crypto-native paywalls powered by Coinbase CDP & x402 protocol.",
   "main": "api/paywall.js",
+  "type": "module",
   "scripts": {
     "start": "node api/paywall.js",
     "dev": "nodemon api/paywall.js"
@@ -11,7 +12,11 @@
     "express": "^4.18.2",
     "axios": "^1.5.0",
     "dotenv": "^16.3.1",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "open": "^10.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   },
   "author": "Payfirst",
   "license": "MIT"
