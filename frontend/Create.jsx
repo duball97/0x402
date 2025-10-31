@@ -21,8 +21,8 @@ function Create() {
       setValidationError('Please enter a URL');
       return;
     }
-    if (!price || parseFloat(price) <= 0) {
-      setValidationError('Please enter a valid price');
+          if (price === '' || parseFloat(price) < 0) {
+            setValidationError('Please enter a valid price (0 for free, or more)');
       return;
     }
     if (!paywallId) {
@@ -122,15 +122,15 @@ function Create() {
             {/* Price and Wallet - Two Column */}
             <div className="form-row">
               <div className="input-group">
-                <label htmlFor="priceInput">
-                  Price (BNB) <span className="required">*</span>
-                </label>
+                       <label htmlFor="priceInput">
+                         Price (BNB) <span className="required">*</span>
+                       </label>
                 <input
                   type="number"
                   id="priceInput"
-                  placeholder="0.0001"
-                  step="0.0001"
-                  min="0.0001"
+                         placeholder="0.0000 (0 = free)"
+                         step="0.0001"
+                         min="0"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />

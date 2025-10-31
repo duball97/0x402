@@ -19,6 +19,11 @@ function Paywall() {
         const response = await fetch(`/api/get-paywall?id=${id}`);
         const data = await response.json();
         setPaywallData(data);
+        // Auto-unlock if free
+        const priceNum = parseFloat(data?.price ?? '0');
+        if (!isNaN(priceNum) && priceNum <= 0) {
+          setPaid(true);
+        }
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -33,6 +38,14 @@ function Paywall() {
     try {
       setLoading(true);
       setError(null);
+
+      // Free paywall: no wallet required
+      const priceNum = parseFloat(paywallData?.price ?? '0');
+      if (!isNaN(priceNum) && priceNum <= 0) {
+        setPaid(true);
+        setLoading(false);
+        return;
+      }
       
       // Check if MetaMask or other wallet is installed
       if (!window.ethereum) {
@@ -148,7 +161,7 @@ function Paywall() {
         <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
           <div className="result-container success-container">
             <div className="success-icon">✓</div>
-            <h3>Payment Complete!</h3>
+            <h3>{parseFloat(paywallData?.price ?? '0') <= 0 ? 'Free Access' : 'Payment Complete!'}</h3>
             <div className="info-box">
               <p style={{ textAlign: 'center', fontSize: '16px', marginBottom: '24px' }}>🔓 Content unlocked!</p>
               <a
@@ -159,15 +172,15 @@ function Paywall() {
                   display: 'block',
                   textAlign: 'center',
                   padding: '14px 28px',
-                  background: '#0070f3',
+                  background: '#4a1a3d',
                   color: 'white',
                   borderRadius: '8px',
                   textDecoration: 'none',
                   fontWeight: '500',
                   transition: 'background 0.2s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = '#0051cc'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#0070f3'}
+                onMouseOver={(e) => e.currentTarget.style.background = '#5a2a4d'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#4a1a3d'}
               >
                 Access Content →
               </a>
@@ -192,23 +205,23 @@ function Paywall() {
             </div>
           )}
 
-          <div className="result-section">
+            <div className="result-section">
             <div className="result-label">Paywall ID</div>
             <code className="wallet-address">{paywallData?.id}</code>
           </div>
           <div className="result-section">
             <div className="result-label">Price</div>
-            <div className="result-value" style={{ fontSize: '28px' }}>
-              {paywallData?.price} BNB
-            </div>
+                <div className="result-value" style={{ fontSize: '28px' }}>
+                  {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} BNB
+                </div>
           </div>
 
           <button
             onClick={handlePayment}
-            disabled={loading}
+              disabled={loading}
             style={{ marginTop: '32px' }}
           >
-            {loading ? 'Processing Payment...' : 'Pay with Crypto'}
+              {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Crypto')}
           </button>
 
           <div className="info-box" style={{ marginTop: '32px' }}>
@@ -230,9 +243,9 @@ function Paywall() {
           <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#888' }}>
             This paywall implements the HTTP 402 "Payment Required" protocol, enabling AI agents and automated systems to discover payment requirements programmatically.
           </p>
-          <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
+                 <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>
-            X-Payment-Required: {paywallData?.price} BNB<br/>
+                   X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} BNB<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
             X-Payment-Network: bnb-chain
           </code>
