@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { switchToBNBChain, getCurrentNetwork } from './config';
 import Header from './Header';
+import Footer from './Footer';
 
 function Paywall() {
   const { id } = useParams();
@@ -65,13 +66,29 @@ function Paywall() {
       // Prepare payment
       const priceInWei = ethers.parseEther(paywallData.price.toString()); // BNB native token
       const toAddress = paywallData.walletAddress || '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
-      
+
+      // Validate address
+      if (!ethers.isAddress(toAddress)) {
+        setError('Invalid payment address');
+        setLoading(false);
+        return;
+      }
+
+      // Check user balance
+      const balance = await provider.getBalance(await signer.getAddress());
+      if (balance < priceInWei) {
+        setError(`Insufficient BNB balance. Required: ${paywallData.price} BNB`);
+        setLoading(false);
+        return;
+      }
+
       // Send BNB transaction
       console.log(`Sending ${paywallData.price} BNB to ${toAddress}`);
-      
+
       const tx = await signer.sendTransaction({
         to: toAddress,
         value: priceInWei,
+        gasLimit: 21000, // Standard gas limit for BNB transfer
       });
       
       console.log('Transaction hash:', tx.hash);
@@ -231,6 +248,8 @@ function Paywall() {
           </code>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 }

@@ -68,7 +68,7 @@ nav h1 {
 }
 
 .nav-logo img {
-  height: 54px;
+  height: 108px;
   width: auto;
   object-fit: contain;
   transition: opacity 0.2s;
@@ -1288,7 +1288,7 @@ footer {
   }
 
   .product-card {
-    padding: 20px;
+  padding: 20px;
   }
 }
 
@@ -1372,10 +1372,11 @@ footer {
   color: #888;
   text-decoration: none;
   font-size: 14px;
-  padding: 8px 12px;
+  padding: 8px 8px 8px 12px;
   border-radius: 6px;
   transition: all 0.2s;
   border-left: 2px solid transparent;
+  text-align: left;
 }
 
 .docs-toc a:hover {

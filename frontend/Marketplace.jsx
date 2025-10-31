@@ -28,14 +28,6 @@ function Marketplace() {
     navigate(`/paywall/${id}`);
   };
 
-  const getUrlDomain = (url) => {
-    try {
-      return new URL(url).hostname;
-    } catch {
-      return url;
-    }
-  };
-
   return (
     <>
       <Header />
@@ -87,11 +79,6 @@ function Marketplace() {
                   <h3 className="product-title">
                     {paywall.description || 'Premium Content'}
                   </h3>
-
-                  <div className="product-url">
-                    <span className="url-icon">🔗</span>
-                    <span className="url-text">{getUrlDomain(paywall.url)}</span>
-                  </div>
 
                   <div className="product-price-section">
                     <div className="product-price">

@@ -1,4 +1,5 @@
 import Header from './Header';
+import Footer from './Footer';
 
 function Docs() {
   return (
@@ -522,6 +523,8 @@ const address = await signer.getAddress();`}</code></pre>
           </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
