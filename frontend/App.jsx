@@ -7,16 +7,12 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header transparent />
 
       {/* Hero Section */}
       <section className="landing-hero">
         <div className="landing-hero-content">
-          <div className="hero-badge">
-            <span>Powered by BNB Chain</span>
-            <span className="badge-dot">•</span>
-            <span>HTTP 402 Protocol</span>
-          </div>
+          
 
           <h1 className="landing-hero-title">
             Monetize Your Content<br />

@@ -1,6 +1,6 @@
-function Header() {
+function Header({ transparent = false }) {
   return (
-    <nav>
+    <nav className={transparent ? 'nav-transparent' : ''}>
       <div className="nav-logo">
         <a href="/">
           <img src="/logo.png" alt="Payx402" />
