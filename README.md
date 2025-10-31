@@ -1,163 +1,291 @@
 # Payx402
 
-Turn any link into instant crypto revenue.  
-Payx402 is a crypto-native paywall service that lets anyone monetize web content with on-chain payments.  
-No signups, no integration — just paste a URL, set a price, and get paid instantly.
+> Crypto-native paywalls powered by BNB Chain and the HTTP 402 protocol
 
-> ⚡ Powered by CoinbaseDev infrastructure and the x402 HTTP payment protocol.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![BNB Chain](https://img.shields.io/badge/Chain-BNB-yellow.svg)](https://www.bnbchain.org/)
 
----
+Payx402 is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, Payx402 makes payments programmable for AI agents and automated systems.
 
-## 🚀 Quick Overview
+## ✨ Features
 
-Payx402 brings the "Paywall" model into Web3.
+### Core Features
+- **Instant BNB Payments** - Settle payments in 2-5 seconds on BNB Chain
+- **Custom Paywall IDs** - Choose memorable, human-readable URLs for your paywalls
+- **Non-Custodial** - Full wallet control, payments flow directly from buyer to seller
+- **Zero Platform Fees** - Keep 100% of your revenue, only pay gas fees (&lt;$0.01)
+- **HTTP 402 Protocol** - Machine-readable payment requirements for AI agents
+- **MetaMask Integration** - Seamless wallet connection and payment flow
+- **Multi-Decimal Precision** - Support for up to 4 decimal places in BNB pricing
 
-- 🧱 **Paywall any URL** — monetize articles, videos, code, APIs, or files  
-- 💸 **Accept BNB** — Native BNB payments on BNB Chain via MetaMask  
-- 🪙 **Instant payouts** — automatically receive BNB on BNB Chain  
-- 🔐 **Non-custodial wallets** — you keep full control of your funds  
-- 🤖 **Agentic payments** — AI agents can pay via HTTP 402 headers  
-- 💳 **0% platform fees** — you keep 100% of your earnings
+### User Experience
+- **Modern, Vercel-Style UI** - Clean, professional dark theme interface
+- **Responsive Design** - Optimized for desktop, tablet, and mobile
+- **Real-Time Validation** - Instant feedback on form inputs
+- **Live Preview** - See your paywall before publishing
+- **One-Click Copy** - Easy sharing of paywall links
+- **Smooth Animations** - Polished, professional interactions
 
----
+### Developer Features
+- **RESTful API** - Simple integration with comprehensive endpoints
+- **Supabase Backend** - Scalable database for paywall management
+- **Vercel Deployment** - Serverless functions for optimal performance
+- **React + Vite** - Modern frontend stack
+- **TypeScript Ready** - Built with extensibility in mind
 
-## 🧭 Documentation
+## 🚀 Quick Start
 
-Full documentation is available at → [https://payfirst.app/docs](https://payfirst.app)
+### Prerequisites
+- Node.js 18+ and npm
+- MetaMask browser extension
+- Supabase account (for database)
+- BNB Chain testnet/mainnet access
 
-**Core sections:**
-- Getting Started
-- Quick Start
-- How It Works
-- Wallet Creation
-- x402 Protocol
-- Security Layers
-- FAQs
+### Installation
 
----
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/payx402.git
+cd payx402
+```
 
-## 🧰 Features
+2. **Install dependencies**
+```bash
+npm install
+```
 
-| Feature | Description |
-|----------|--------------|
-| **Instant Paywalls** | Create and share paywalled links for any URL |
-| **BNB Payments** | Accept native BNB payments via MetaMask |
-| **Direct Settlements** | All payments settle directly to your wallet in BNB |
-| **Smart Wallets** | Non-custodial wallets deployed with passkey authentication |
-| **Passkey Security** | Replace passwords with biometric or device-based keys |
-| **Coinbase CDP Infrastructure** | Enterprise-grade reliability, SOC 2 Type I certified |
-| **x402 Protocol Integration** | Native HTTP “402 Payment Required” support for AI and agents |
-| **0% Platform Fees** | Keep 100% of your revenue |
+3. **Configure environment variables**
 
----
+Create a `.env` file in the root directory:
 
-## 🪙 Payment Flow
+```env
+# Supabase Configuration
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
 
-1️⃣ **Visitor clicks paywalled link**  
-2️⃣ **User pays with any crypto** — automatically converted to USDC  
-3️⃣ **BNB Chain confirms transaction** (2–5s)  
-4️⃣ **Content unlocks instantly**  
-5️⃣ **Funds go directly to your non-custodial wallet**
+# BNB Chain Configuration
+BNB_CHAIN_RPC_URL=https://bsc-dataseed.binance.org/
+BNB_CONTRACT_ADDRESS=native
 
----
+# Optional: Deployment URL
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
 
-## 🧩 Wallet Architecture
+4. **Set up the database**
 
-Payx402 wallets are smart, non-custodial, and powered by **Coinbase CDP Infrastructure**.  
+Run the SQL schema in your Supabase project:
 
-✅ Created with passkeys (FaceID, TouchID, or device PIN)  
-✅ Private keys never leave your device  
-✅ Built on ERC-4337  
-✅ Withdraw anytime — Payx402 never holds your funds
+```sql
+CREATE TABLE paywalls (
+  id TEXT PRIMARY KEY,
+  url TEXT NOT NULL,
+  description TEXT,
+  price DECIMAL(18, 8) NOT NULL,
+  currency TEXT DEFAULT 'BNB',
+  status TEXT DEFAULT 'created',
+  wallet_address TEXT NOT NULL,
+  network TEXT DEFAULT 'BNB Chain',
+  non_custodial BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
 
----
+5. **Run the development server**
+```bash
+npm run dev
+```
 
-## 🔑 Passkey Authentication
+Visit `http://localhost:3000` to see your app running!
 
-Passkeys replace traditional passwords with biometric verification and secure key pairs.
+## 🏗️ Architecture
 
-- Private key stored locally, never shared  
-- Public key verifies your identity  
-- Phishing-resistant, device-bound, and secure by design
+### Frontend Stack
+- **React 18** - UI library
+- **Vite** - Build tool and dev server
+- **React Router DOM** - Client-side routing
+- **Ethers.js** - Web3 blockchain interactions
 
----
+### Backend Stack
+- **Vercel Serverless Functions** - API endpoints
+- **Supabase** - PostgreSQL database
+- **Node.js** - Runtime environment
 
-## ⚙️ x402 Protocol
+### Blockchain
+- **BNB Chain** - Fast, low-cost transactions
+- **MetaMask** - Wallet provider
+- **Native BNB** - Payment currency
 
-The **x402 protocol** extends HTTP with native payment support, enabling AI agents and automated systems to discover and pay for content programmatically.
+## 📚 How It Works
 
-**Example Response:**
+### Creating a Paywall
+
+1. **Navigate to Create Page** (`/create`)
+2. **Enter Details:**
+   - Content URL (the protected content)
+   - Custom Paywall ID (unique identifier)
+   - Price in BNB (min 0.0001)
+   - Wallet Address (where payments go)
+   - Description (optional)
+3. **Submit** - Get an instant shareable paywall link
+4. **Share** - Distribute your paywall link
+
+### Paying for Content
+
+1. **Visit Paywall Link** (`/paywall/your-id`)
+2. **Review Details** - See price, description, and payment info
+3. **Connect MetaMask** - Approve wallet connection
+4. **Pay with BNB** - Confirm transaction in MetaMask
+5. **Access Content** - Instant redirect after payment confirmation
+
+### HTTP 402 Protocol
+
+Payx402 implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
+
+```http
 HTTP/1.1 402 Payment Required
-X-Payment-Required: 2.99 USDC
-X-Payment-Address: 0x743bc656C34a532952a35b44b69e795f5f0bDEb
+X-Payment-Required: 0.01 BNB
+X-Payment-Address: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb27
 X-Payment-Network: bnb-chain
-X-Payment-Memo: paywall-abc123
+```
 
----
+This enables AI agents and automated systems to:
+- Discover payment requirements programmatically
+- Pay for services without human intervention
+- Access gated APIs and content autonomously
 
-## 💰 Supported Cryptocurrencies
+## 🎨 Design Philosophy
 
-| Cryptocurrency | Network | Conversion |
-|----------------|----------|-------------|
-| Bitcoin | Native | via Daimo Pay |
-| Ethereum | EVM | via Daimo Pay |
-| Solana | SOL | via Daimo Pay |
-| USDC | BNB Chain | Direct |
+Payx402 follows modern web design principles inspired by Vercel:
 
-**Conversion:**  
-All incoming crypto is auto-converted to **USDC on BNB Chain** for instant stable payouts.
+- **Minimalism** - Clean, uncluttered interfaces
+- **Clarity** - Clear information hierarchy
+- **Performance** - Fast load times and smooth interactions
+- **Accessibility** - WCAG compliant color contrast and navigation
+- **Responsiveness** - Works beautifully on all screen sizes
 
----
+## 🔧 API Reference
 
-## 🧠 Security Layers
+### Create Paywall
+```http
+POST /api/create-paywall
+Content-Type: application/json
 
-| Layer | Description |
-|-------|--------------|
-| **Non-Custodial** | Payx402 never holds or accesses your funds |
-| **Passkey Protection** | Device-bound authentication only you can access |
-| **Coinbase CDP Infra** | Enterprise-grade, 99.999% uptime SLA |
-| **Audited Smart Contracts** | Open-source, verified, and immutable logic |
+{
+  "url": "https://example.com/premium-content",
+  "paywallId": "my-premium-article",
+  "price": "0.01",
+  "description": "Premium article about Web3",
+  "walletAddress": "0x..."
+}
+```
 
----
+### Get Paywall
+```http
+GET /api/get-paywall?id=my-premium-article
+```
 
-## 🔗 Why BNB Chain?
+### Get All Paywalls
+```http
+GET /api/get-all-paywalls
+```
 
-| Benefit | Detail |
-|----------|---------|
-| ⏱ **2–5s** | Transaction speed |
-| 💵 **< $0.01** | Average gas cost |
-| 🧱 **EVM Compatible** | Works with Ethereum tools |
-| 🔒 **Secure** | Battle-tested and reliable |
+### HTTP 402 Header
+```http
+GET /api/x402?price=0.01
+```
 
----
+## 🛣️ Roadmap
 
-## 🧩 For Developers
+### Phase 1: Core Features ✅
+- [x] BNB payment integration
+- [x] Custom paywall IDs
+- [x] MetaMask wallet support
+- [x] HTTP 402 protocol implementation
+- [x] Modern UI/UX redesign
 
-Payx402's open documentation and public endpoints are designed for developers and AI agents building on the x402 payment layer.
+### Phase 2: Enhanced Features (Coming Soon)
+- [ ] Multi-chain support (Ethereum, Polygon, Arbitrum)
+- [ ] Subscription-based paywalls
+- [ ] Analytics dashboard
+- [ ] Webhook notifications
+- [ ] API key management
 
-- REST endpoints for payment verification  
-- HTTP header structure for paywall discovery  
-- Wallet abstraction and passkey SDKs (coming soon)
+### Phase 3: Advanced Features
+- [ ] $PAYX402 token utilities
+- [ ] Staking rewards
+- [ ] Governance system
+- [ ] White-label solutions
+- [ ] Enterprise features
 
----
+## 💡 Use Cases
+
+### Content Creators
+- Articles, videos, research papers
+- Online courses and tutorials
+- Exclusive content and early access
+- Premium newsletters
+
+### Developers
+- API access (per-request or subscription)
+- AI model endpoints
+- Data feeds and webhooks
+- Developer tools and SDKs
+
+### Businesses
+- Digital downloads (software, templates, assets)
+- Gated communities and forums
+- Professional services
+- B2B data access
+
+### AI & Automation
+- Agent-to-agent payments
+- Autonomous service access
+- Programmatic content purchasing
+- Machine-readable payment flows
+
+## 🔒 Security
+
+- **Non-Custodial** - Users retain full control of funds
+- **On-Chain Verification** - All transactions verified on BNB Chain
+- **No Private Keys** - Keys never touch our servers
+- **Open Source** - Code is auditable and transparent
+- **HTTPS Only** - Encrypted communication
+- **Input Validation** - XSS and injection protection
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
-MIT License © 2025 Payx402
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- **Website:** [payx402.io](https://payx402.io)
+- **Documentation:** [payx402.io/docs](https://payx402.io/docs)
+- **Twitter/X:** [@payx402](https://x.com/payx402)
+- **GitHub:** [github.com/payx402](https://github.com/payx402)
+
+## 🙏 Acknowledgments
+
+- Built on [BNB Chain](https://www.bnbchain.org/)
+- Powered by [Supabase](https://supabase.com/)
+- Deployed on [Vercel](https://vercel.com/)
+- UI inspired by [Vercel Design](https://vercel.com/design)
+
+## 📞 Support
+
+- **Discord:** [Join our community](https://discord.gg/payx402)
+- **Twitter:** [@payx402](https://x.com/payx402)
+- **Email:** support@payx402.io
 
 ---
 
-## 🌐 Links
-- Website → [https://payfirst.app](https://payfirst.app)  
-- Documentation → [(https://www.payfirstdocs.app/docs)  
-- Twitter → [https://x.com/payfirstapp](https://x.com/payfirstapp)
-
----
-
-## 🧠 Summary
-
-**Payx402** is building the future of monetization.  
-Instant, borderless, and protocol-level — not platform-dependent.  
-
-**Turn links into revenue.**  
-**Powered by crypto, secured by passkeys.**
-
+**Built with ❤️ for the future of Web3 payments**
