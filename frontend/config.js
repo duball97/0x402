@@ -7,9 +7,8 @@ export const CHAIN_CONFIG = {
   BNB_RPC_URL: 'https://bsc-dataseed.binance.org/',
   BNB_TESTNET_RPC_URL: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   
-  // USDC Contract Addresses
-  USDC_MAINNET: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-  USDC_TESTNET: '0x64544969e7c1FE07b55a12c26a8Fa2f9C46bb862',
+  // Token Contract Addresses (reserved for future use)
+  // Currently using native BNB for all payments
   
   // Network Names
   BNB_NETWORK_NAME: 'BNB Smart Chain',
@@ -25,7 +24,6 @@ export const getCurrentNetwork = () => ({
   chainId: CHAIN_CONFIG.BNB_CHAIN_ID,
   name: CHAIN_CONFIG.BNB_NETWORK_NAME,
   rpcUrl: CHAIN_CONFIG.BNB_RPC_URL,
-  usdcAddress: CHAIN_CONFIG.USDC_MAINNET,
   explorer: CHAIN_CONFIG.BNB_EXPLORER,
 });
 

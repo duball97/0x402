@@ -30,7 +30,7 @@ function Footer() {
             <li><a href="/marketplace">Marketplace</a></li>
             <li><a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
             <li><a href="/docs">Documentation</a></li>
-            <li><a href="https://github.com/payx402" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">Buy $PAYX402</a></li>
           </ul>
         </div>
       </div>
