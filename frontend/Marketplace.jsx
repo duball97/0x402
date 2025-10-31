@@ -89,21 +89,7 @@ function Marketplace() {
                     </p>
                   )}
 
-                  {/* Paywall Destination */}
-
-                  {/* Destination Host */}
-                  <div className="product-url">
-                    <span className="url-icon">🔗</span>
-                    <span className="url-text">
-                      {(() => {
-                        try {
-                          return new URL(paywall.url).hostname;
-                        } catch {
-                          return paywall.url;
-                        }
-                      })()}
-                    </span>
-                  </div>
+                  {/* Destination link intentionally hidden on marketplace */}
 
                   <div className="product-price-section">
                     <div className="product-price">
