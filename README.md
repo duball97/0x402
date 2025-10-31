@@ -1,7 +1,7 @@
-# Payfirst
+# Payx402
 
 Turn any link into instant crypto revenue.  
-Payfirst is a crypto-native paywall service that lets anyone monetize web content with on-chain payments.  
+Payx402 is a crypto-native paywall service that lets anyone monetize web content with on-chain payments.  
 No signups, no integration — just paste a URL, set a price, and get paid instantly.
 
 > ⚡ Powered by CoinbaseDev infrastructure and the x402 HTTP payment protocol.
@@ -10,7 +10,7 @@ No signups, no integration — just paste a URL, set a price, and get paid insta
 
 ## 🚀 Quick Overview
 
-Payfirst brings the “Paywall” model into Web3.
+Payx402 brings the "Paywall" model into Web3.
 
 - 🧱 **Paywall any URL** — monetize articles, videos, code, APIs, or files  
 - 💸 **Accept any crypto** — BTC, ETH, SOL, and more via Daimo Pay  
@@ -63,12 +63,12 @@ Full documentation is available at → [https://payfirst.app/docs](https://payfi
 
 ## 🧩 Wallet Architecture
 
-Payfirst wallets are smart, non-custodial, and powered by **Coinbase CDP Infrastructure**.  
+Payx402 wallets are smart, non-custodial, and powered by **Coinbase CDP Infrastructure**.  
 
 ✅ Created with passkeys (FaceID, TouchID, or device PIN)  
 ✅ Private keys never leave your device  
 ✅ Built on ERC-4337  
-✅ Withdraw anytime — Payfirst never holds your funds
+✅ Withdraw anytime — Payx402 never holds your funds
 
 ---
 
@@ -113,7 +113,7 @@ All incoming crypto is auto-converted to **USDC on BNB Chain** for instant stabl
 
 | Layer | Description |
 |-------|--------------|
-| **Non-Custodial** | Payfirst never holds or accesses your funds |
+| **Non-Custodial** | Payx402 never holds or accesses your funds |
 | **Passkey Protection** | Device-bound authentication only you can access |
 | **Coinbase CDP Infra** | Enterprise-grade, 99.999% uptime SLA |
 | **Audited Smart Contracts** | Open-source, verified, and immutable logic |
@@ -133,7 +133,7 @@ All incoming crypto is auto-converted to **USDC on BNB Chain** for instant stabl
 
 ## 🧩 For Developers
 
-Payfirst’s open documentation and public endpoints are designed for developers and AI agents building on the x402 payment layer.
+Payx402's open documentation and public endpoints are designed for developers and AI agents building on the x402 payment layer.
 
 - REST endpoints for payment verification  
 - HTTP header structure for paywall discovery  
@@ -142,7 +142,7 @@ Payfirst’s open documentation and public endpoints are designed for developers
 ---
 
 ## 📄 License
-MIT License © 2025 Payfirst
+MIT License © 2025 Payx402
 
 ---
 
@@ -155,7 +155,7 @@ MIT License © 2025 Payfirst
 
 ## 🧠 Summary
 
-**Payfirst** is building the future of monetization.  
+**Payx402** is building the future of monetization.  
 Instant, borderless, and protocol-level — not platform-dependent.  
 
 **Turn links into revenue.**  

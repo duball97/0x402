@@ -25,7 +25,7 @@ app.use(express.static(distPath));
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Payfirst API is live",
+    message: "Payx402 API is live",
     version: "1.0.0",
     powered_by: "@CoinbaseDev + x402"
   });
@@ -79,7 +79,7 @@ app.post("/verify-payment", (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`🚀 Payfirst API running on port ${PORT}`);
+  console.log(`🚀 Payx402 API running on port ${PORT}`);
   console.log(`💡 For development, run: npm run frontend:dev`);
   console.log(`🌐 Frontend will be available at: http://localhost:3000`);
 });

@@ -1,13 +1,13 @@
-# Payfirst Setup Guide 🚀
+# Payx402 Setup Guide 🚀
 
-Turn any link into instant crypto revenue with Payfirst!
+Turn any link into instant crypto revenue with Payx402!
 
 ## TL;DR - Quickest Start
 
 1. **Install:** `npm install`
 2. **Create `.env` file:** Copy `.env.example` and update `BASE_DOMAIN` to your domain
 3. **Run both:** `npm run dev:all` (runs both backend and frontend)
-4. **Open:** Browser opens automatically at `http://localhost:5173`
+4. **Open:** Browser opens automatically at `http://localhost:3000`
 5. **Test:** Create a paywall!
 
 ---
@@ -35,18 +35,25 @@ Create a `.env` file in the project root with these contents:
 ```env
 # Server configuration
 PORT=8080
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:3000
 
 # Your domain (change this to your actual domain)
 BASE_DOMAIN=https://yourdomain.com
 
 # Your BNB Chain wallet address for receiving payments
 WALLET_ADDRESS=your_bnb_chain_wallet_address_here
+
+# BNB Chain RPC (for production, get your own from Infura/Alchemy)
+BNB_CHAIN_RPC_URL=https://bsc-dataseed.binance.org/
+
+# USDC Contract on BNB Chain
+USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
 ```
 
 **Important:**
 - Change `BASE_DOMAIN` to your actual domain to avoid using `payfirst.app`
 - Add your wallet address to receive payments
+- The public RPC works for testing but **get your own for production** (see `ENV_KEYS.md`)
 - All payments will go to the wallet address you specify
 
 For production, see [ENV_KEYS.md](./ENV_KEYS.md) for what you need:
@@ -74,7 +81,7 @@ npm start
 ```
 
 The API will be available at: `http://localhost:8080`
-The frontend will be available at: `http://localhost:5173`
+The frontend will be available at: `http://localhost:3000`
 
 ---
 
@@ -89,7 +96,7 @@ curl http://localhost:8080/
 You should see:
 ```json
 {
-  "message": "Payfirst API is live",
+  "message": "Payx402 API is live",
   "version": "1.0.0",
   "powered_by": "@CoinbaseDev + x402"
 }
@@ -155,7 +162,7 @@ The built files will be in the `dist` folder, which the backend serves in produc
 
 1. Make sure your backend API is running: `npm run dev`
 2. Start the frontend: `npm run frontend:dev` (or use `npm run dev:all` to run both)
-3. Open `http://localhost:5173` in your browser
+3. Open `http://localhost:3000` in your browser
 4. Fill in the form and create a paywall
 5. You should see your paywall link with your configured domain
 

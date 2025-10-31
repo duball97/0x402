@@ -1,3 +1,5 @@
+import { supabase } from './supabase.js';
+
 // Helper function to create a wallet
 function createWallet(passkey) {
   return {
@@ -8,7 +10,7 @@ function createWallet(passkey) {
   };
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // Add CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -41,10 +43,34 @@ export default function handler(req, res) {
     };
   }
 
-  const baseDomain = process.env.BASE_DOMAIN ||
+  const baseDomain = process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.BASE_DOMAIN ||
     (process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : "http://localhost:3000");
+
+  const paywallData = {
+    id,
+    url,
+    price: parseFloat(price),
+    currency: "USDC",
+    status: "created",
+    wallet_address: wallet.walletAddress,
+    network: wallet.network,
+    non_custodial: wallet.nonCustodial,
+    created_at: new Date().toISOString()
+  };
+
+  // Save to Supabase
+  const { data, error } = await supabase
+    .from('paywalls')
+    .insert([paywallData])
+    .select();
+
+  if (error) {
+    console.error('Supabase error:', error);
+    return res.status(500).json({ error: 'Failed to create paywall', details: error.message });
+  }
 
   res.status(200).json({
     paywall_id: id,
