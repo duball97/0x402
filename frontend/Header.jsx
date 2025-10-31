@@ -1,16 +1,17 @@
+import { Link } from 'react-router-dom';
 function Header({ transparent = false }) {
   return (
     <nav className={transparent ? 'nav-transparent' : ''}>
       <div className="nav-logo">
-        <a href="/">
+        <Link to="/">
           <img src="/logo.png" alt="Payx402" />
-        </a>
+        </Link>
       </div>
       <div className="nav-links">
-        <a href="/create" className="nav-link">Create Paywall</a>
-        <a href="/marketplace" className="nav-link">Marketplace</a>
+        <Link to="/create" className="nav-link">Create Paywall</Link>
+        <Link to="/marketplace" className="nav-link">Marketplace</Link>
         <a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer" className="nav-link">Community</a>
-        <a href="/docs" className="nav-link">Documentation</a>
+        <Link to="/docs" className="nav-link">Documentation</Link>
         <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $PAYX402</a>
       </div>
     </nav>

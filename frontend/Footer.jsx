@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 function Footer() {
   return (
     <footer>
@@ -27,9 +28,9 @@ function Footer() {
         <div className="footer-section">
           <h4>Community</h4>
           <ul>
-            <li><a href="/marketplace">Marketplace</a></li>
+            <li><Link to="/marketplace">Marketplace</Link></li>
             <li><a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
-            <li><a href="/docs">Documentation</a></li>
+            <li><Link to="/docs">Documentation</Link></li>
             <li><a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">Buy $PAYX402</a></li>
           </ul>
         </div>
