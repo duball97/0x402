@@ -12,6 +12,10 @@ function Marketplace() {
     const fetchPaywalls = async () => {
       try {
         const response = await fetch('/api/get-all-paywalls');
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`API ${response.status}: ${text.slice(0, 140)}`);
+        }
         const data = await response.json();
         setPaywalls(data.paywalls || []);
         setLoading(false);

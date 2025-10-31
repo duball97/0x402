@@ -63,11 +63,15 @@ export default async function handler(req, res) {
     };
   }
 
-  const baseDomain = process.env.NEXT_PUBLIC_BASE_URL ||
+  // Determine base domain for generated links
+  const isProd = (process.env.VERCEL_ENV === 'production') || (process.env.NODE_ENV === 'production');
+  const rawBase = process.env.PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
     process.env.BASE_DOMAIN ||
-    (process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000");
+    (isProd ? 'https://payx402.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
+
+  // Normalize (remove trailing slash)
+  const baseDomain = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;
 
   const paywallData = {
     id,
