@@ -75,17 +75,15 @@ BNB_CHAIN_RPC_URL=https://bsc-dataseed.binance.org/
 
 ---
 
-### 6. USDC_CONTRACT_ADDRESS (USDC on BNB Chain)
+### 6. BNB_CONTRACT_ADDRESS (BNB Native Token)
 ```env
-USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
+BNB_CONTRACT_ADDRESS=native
 ```
-**What it is:** USDC token contract address on BNB Chain  
-**Why:** This is where all payments settle  
-**Default:** Mainnet USDC address (already set)
+**What it is:** BNB native token (not an ERC-20 contract)  
+**Why:** All payments are made in native BNB on BNB Chain  
+**Default:** "native" (BNB is the native currency, not a token contract)
 
-**Other networks:**
-- BNB Mainnet: `0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d`
-- BNB Testnet: `0x64544969e7c1FE07b55a12c26a8Fa2f9C46bb862`
+**Note:** Unlike USDC, BNB doesn't need a contract address since it's the native blockchain currency (like ETH on Ethereum).
 
 ---
 
@@ -119,8 +117,8 @@ COINBASE_API_SECRET=your_actual_secret_here
 # Get from: https://www.bnbchain.org/en/developers/rpc/
 BNB_CHAIN_RPC_URL=https://bsc-dataseed.binance.org/
 
-# USDC Contract on BNB Chain
-USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
+# BNB Native Token (not a contract address)
+BNB_CONTRACT_ADDRESS=native
 ```
 
 ---

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { switchToBNBChain, getCurrentNetwork } from './config';
+import Header from './Header';
 
 function Paywall() {
   const { id } = useParams();
@@ -98,10 +99,7 @@ function Paywall() {
   if (loading && !paywallData) {
     return (
       <>
-        <nav>
-          <h1>⚡ Payx402</h1>
-          <span className="nav-subtitle">Turn links into revenue</span>
-        </nav>
+        <Header />
         <section className="hero" style={{ maxWidth: '600px', margin: '100px auto', textAlign: 'center' }}>
           <div className="loading-spinner" style={{ marginBottom: '24px' }}></div>
           <p className="loading-text">Loading paywall...</p>
@@ -113,10 +111,7 @@ function Paywall() {
   if (error) {
     return (
       <>
-        <nav>
-          <h1>⚡ Payx402</h1>
-          <span className="nav-subtitle">Turn links into revenue</span>
-        </nav>
+        <Header />
         <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
           <div className="result-container error-container">
             <div className="error-icon">❌</div>
@@ -132,10 +127,7 @@ function Paywall() {
   if (paid) {
     return (
       <>
-        <nav>
-          <h1>⚡ Payx402</h1>
-          <span className="nav-subtitle">Turn links into revenue</span>
-        </nav>
+        <Header />
         <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
           <div className="result-container success-container">
             <div className="success-icon">✓</div>
@@ -175,7 +167,12 @@ function Paywall() {
         <div className="nav-logo">
           <img src="/logore.png" alt="Payx402" />
         </div>
-        <span className="nav-subtitle">Turn links into revenue</span>
+        <div className="nav-links">
+          <a href="/marketplace" className="nav-link">Marketplace</a>
+          <a href="/community" className="nav-link">Community</a>
+          <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $PAYX402</a>
+          <a href="/docs" className="nav-link">Documentation</a>
+        </div>
       </nav>
       <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
         <h2>Content Locked</h2>
@@ -195,7 +192,7 @@ function Paywall() {
           <div className="result-section">
             <div className="result-label">Price</div>
             <div className="result-value" style={{ fontSize: '28px' }}>
-              ${paywallData?.price} {paywallData?.currency}
+              {paywallData?.price} BNB
             </div>
           </div>
 
@@ -210,7 +207,7 @@ function Paywall() {
           <div className="info-box" style={{ marginTop: '32px' }}>
             <p>⚡ Instant settlement on BNB Chain</p>
             <p>🔐 Secure Web3 payment</p>
-            <p>💰 Multi-crypto support via MetaMask</p>
+            <p>💰 Pay with BNB via MetaMask</p>
           </div>
 
           {paywallData?.walletAddress && (
@@ -228,7 +225,7 @@ function Paywall() {
           </p>
           <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>
-            X-Payment-Required: {paywallData?.price} {paywallData?.currency}<br/>
+            X-Payment-Required: {paywallData?.price} BNB<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
             X-Payment-Network: bnb-chain
           </code>

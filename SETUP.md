@@ -46,8 +46,8 @@ WALLET_ADDRESS=your_bnb_chain_wallet_address_here
 # BNB Chain RPC (for production, get your own from Infura/Alchemy)
 BNB_CHAIN_RPC_URL=https://bsc-dataseed.binance.org/
 
-# USDC Contract on BNB Chain
-USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
+# BNB Native Token (not a contract - BNB is native currency)
+BNB_CONTRACT_ADDRESS=native
 ```
 
 **Important:**

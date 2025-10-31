@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Header from './Header';
 
 function App() {
   const [url, setUrl] = useState('');
@@ -28,13 +29,20 @@ function App() {
     setValidationError(null);
     setResult(null);
 
+    // Auto-add https:// if protocol is missing
+    let processedUrl = url.trim();
+    if (!processedUrl.match(/^https?:\/\//i)) {
+      processedUrl = `https://${processedUrl}`;
+    }
+
     try {
       const res = await fetch('/api/create-paywall', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          url,
+          url: processedUrl,
           price,
+          description,
           walletAddress: walletAddress || null,
         }),
       });
@@ -54,12 +62,7 @@ function App() {
 
   return (
     <>
-      <nav>
-        <div className="nav-logo">
-          <img src="/logore.png" alt="Payx402" />
-        </div>
-        <span className="nav-subtitle">Turn links into revenue</span>
-      </nav>
+      <Header />
 
       <div className="main-layout">
         <section className="hero">
@@ -81,9 +84,9 @@ function App() {
                 Content URL <span className="required">*</span>
               </label>
               <input
-                type="url"
+                type="text"
                 id="urlInput"
-                placeholder="https://example.com/premium-content"
+                placeholder="example.com/premium-content"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
@@ -93,14 +96,14 @@ function App() {
             <div className="form-row">
               <div className="input-group">
                 <label htmlFor="priceInput">
-                  Price (USDC) <span className="required">*</span>
+                  Price (BNB) <span className="required">*</span>
                 </label>
                 <input
                   type="number"
                   id="priceInput"
-                  placeholder="5.00"
-                  step="0.01"
-                  min="0.01"
+                  placeholder="0.01"
+                  step="0.00001"
+                  min="0.00001"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -142,7 +145,7 @@ function App() {
             </button>
 
             <p className="form-footer-text">
-              💡 Auto-generates wallet if not provided • Instant BNB Chain settlement
+              💡 Auto-generates wallet if not provided • Instant BNB settlement on BNB Chain
             </p>
           </form>
         </section>
@@ -198,7 +201,7 @@ function App() {
               <div className="info-box">
                 <p>🔗 Share this link to monetize your content</p>
                 <p>💰 Payments settle to your wallet on BNB Chain</p>
-                <p>⚡ Instant payouts in USDC</p>
+                <p>⚡ Instant payouts in BNB</p>
               </div>
             </div>
           )}
@@ -220,7 +223,7 @@ function App() {
                 <div className="preview-price-box">
                   <span className="preview-price-label">Price</span>
                   <span className="preview-price-value">
-                    ${price || "0.00"} USDC
+                    {price || "0.00"} BNB
                   </span>
                 </div>
 
@@ -261,28 +264,28 @@ function App() {
           <div className="footer-section">
             <h4>Features</h4>
             <ul>
-              <li>Accept BTC, ETH, SOL & more</li>
-              <li>Instant USDC settlements</li>
-              <li>Non-custodial wallets</li>
-              <li>Zero platform fees</li>
+              <li>Native BNB Payments</li>
+              <li>Instant Settlements</li>
+              <li>Non-custodial Wallets</li>
+              <li>Zero Platform Fees</li>
             </ul>
           </div>
           <div className="footer-section">
             <h4>Technology</h4>
             <ul>
-              <li>Powered by Coinbase CDP</li>
               <li>Built on BNB Chain</li>
-              <li>ERC-4337 Wallets</li>
+              <li>Web3 Integration</li>
+              <li>MetaMask Compatible</li>
               <li>HTTP 402 Protocol</li>
             </ul>
           </div>
           <div className="footer-section">
-            <h4>Resources</h4>
+            <h4>Community</h4>
             <ul>
-              <li><a href="https://payx402.com/docs" target="_blank" rel="noopener noreferrer">Documentation</a></li>
-              <li><a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-              <li><a href="https://github.com/payx402" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href="mailto:support@payx402.com">Support</a></li>
+              <li><a href="/marketplace">Marketplace</a></li>
+              <li><a href="/community">Join Community</a></li>
+              <li><a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
+              <li><a href="/docs">Documentation</a></li>
             </ul>
           </div>
         </div>

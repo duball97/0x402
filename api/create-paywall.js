@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { url, price, walletAddress } = req.body;
+  const { url, price, walletAddress, description } = req.body;
   const id = Math.random().toString(36).substring(2, 8);
 
   // If no wallet provided, create a new one
@@ -52,8 +52,9 @@ export default async function handler(req, res) {
   const paywallData = {
     id,
     url,
+    description: description || null,
     price: parseFloat(price),
-    currency: "USDC",
+    currency: "BNB",
     status: "created",
     wallet_address: wallet.walletAddress,
     network: wallet.network,
@@ -76,7 +77,7 @@ export default async function handler(req, res) {
     paywall_id: id,
     paywall_link: `${baseDomain}/paywall/${id}`,
     price,
-    currency: "USDC",
+    currency: "BNB",
     status: "created",
     walletAddress: wallet.walletAddress,
     network: wallet.network,

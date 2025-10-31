@@ -13,8 +13,8 @@ No signups, no integration — just paste a URL, set a price, and get paid insta
 Payx402 brings the "Paywall" model into Web3.
 
 - 🧱 **Paywall any URL** — monetize articles, videos, code, APIs, or files  
-- 💸 **Accept any crypto** — BTC, ETH, SOL, and more via Daimo Pay  
-- 🪙 **Instant payouts** — automatically receive USDC on BNB Chain  
+- 💸 **Accept BNB** — Native BNB payments on BNB Chain via MetaMask  
+- 🪙 **Instant payouts** — automatically receive BNB on BNB Chain  
 - 🔐 **Non-custodial wallets** — you keep full control of your funds  
 - 🤖 **Agentic payments** — AI agents can pay via HTTP 402 headers  
 - 💳 **0% platform fees** — you keep 100% of your earnings
@@ -41,8 +41,8 @@ Full documentation is available at → [https://payfirst.app/docs](https://payfi
 | Feature | Description |
 |----------|--------------|
 | **Instant Paywalls** | Create and share paywalled links for any URL |
-| **Multi-Crypto Support** | Accept payments in BTC, ETH, SOL, and more |
-| **Auto-Conversion to USDC** | All payments settle to stablecoin for simplicity |
+| **BNB Payments** | Accept native BNB payments via MetaMask |
+| **Direct Settlements** | All payments settle directly to your wallet in BNB |
 | **Smart Wallets** | Non-custodial wallets deployed with passkey authentication |
 | **Passkey Security** | Replace passwords with biometric or device-based keys |
 | **Coinbase CDP Infrastructure** | Enterprise-grade reliability, SOC 2 Type I certified |
