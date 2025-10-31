@@ -81,14 +81,15 @@ function Marketplace() {
 
                 <div className="product-content">
                   <h3 className="product-title">
-                    {paywall.description || 'Premium Content'}
+                    {paywall.id}
                   </h3>
+                  {paywall.description && (
+                    <p style={{ margin: '0 0 12px 0', color: '#aaa', lineHeight: 1.6 }}>
+                      {paywall.description}
+                    </p>
+                  )}
 
-                  {/* Paywall ID */}
-                  <div className="product-url" style={{ marginBottom: 12 }}>
-                    <span className="url-icon">🏷️</span>
-                    <span className="url-text">{paywall.id}</span>
-                  </div>
+                  {/* Paywall Destination */}
 
                   {/* Destination Host */}
                   <div className="product-url">

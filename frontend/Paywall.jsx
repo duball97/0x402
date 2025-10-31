@@ -193,10 +193,10 @@ function Paywall() {
 
   return (
     <>
-      <Header />
-      <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
-        <h2>Content Locked</h2>
-        <p>This content requires payment to unlock</p>
+            <Header />
+            <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
+              <h2>{paywallData?.id || 'Content Locked'}</h2>
+              <p>This content requires payment to unlock</p>
 
         <div className="form-container">
           {error && (

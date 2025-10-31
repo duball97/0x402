@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   res.status(200).json({
     id: data.id,
     url: data.url,
-    price: data.price.toString(),
+    price: Number(data.price).toFixed(4),
     currency: data.currency,
     status: data.status,
     walletAddress: data.wallet_address,
