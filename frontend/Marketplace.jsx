@@ -84,9 +84,29 @@ function Marketplace() {
                     {paywall.description || 'Premium Content'}
                   </h3>
 
+                  {/* Paywall ID */}
+                  <div className="product-url" style={{ marginBottom: 12 }}>
+                    <span className="url-icon">🏷️</span>
+                    <span className="url-text">{paywall.id}</span>
+                  </div>
+
+                  {/* Destination Host */}
+                  <div className="product-url">
+                    <span className="url-icon">🔗</span>
+                    <span className="url-text">
+                      {(() => {
+                        try {
+                          return new URL(paywall.url).hostname;
+                        } catch {
+                          return paywall.url;
+                        }
+                      })()}
+                    </span>
+                  </div>
+
                   <div className="product-price-section">
                     <div className="product-price">
-                      <span className="price-value">{paywall.price}</span>
+                      <span className="price-value">{!isNaN(parseFloat(paywall.price)) ? parseFloat(paywall.price).toFixed(4) : paywall.price}</span>
                       <span className="price-currency">{paywall.currency}</span>
                     </div>
                   </div>
