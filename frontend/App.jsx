@@ -13,44 +13,49 @@ function App() {
       <section className="landing-hero">
         <div className="landing-hero-content">
           <div className="hero-badge">
-            <span className="badge-icon">⚡</span>
-            <span>Powered by BNB Chain & HTTP 402 Protocol</span>
+            <span>Powered by BNB Chain</span>
+            <span className="badge-dot">•</span>
+            <span>HTTP 402 Protocol</span>
           </div>
 
           <h1 className="landing-hero-title">
-            Monetize Your Content.<br />
-            <span className="gradient-text">Instantly. On-Chain.</span>
+            Monetize Your Content<br />
+            <span className="gradient-text">With Crypto Paywalls</span>
           </h1>
 
           <p className="landing-hero-subtitle">
-            Create crypto paywalls in seconds. Accept BNB payments. Zero platform fees.
-            Built on the HTTP 402 protocol for seamless Web3 monetization.
+            Accept BNB payments instantly. No platform fees. Non-custodial. Built on the HTTP 402 protocol 
+            to enable programmable payments for AI agents and automated systems.
           </p>
 
           <div className="landing-hero-cta">
             <button onClick={() => navigate('/create')} className="cta-primary">
-              Create Paywall
-              <span className="cta-arrow">→</span>
+              Start Building
             </button>
-            <button onClick={() => navigate('/marketplace')} className="cta-secondary">
-              Explore Marketplace
+            <button onClick={() => navigate('/docs')} className="cta-secondary">
+              Documentation
             </button>
           </div>
 
           <div className="landing-hero-stats">
             <div className="stat-item">
               <div className="stat-value">$PAYX402</div>
-              <div className="stat-label">Native Token on BNB</div>
+              <div className="stat-label">Native Token</div>
             </div>
             <div className="stat-divider"></div>
             <div className="stat-item">
-              <div className="stat-value">&lt;2s</div>
-              <div className="stat-label">Settlement Time</div>
+              <div className="stat-value">2-5s</div>
+              <div className="stat-label">Settlement</div>
             </div>
             <div className="stat-divider"></div>
             <div className="stat-item">
               <div className="stat-value">0%</div>
-              <div className="stat-label">Platform Fees</div>
+              <div className="stat-label">Fees</div>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <div className="stat-value">&lt;$0.01</div>
+              <div className="stat-label">Gas Cost</div>
             </div>
           </div>
         </div>
@@ -59,98 +64,139 @@ function App() {
       {/* Features Section */}
       <section className="landing-features">
         <div className="section-header">
-          <h2 className="section-title">Built for the Future of Payments</h2>
+          <h2 className="section-title">Why Payx402</h2>
           <p className="section-subtitle">
-            Next-generation paywall infrastructure powered by Web3
+            Built for creators, developers, and businesses who want full control
           </p>
         </div>
 
         <div className="features-grid">
           <div className="feature-card">
-            <div className="feature-icon">⚡</div>
             <h3 className="feature-title">Instant Settlements</h3>
             <p className="feature-description">
-              BNB payments settle in seconds. No waiting for traditional payment processors.
-              Funds hit your wallet immediately.
+              Payments settle in 2-5 seconds on BNB Chain. No waiting days for traditional 
+              payment processors. Funds arrive in your wallet immediately upon payment.
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">2-5s</span>
+              <span className="metric-label">average settlement time</span>
+            </div>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">🔐</div>
-            <h3 className="feature-title">Non-Custodial</h3>
+            <h3 className="feature-title">Non-Custodial Control</h3>
             <p className="feature-description">
-              You own your wallet. We never touch your funds. Payments go directly from
-              buyer to seller on-chain.
+              You own your wallet. Payx402 never holds your funds. Payments flow directly 
+              from buyer to seller on-chain with full transparency and auditability.
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">100%</span>
+              <span className="metric-label">self-custodial</span>
+            </div>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">🌐</div>
-            <h3 className="feature-title">HTTP 402 Native</h3>
+            <h3 className="feature-title">HTTP 402 Protocol</h3>
             <p className="feature-description">
-              Built on the HTTP 402 "Payment Required" protocol. AI agents and automated
-              systems can discover and pay programmatically.
+              Built on the HTTP 402 "Payment Required" standard. Enables AI agents, bots, 
+              and automated systems to discover payment requirements and transact programmatically.
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">Machine-Readable</span>
+              <span className="metric-label">protocol specification</span>
+            </div>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">💎</div>
-            <h3 className="feature-title">$PAYX402 Token</h3>
+            <h3 className="feature-title">Zero Platform Fees</h3>
             <p className="feature-description">
-              Powered by the $PAYX402 token on BNB Chain. Trade on Uniswap, earn rewards,
-              and participate in governance.
+              Keep 100% of your revenue. No platform cuts, transaction fees, or hidden charges. 
+              Only pay minimal gas fees on BNB Chain (typically less than $0.01 per transaction).
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">0%</span>
+              <span className="metric-label">platform fees</span>
+            </div>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">🚀</div>
-            <h3 className="feature-title">Developer-First</h3>
+            <h3 className="feature-title">Developer-Friendly API</h3>
             <p className="feature-description">
-              Simple API integration. RESTful endpoints. Web3-compatible. Build paywalls
-              into your apps with a few lines of code.
+              RESTful API with comprehensive documentation. Integrate paywalls into your 
+              application with a few lines of code. Web3-compatible with MetaMask support.
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">RESTful</span>
+              <span className="metric-label">API endpoints</span>
+            </div>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">💰</div>
-            <h3 className="feature-title">Zero Fees</h3>
+            <h3 className="feature-title">BNB Chain Infrastructure</h3>
             <p className="feature-description">
-              No platform fees. No transaction cuts. No hidden charges. Keep 100% of your
-              revenue. Only pay gas fees.
+              Built on BNB Chain for fast, low-cost transactions. EVM-compatible smart contracts 
+              ensure security and transparency. Battle-tested infrastructure at scale.
             </p>
+            <div className="feature-metric">
+              <span className="metric-value">&lt;$0.01</span>
+              <span className="metric-label">gas cost</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
+      {/* Use Cases Section */}
       <section className="landing-tech">
         <div className="section-header">
-          <h2 className="section-title">Built on Modern Infrastructure</h2>
+          <h2 className="section-title">Built for Every Use Case</h2>
           <p className="section-subtitle">
-            Leveraging the best technologies in Web3
+            From content creators to enterprise APIs
           </p>
         </div>
 
-        <div className="tech-grid">
-          <div className="tech-item">
-            <div className="tech-icon">🔗</div>
-            <div className="tech-name">BNB Chain</div>
-            <div className="tech-description">Fast, low-cost blockchain</div>
+        <div className="use-cases-grid">
+          <div className="use-case-item">
+            <div className="use-case-header">
+              <h3 className="use-case-name">Premium Content</h3>
+              <span className="use-case-tag">Creators</span>
+            </div>
+            <p className="use-case-description">
+              Articles, videos, research papers, courses, and exclusive content. 
+              One-time purchases or subscription models.
+            </p>
           </div>
-          <div className="tech-item">
-            <div className="tech-icon">🦊</div>
-            <div className="tech-name">MetaMask</div>
-            <div className="tech-description">Easy wallet integration</div>
+
+          <div className="use-case-item">
+            <div className="use-case-header">
+              <h3 className="use-case-name">API Monetization</h3>
+              <span className="use-case-tag">Developers</span>
+            </div>
+            <p className="use-case-description">
+              Per-request pricing for AI models, data feeds, compute resources, 
+              and developer tools. Built for automation.
+            </p>
           </div>
-          <div className="tech-item">
-            <div className="tech-icon">⚡</div>
-            <div className="tech-name">Instant Settlement</div>
-            <div className="tech-description">On-chain payment finality</div>
+
+          <div className="use-case-item">
+            <div className="use-case-header">
+              <h3 className="use-case-name">Digital Downloads</h3>
+              <span className="use-case-tag">Merchants</span>
+            </div>
+            <p className="use-case-description">
+              Software, templates, assets, and files. Instant delivery upon payment 
+              with cryptographic verification.
+            </p>
           </div>
-          <div className="tech-item">
-            <div className="tech-icon">🔐</div>
-            <div className="tech-name">HTTP 402</div>
-            <div className="tech-description">Native payment protocol</div>
+
+          <div className="use-case-item">
+            <div className="use-case-header">
+              <h3 className="use-case-name">AI Agent Access</h3>
+              <span className="use-case-tag">Automation</span>
+            </div>
+            <p className="use-case-description">
+              Enable autonomous agents to pay for services programmatically. 
+              HTTP 402 native for machine-to-machine payments.
+            </p>
           </div>
         </div>
       </section>
@@ -158,23 +204,17 @@ function App() {
       {/* CTA Section */}
       <section className="landing-cta">
         <div className="cta-content">
-          <h2 className="cta-title">Start Monetizing Today</h2>
+          <h2 className="cta-title">Ready to Get Started?</h2>
           <p className="cta-description">
-            Create your first paywall in less than 60 seconds. No signup required.
+            Create your first paywall in under 60 seconds. No signup required.
           </p>
           <div className="cta-buttons">
             <button onClick={() => navigate('/create')} className="cta-primary">
-              Create Your Paywall
-              <span className="cta-arrow">→</span>
+              Create Paywall
             </button>
-            <a
-              href="https://app.uniswap.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-secondary"
-            >
-              Buy $PAYX402 Token
-            </a>
+            <button onClick={() => navigate('/docs')} className="cta-secondary">
+              View Documentation
+            </button>
           </div>
         </div>
       </section>

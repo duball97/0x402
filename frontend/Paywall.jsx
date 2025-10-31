@@ -180,17 +180,7 @@ function Paywall() {
 
   return (
     <>
-      <nav>
-        <div className="nav-logo">
-          <img src="/logore.png" alt="Payx402" />
-        </div>
-        <div className="nav-links">
-          <a href="/marketplace" className="nav-link">Marketplace</a>
-          <a href="/community" className="nav-link">Community</a>
-          <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $PAYX402</a>
-          <a href="/docs" className="nav-link">Documentation</a>
-        </div>
-      </nav>
+      <Header />
       <section className="hero" style={{ maxWidth: '600px', margin: '60px auto' }}>
         <h2>Content Locked</h2>
         <p>This content requires payment to unlock</p>

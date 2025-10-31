@@ -6,6 +6,7 @@ function Create() {
   const [url, setUrl] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [paywallId, setPaywallId] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,14 @@ function Create() {
     }
     if (!price || parseFloat(price) <= 0) {
       setValidationError('Please enter a valid price');
+      return;
+    }
+    if (!paywallId) {
+      setValidationError('Please enter a Paywall ID');
+      return;
+    }
+    if (!/^[a-zA-Z0-9-_]+$/.test(paywallId)) {
+      setValidationError('Paywall ID can only contain letters, numbers, hyphens, and underscores');
       return;
     }
 
@@ -44,6 +53,7 @@ function Create() {
           url: processedUrl,
           price,
           description,
+          paywallId,
           walletAddress: walletAddress || null,
         }),
       });
@@ -93,6 +103,22 @@ function Create() {
               />
             </div>
 
+            {/* Paywall ID - Full Width */}
+            <div className="input-group full-width">
+              <label htmlFor="paywallIdInput">
+                Paywall ID <span className="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="paywallIdInput"
+                placeholder="my-premium-article"
+                value={paywallId}
+                onChange={(e) => setPaywallId(e.target.value.toLowerCase())}
+                pattern="[a-zA-Z0-9-_]+"
+              />
+              <p className="input-hint">Use letters, numbers, hyphens, and underscores only. Must be unique.</p>
+            </div>
+
             {/* Price and Wallet - Two Column */}
             <div className="form-row">
               <div className="input-group">
@@ -102,9 +128,9 @@ function Create() {
                 <input
                   type="number"
                   id="priceInput"
-                  placeholder="0.01"
-                  step="0.00001"
-                  min="0.00001"
+                  placeholder="0.0001"
+                  step="0.0001"
+                  min="0.0001"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />

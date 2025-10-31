@@ -28,8 +28,28 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { url, price, walletAddress, description } = req.body;
-  const id = Math.random().toString(36).substring(2, 8);
+  const { url, price, walletAddress, description, paywallId } = req.body;
+  
+  // Validate paywallId
+  if (!paywallId) {
+    return res.status(400).json({ error: "Paywall ID is required" });
+  }
+  if (!/^[a-zA-Z0-9-_]+$/.test(paywallId)) {
+    return res.status(400).json({ error: "Paywall ID can only contain letters, numbers, hyphens, and underscores" });
+  }
+  
+  // Check if ID already exists
+  const { data: existingPaywall } = await supabase
+    .from('paywalls')
+    .select('id')
+    .eq('id', paywallId)
+    .single();
+  
+  if (existingPaywall) {
+    return res.status(400).json({ error: "This Paywall ID is already taken. Please choose another one." });
+  }
+  
+  const id = paywallId;
 
   // If no wallet provided, create a new one
   let wallet;
