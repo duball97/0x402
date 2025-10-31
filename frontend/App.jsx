@@ -35,7 +35,7 @@ function App() {
 
           <div className="landing-hero-stats">
             <div className="stat-item">
-              <div className="stat-value">$PAYX402</div>
+              <div className="stat-value">$PX402</div>
               <div className="stat-label">Native Token</div>
             </div>
             <div className="stat-divider"></div>

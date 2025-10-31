@@ -12,7 +12,7 @@ function Header({ transparent = false }) {
         <Link to="/marketplace" className="nav-link">Marketplace</Link>
         <a href="https://x.com/payx402" target="_blank" rel="noopener noreferrer" className="nav-link">Community</a>
         <Link to="/docs" className="nav-link">Documentation</Link>
-        <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $PAYX402</a>
+        <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $PX402</a>
       </div>
     </nav>
   );
