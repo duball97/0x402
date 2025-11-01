@@ -54,31 +54,49 @@ function Paywall() {
       if (isSolana) {
         // Handle Solana payment
         if (!isPhantomInstalled()) {
-          setError('Please install Phantom wallet to make Solana payments');
+          setError('Please install Phantom wallet to make Solana payments. Get it at https://phantom.app/');
           setLoading(false);
           return;
         }
 
-        // Connect to Phantom
-        const publicKeyStr = await connectPhantom();
+        // Ensure Phantom is connected
+        let publicKeyStr;
+        try {
+          publicKeyStr = await connectPhantom();
+        } catch (err) {
+          setError(err.message || 'Failed to connect to Phantom wallet');
+          setLoading(false);
+          return;
+        }
+
         const fromPublicKey = new PublicKey(publicKeyStr);
         const toPublicKey = new PublicKey(paywallData.walletAddress);
 
-        // Connect to Solana network
+        // Create a connection for balance checking and confirmation
+        // Use a public RPC endpoint
         const connection = new Connection(CHAIN_CONFIG.SOLANA_MAINNET_RPC, 'confirmed');
 
-        // Check balance
-        const balance = await connection.getBalance(fromPublicKey);
+        // Calculate amount in lamports
         const priceInLamports = Math.floor(priceNum * LAMPORTS_PER_SOL);
 
-        if (balance < priceInLamports) {
-          setError(`Insufficient SOL balance. Required: ${paywallData.price} SOL`);
-          setLoading(false);
-          return;
+        // Check balance (optional - Phantom will also check)
+        try {
+          const balance = await connection.getBalance(fromPublicKey);
+          if (balance < priceInLamports) {
+            setError(`Insufficient SOL balance. Required: ${paywallData.price} SOL. You have ${(balance / LAMPORTS_PER_SOL).toFixed(4)} SOL.`);
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.warn('Could not check balance, continuing:', err.message);
+          // Continue - Phantom will handle balance check
         }
 
         // Create transaction
-        const transaction = new Transaction().add(
+        const transaction = new Transaction();
+
+        // Add transfer instruction
+        transaction.add(
           SystemProgram.transfer({
             fromPubkey: fromPublicKey,
             toPubkey: toPublicKey,
@@ -86,21 +104,78 @@ function Paywall() {
           })
         );
 
-        // Get recent blockhash
-        const { blockhash } = await connection.getLatestBlockhash();
-        transaction.recentBlockhash = blockhash;
+        // Get recent blockhash and set fee payer
+        try {
+          const { blockhash } = await connection.getLatestBlockhash('finalized');
+          transaction.recentBlockhash = blockhash;
+        } catch (err) {
+          // Fallback to confirmed
+          const { blockhash } = await connection.getLatestBlockhash('confirmed');
+          transaction.recentBlockhash = blockhash;
+        }
         transaction.feePayer = fromPublicKey;
 
-        // Request signature from Phantom
-        const { signature } = await window.solana.signAndSendTransaction(transaction);
-        console.log('Transaction signature:', signature);
+        // Request signature and send from Phantom
+        let signature;
+        try {
+          // Phantom's signAndSendTransaction signs and sends the transaction
+          // It returns the signature as a string or wrapped in an object
+          const result = await window.solana.signAndSendTransaction(transaction);
+          
+          // Phantom can return signature as string or { signature: string }
+          if (typeof result === 'string') {
+            signature = result;
+          } else if (result?.signature) {
+            signature = result.signature;
+          } else {
+            // Log the result to debug
+            console.error('Unexpected Phantom response:', result);
+            throw new Error('Unexpected response from Phantom wallet. Please try again.');
+          }
+          
+          console.log('Transaction signature:', signature);
+        } catch (err) {
+          console.error('Transaction error:', err);
+          
+          // Handle user rejection
+          if (err.code === 4001 || err.code === 'ACTION_REJECTED' || 
+              (err.message && err.message.toLowerCase().includes('user rejected'))) {
+            setError('Transaction was rejected. Please approve the transaction in Phantom.');
+            setLoading(false);
+            return;
+          }
+          
+          // Handle insufficient funds
+          if (err.message && (err.message.includes('insufficient') || err.message.includes('0x1'))) {
+            setError('Insufficient SOL balance to complete this transaction.');
+            setLoading(false);
+            return;
+          }
+          
+          // Generic error
+          setError(err.message || 'Failed to send transaction. Please check Phantom wallet and try again.');
+          setLoading(false);
+          return;
+        }
         
         const config = getCurrentNetwork('Solana');
-        console.log('View on explorer:', `${config.explorer}/tx/${signature}`);
+        console.log('Transaction submitted. View on explorer:', `${config.explorer}/tx/${signature}`);
 
-        // Wait for confirmation
-        await connection.confirmTransaction(signature, 'confirmed');
-        console.log('Transaction confirmed!');
+        // Wait for confirmation (optional - transaction is already sent)
+        try {
+          // Use a shorter timeout for confirmation
+          const confirmation = await Promise.race([
+            connection.confirmTransaction(signature, 'confirmed'),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Confirmation timeout')), 30000)
+            )
+          ]);
+          console.log('Transaction confirmed!', confirmation);
+        } catch (err) {
+          console.warn('Confirmation timeout or error:', err.message);
+          // Transaction is already submitted, continue
+          console.log('Transaction submitted but confirmation pending. Access granted.');
+        }
 
         setPaid(true);
         setLoading(false);

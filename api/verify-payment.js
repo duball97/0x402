@@ -1,6 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 
-const SOLANA_MAINNET_RPC = 'https://api.mainnet-beta.solana.com';
+const SOLANA_MAINNET_RPC = 'https://mainnet.helius-rpc.com/?api-key=89ad9e93-6e87-4b75-be27-dd2428ce64db';
 
 export default async function handler(req, res) {
   // Add CORS headers

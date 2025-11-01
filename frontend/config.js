@@ -94,17 +94,26 @@ export const isPhantomInstalled = () => {
 // Connect to Phantom wallet
 export const connectPhantom = async () => {
   if (!isPhantomInstalled()) {
-    throw new Error('Please install Phantom wallet');
+    throw new Error('Please install Phantom wallet. Get it at https://phantom.app/');
   }
   
   try {
-    const resp = await window.solana.connect();
+    // Check if already connected
+    if (window.solana.isConnected) {
+      return window.solana.publicKey.toString();
+    }
+    
+    // Connect to Phantom
+    const resp = await window.solana.connect({ onlyIfTrusted: false });
     return resp.publicKey.toString();
   } catch (err) {
     if (err.code === 4001) {
       throw new Error('User rejected the connection request');
     }
-    throw err;
+    if (err.message) {
+      throw new Error(err.message);
+    }
+    throw new Error('Failed to connect to Phantom wallet');
   }
 };
 
