@@ -8,10 +8,12 @@ export const CHAIN_CONFIG = {
   BNB_TESTNET_RPC_URL: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   
   // Solana Configuration
-  SOLANA_MAINNET_RPC: 'https://api.mainnet-beta.solana.com',
+  SOLANA_MAINNET_RPC: 'https://mainnet.helius-rpc.com/?api-key=89ad9e93-6e87-4b75-be27-dd2428ce64db',
   SOLANA_DEVNET_RPC: 'https://api.devnet.solana.com',
   SOLANA_EXPLORER: 'https://solscan.io',
   SOLANA_DEVNET_EXPLORER: 'https://solscan.io?cluster=devnet',
+
+
   
   // Token Contract Addresses (reserved for future use)
   // Currently using native BNB for all payments
