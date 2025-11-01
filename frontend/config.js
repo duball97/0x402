@@ -7,12 +7,19 @@ export const CHAIN_CONFIG = {
   BNB_RPC_URL: 'https://bsc-dataseed.binance.org/',
   BNB_TESTNET_RPC_URL: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   
+  // Solana Configuration
+  SOLANA_MAINNET_RPC: 'https://api.mainnet-beta.solana.com',
+  SOLANA_DEVNET_RPC: 'https://api.devnet.solana.com',
+  SOLANA_EXPLORER: 'https://solscan.io',
+  SOLANA_DEVNET_EXPLORER: 'https://solscan.io?cluster=devnet',
+  
   // Token Contract Addresses (reserved for future use)
   // Currently using native BNB for all payments
   
   // Network Names
   BNB_NETWORK_NAME: 'BNB Smart Chain',
   BNB_TESTNET_NETWORK_NAME: 'BNB Smart Chain Testnet',
+  SOLANA_NETWORK_NAME: 'Solana',
   
   // Block Explorers
   BNB_EXPLORER: 'https://bscscan.com',
@@ -20,14 +27,25 @@ export const CHAIN_CONFIG = {
 };
 
 // Get current network config (defaulting to mainnet)
-export const getCurrentNetwork = () => ({
-  chainId: CHAIN_CONFIG.BNB_CHAIN_ID,
-  name: CHAIN_CONFIG.BNB_NETWORK_NAME,
-  rpcUrl: CHAIN_CONFIG.BNB_RPC_URL,
-  explorer: CHAIN_CONFIG.BNB_EXPLORER,
-});
+export const getCurrentNetwork = (network = 'BNB Chain') => {
+  if (network === 'Solana') {
+    return {
+      name: CHAIN_CONFIG.SOLANA_NETWORK_NAME,
+      rpcUrl: CHAIN_CONFIG.SOLANA_MAINNET_RPC,
+      explorer: CHAIN_CONFIG.SOLANA_EXPLORER,
+      network: 'Solana'
+    };
+  }
+  return {
+    chainId: CHAIN_CONFIG.BNB_CHAIN_ID,
+    name: CHAIN_CONFIG.BNB_NETWORK_NAME,
+    rpcUrl: CHAIN_CONFIG.BNB_RPC_URL,
+    explorer: CHAIN_CONFIG.BNB_EXPLORER,
+    network: 'BNB Chain'
+  };
+};
 
-// Network switch helper
+// Network switch helper for BNB Chain
 export const switchToBNBChain = async () => {
   try {
     await window.ethereum.request({
@@ -63,6 +81,28 @@ export const switchToBNBChain = async () => {
     }
     console.error('Failed to switch to BNB Chain:', switchError);
     return false;
+  }
+};
+
+// Check if Phantom wallet is installed
+export const isPhantomInstalled = () => {
+  return typeof window !== 'undefined' && window.solana && window.solana.isPhantom;
+};
+
+// Connect to Phantom wallet
+export const connectPhantom = async () => {
+  if (!isPhantomInstalled()) {
+    throw new Error('Please install Phantom wallet');
+  }
+  
+  try {
+    const resp = await window.solana.connect();
+    return resp.publicKey.toString();
+  } catch (err) {
+    if (err.code === 4001) {
+      throw new Error('User rejected the connection request');
+    }
+    throw err;
   }
 };
 

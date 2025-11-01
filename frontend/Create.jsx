@@ -8,6 +8,7 @@ function Create() {
   const [description, setDescription] = useState('');
   const [paywallId, setPaywallId] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
+  const [network, setNetwork] = useState('BNB Chain');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,6 +56,7 @@ function Create() {
           description,
           paywallId,
           walletAddress: walletAddress || null,
+          network,
         }),
       });
 
@@ -119,11 +121,36 @@ function Create() {
               <p className="input-hint">Use letters, numbers, hyphens, and underscores only. Must be unique.</p>
             </div>
 
+            {/* Network Selector - Full Width */}
+            <div className="input-group full-width">
+              <label htmlFor="networkSelect">
+                Network <span className="required">*</span>
+              </label>
+              <select
+                id="networkSelect"
+                value={network}
+                onChange={(e) => setNetwork(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 14px',
+                  background: '#0a0a0a',
+                  border: '1px solid #2a2a2a',
+                  borderRadius: '8px',
+                  color: '#e5e5e5',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="BNB Chain">BNB Chain</option>
+                <option value="Solana">Solana</option>
+              </select>
+            </div>
+
             {/* Price and Wallet - Two Column */}
             <div className="form-row">
               <div className="input-group">
                        <label htmlFor="priceInput">
-                         Price (BNB) <span className="required">*</span>
+                         Price ({network === 'Solana' ? 'SOL' : 'BNB'}) <span className="required">*</span>
                        </label>
                 <input
                   type="number"
@@ -141,8 +168,7 @@ function Create() {
                 <input
                   type="text"
                   id="walletAddress"
-                  placeholder="0x742d35Cc..."
-                  pattern="^0x[a-fA-F0-9]{40}$"
+                  placeholder={network === 'Solana' ? 'Solana address...' : '0x742d35Cc...'}
                   value={walletAddress}
                   onChange={(e) => setWalletAddress(e.target.value)}
                 />
@@ -172,7 +198,7 @@ function Create() {
             </button>
 
             <p className="form-footer-text">
-              💡 Auto-generates wallet if not provided • Instant BNB settlement on BNB Chain
+              💡 Auto-generates wallet if not provided • Instant {network === 'Solana' ? 'SOL' : 'BNB'} settlement on {network === 'Solana' ? 'Solana' : 'BNB Chain'}
             </p>
           </form>
         </section>
@@ -227,8 +253,8 @@ function Create() {
 
               <div className="info-box">
                 <p>🔗 Share this link to monetize your content</p>
-                <p>💰 Payments settle to your wallet on BNB Chain</p>
-                <p>⚡ Instant payouts in BNB</p>
+                <p>💰 Payments settle to your wallet on {result.network || 'BNB Chain'}</p>
+                <p>⚡ Instant payouts in {result.currency || 'BNB'}</p>
               </div>
             </div>
           )}
@@ -250,8 +276,13 @@ function Create() {
                 <div className="preview-price-box">
                   <span className="preview-price-label">Price</span>
                   <span className="preview-price-value">
-                    {price || "0.00"} BNB
+                    {price || "0.00"} {network === 'Solana' ? 'SOL' : 'BNB'}
                   </span>
+                </div>
+
+                <div className="preview-url-box" style={{ marginBottom: 12 }}>
+                  <span className="preview-url-label">🌐 Network</span>
+                  <span className="preview-url-value">{network}</span>
                 </div>
 
                 <div className="preview-url-box">
@@ -262,13 +293,13 @@ function Create() {
                 </div>
 
                 <button className="preview-pay-btn" disabled>
-                  Pay with Crypto
+                  Pay with {network === 'Solana' ? 'Phantom' : 'Crypto'}
                 </button>
 
                 <div className="preview-features">
                   <span>⚡ Instant</span>
                   <span>🔐 Secure</span>
-                  <span>💰 BNB Native</span>
+                  <span>💰 {network === 'Solana' ? 'SOL Native' : 'BNB Native'}</span>
                 </div>
               </div>
 

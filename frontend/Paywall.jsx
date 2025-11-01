@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ethers } from 'ethers';
-import { switchToBNBChain, getCurrentNetwork } from './config';
+import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { switchToBNBChain, getCurrentNetwork, isPhantomInstalled, connectPhantom, CHAIN_CONFIG } from './config';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -46,79 +47,137 @@ function Paywall() {
         setLoading(false);
         return;
       }
-      
-      // Check if MetaMask or other wallet is installed
-      if (!window.ethereum) {
-        setError('Please install MetaMask or another Web3 wallet to make payments');
+
+      const network = paywallData?.network || 'BNB Chain';
+      const isSolana = network === 'Solana';
+
+      if (isSolana) {
+        // Handle Solana payment
+        if (!isPhantomInstalled()) {
+          setError('Please install Phantom wallet to make Solana payments');
+          setLoading(false);
+          return;
+        }
+
+        // Connect to Phantom
+        const publicKeyStr = await connectPhantom();
+        const fromPublicKey = new PublicKey(publicKeyStr);
+        const toPublicKey = new PublicKey(paywallData.walletAddress);
+
+        // Connect to Solana network
+        const connection = new Connection(CHAIN_CONFIG.SOLANA_MAINNET_RPC, 'confirmed');
+
+        // Check balance
+        const balance = await connection.getBalance(fromPublicKey);
+        const priceInLamports = Math.floor(priceNum * LAMPORTS_PER_SOL);
+
+        if (balance < priceInLamports) {
+          setError(`Insufficient SOL balance. Required: ${paywallData.price} SOL`);
+          setLoading(false);
+          return;
+        }
+
+        // Create transaction
+        const transaction = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: fromPublicKey,
+            toPubkey: toPublicKey,
+            lamports: priceInLamports,
+          })
+        );
+
+        // Get recent blockhash
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = fromPublicKey;
+
+        // Request signature from Phantom
+        const { signature } = await window.solana.signAndSendTransaction(transaction);
+        console.log('Transaction signature:', signature);
+        
+        const config = getCurrentNetwork('Solana');
+        console.log('View on explorer:', `${config.explorer}/tx/${signature}`);
+
+        // Wait for confirmation
+        await connection.confirmTransaction(signature, 'confirmed');
+        console.log('Transaction confirmed!');
+
+        setPaid(true);
         setLoading(false);
-        return;
-      }
+      } else {
+        // Handle BNB Chain payment
+        if (!window.ethereum) {
+          setError('Please install MetaMask or another Web3 wallet to make payments');
+          setLoading(false);
+          return;
+        }
 
-      // Switch to BNB Chain if needed
-      const networkSwitched = await switchToBNBChain();
-      if (!networkSwitched) {
-        setError('Please switch to BNB Smart Chain to continue');
+        // Switch to BNB Chain if needed
+        const networkSwitched = await switchToBNBChain();
+        if (!networkSwitched) {
+          setError('Please switch to BNB Smart Chain to continue');
+          setLoading(false);
+          return;
+        }
+
+        // Connect to wallet
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send('eth_requestAccounts', []);
+        const signer = await provider.getSigner();
+        
+        // Verify we're on the correct network
+        const providerNetwork = await provider.getNetwork();
+        const config = getCurrentNetwork('BNB Chain');
+        if (Number(providerNetwork.chainId) !== config.chainId) {
+          setError('Please switch to BNB Smart Chain in your wallet');
+          setLoading(false);
+          return;
+        }
+        
+        // Prepare payment
+        const priceInWei = ethers.parseEther(paywallData.price.toString()); // BNB native token
+        const toAddress = paywallData.walletAddress || '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+
+        // Validate address
+        if (!ethers.isAddress(toAddress)) {
+          setError('Invalid payment address');
+          setLoading(false);
+          return;
+        }
+
+        // Check user balance
+        const balance = await provider.getBalance(await signer.getAddress());
+        if (balance < priceInWei) {
+          setError(`Insufficient BNB balance. Required: ${paywallData.price} BNB`);
+          setLoading(false);
+          return;
+        }
+
+        // Send BNB transaction
+        console.log(`Sending ${paywallData.price} BNB to ${toAddress}`);
+
+        const tx = await signer.sendTransaction({
+          to: toAddress,
+          value: priceInWei,
+          gasLimit: 21000, // Standard gas limit for BNB transfer
+        });
+        
+        console.log('Transaction hash:', tx.hash);
+        console.log('View on explorer:', `${config.explorer}/tx/${tx.hash}`);
+        
+        // Wait for confirmation
+        await tx.wait();
+        console.log('Transaction confirmed!');
+        
+        setPaid(true);
         setLoading(false);
-        return;
       }
-
-      // Connect to wallet
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      await provider.send('eth_requestAccounts', []);
-      const signer = await provider.getSigner();
-      
-      // Verify we're on the correct network
-      const network = await provider.getNetwork();
-      const config = getCurrentNetwork();
-      if (Number(network.chainId) !== config.chainId) {
-        setError('Please switch to BNB Smart Chain in your wallet');
-        setLoading(false);
-        return;
-      }
-      
-      // Prepare payment
-      const priceInWei = ethers.parseEther(paywallData.price.toString()); // BNB native token
-      const toAddress = paywallData.walletAddress || '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
-
-      // Validate address
-      if (!ethers.isAddress(toAddress)) {
-        setError('Invalid payment address');
-        setLoading(false);
-        return;
-      }
-
-      // Check user balance
-      const balance = await provider.getBalance(await signer.getAddress());
-      if (balance < priceInWei) {
-        setError(`Insufficient BNB balance. Required: ${paywallData.price} BNB`);
-        setLoading(false);
-        return;
-      }
-
-      // Send BNB transaction
-      console.log(`Sending ${paywallData.price} BNB to ${toAddress}`);
-
-      const tx = await signer.sendTransaction({
-        to: toAddress,
-        value: priceInWei,
-        gasLimit: 21000, // Standard gas limit for BNB transfer
-      });
-      
-      console.log('Transaction hash:', tx.hash);
-      console.log('View on explorer:', `${config.explorer}/tx/${tx.hash}`);
-      
-      // Wait for confirmation
-      await tx.wait();
-      console.log('Transaction confirmed!');
-      
-      setPaid(true);
-      setLoading(false);
     } catch (err) {
       console.error('Payment error:', err);
-      if (err.code === 'ACTION_REJECTED') {
+      if (err.code === 'ACTION_REJECTED' || err.code === 4001) {
         setError('Transaction was rejected. Please try again.');
       } else if (err.code === 'INSUFFICIENT_FUNDS') {
-        setError('Insufficient BNB balance to complete payment.');
+        setError(`Insufficient ${paywallData?.network === 'Solana' ? 'SOL' : 'BNB'} balance to complete payment.`);
       } else {
         setError(err.message || 'Payment failed. Please try again.');
       }
@@ -212,22 +271,29 @@ function Paywall() {
           <div className="result-section">
             <div className="result-label">Price</div>
                 <div className="result-value" style={{ fontSize: '28px' }}>
-                  {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} BNB
+                  {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {paywallData?.currency || (paywallData?.network === 'Solana' ? 'SOL' : 'BNB')}
                 </div>
           </div>
+
+          {paywallData?.network && (
+            <div className="result-section">
+              <div className="result-label">Network</div>
+              <div className="result-value">{paywallData.network}</div>
+            </div>
+          )}
 
           <button
             onClick={handlePayment}
               disabled={loading}
             style={{ marginTop: '32px' }}
           >
-              {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Crypto')}
+              {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : (paywallData?.network === 'Solana' ? 'Pay with Phantom' : 'Pay with Crypto'))}
           </button>
 
           <div className="info-box" style={{ marginTop: '32px' }}>
-            <p>⚡ Instant settlement on BNB Chain</p>
+            <p>⚡ Instant settlement on {paywallData?.network || 'BNB Chain'}</p>
             <p>🔐 Secure Web3 payment</p>
-            <p>💰 Pay with BNB via MetaMask</p>
+            <p>💰 Pay with {paywallData?.network === 'Solana' ? 'SOL via Phantom' : 'BNB via MetaMask'}</p>
           </div>
 
           {paywallData?.walletAddress && (
@@ -245,9 +311,9 @@ function Paywall() {
           </p>
                  <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>
-                   X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} BNB<br/>
+                   X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {paywallData?.currency || (paywallData?.network === 'Solana' ? 'SOL' : 'BNB')}<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
-            X-Payment-Network: bnb-chain
+            X-Payment-Network: {paywallData?.network === 'Solana' ? 'solana' : 'bnb-chain'}
           </code>
         </div>
       </section>
@@ -258,4 +324,5 @@ function Paywall() {
 }
 
 export default Paywall;
+
 

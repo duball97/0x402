@@ -1,13 +1,26 @@
 import { supabase } from './supabase.js';
+import { Keypair, PublicKey } from '@solana/web3.js';
+import { ethers } from 'ethers';
 
 // Helper function to create a wallet
-function createWallet(passkey) {
-  return {
-    walletAddress: `0x${Math.random().toString(16).slice(2, 42)}`,
-    passkey,
-    network: "BNB Chain",
-    nonCustodial: true
-  };
+function createWallet(network = 'BNB Chain') {
+  if (network === 'Solana') {
+    // Generate a proper Solana keypair
+    const keypair = Keypair.generate();
+    const publicKey = keypair.publicKey.toBase58();
+    return {
+      walletAddress: publicKey,
+      network: network,
+      nonCustodial: true
+    };
+  } else {
+    // Generate Ethereum-style address for BNB Chain
+    return {
+      walletAddress: `0x${Math.random().toString(16).slice(2, 42)}`,
+      network: network,
+      nonCustodial: true
+    };
+  }
 }
 
 export default async function handler(req, res) {
@@ -28,7 +41,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { url, price, walletAddress, description, paywallId } = req.body;
+  const { url, price, walletAddress, description, paywallId, network: selectedNetwork } = req.body;
   
   // Validate paywallId
   if (!paywallId) {
@@ -54,11 +67,27 @@ export default async function handler(req, res) {
   // If no wallet provided, create a new one
   let wallet;
   if (!walletAddress) {
-    wallet = createWallet("demo-passkey");
+    wallet = createWallet(selectedNetwork);
   } else {
+    // Validate wallet address based on network
+    const network = selectedNetwork || 'BNB Chain';
+    if (network === 'Solana') {
+      try {
+        // Validate Solana address
+        new PublicKey(walletAddress);
+      } catch (err) {
+        return res.status(400).json({ error: "Invalid Solana wallet address" });
+      }
+    } else {
+      // Validate BNB Chain address (Ethereum format)
+      if (!ethers.isAddress(walletAddress)) {
+        return res.status(400).json({ error: "Invalid BNB Chain wallet address" });
+      }
+    }
+    
     wallet = {
       walletAddress: walletAddress,
-      network: "BNB Chain",
+      network: network,
       nonCustodial: true
     };
   }
@@ -78,7 +107,7 @@ export default async function handler(req, res) {
     url,
     description: description || null,
     price: parseFloat(price),
-    currency: "BNB",
+    currency: selectedNetwork === 'Solana' ? 'SOL' : 'BNB',
     status: "created",
     wallet_address: wallet.walletAddress,
     network: wallet.network,
@@ -101,7 +130,7 @@ export default async function handler(req, res) {
     paywall_id: id,
     paywall_link: `${baseDomain}/paywall/${id}`,
     price,
-    currency: "BNB",
+    currency: selectedNetwork === 'Solana' ? 'SOL' : 'BNB',
     status: "created",
     walletAddress: wallet.walletAddress,
     network: wallet.network,
