@@ -53,46 +53,53 @@ function Paywall() {
 
       if (isSolana) {
         // Handle Solana payment
+        console.log('Starting Solana payment...');
+        
         if (!isPhantomInstalled()) {
           setError('Please install Phantom wallet to make Solana payments. Get it at https://phantom.app/');
           setLoading(false);
           return;
         }
 
-        // Ensure Phantom is connected
+        console.log('Phantom is installed, connecting...');
+
+        // Connect to Phantom FIRST - this will open the wallet popup
         let publicKeyStr;
         try {
           publicKeyStr = await connectPhantom();
+          console.log('Connected to Phantom:', publicKeyStr);
         } catch (err) {
-          setError(err.message || 'Failed to connect to Phantom wallet');
+          console.error('Phantom connection error:', err);
+          setError(err.message || 'Failed to connect to Phantom wallet. Please try again.');
           setLoading(false);
           return;
         }
 
-        const fromPublicKey = new PublicKey(publicKeyStr);
-        const toPublicKey = new PublicKey(paywallData.walletAddress);
-
-        // Create a connection for balance checking and confirmation
-        // Use a public RPC endpoint
-        const connection = new Connection(CHAIN_CONFIG.SOLANA_MAINNET_RPC, 'confirmed');
+        // Validate addresses
+        let fromPublicKey, toPublicKey;
+        try {
+          fromPublicKey = new PublicKey(publicKeyStr);
+          toPublicKey = new PublicKey(paywallData.walletAddress);
+          console.log('Addresses validated:', { from: fromPublicKey.toString(), to: toPublicKey.toString() });
+        } catch (err) {
+          setError(`Invalid address: ${err.message}`);
+          setLoading(false);
+          return;
+        }
 
         // Calculate amount in lamports
         const priceInLamports = Math.floor(priceNum * LAMPORTS_PER_SOL);
+        console.log(`Amount: ${priceNum} SOL = ${priceInLamports} lamports`);
 
-        // Check balance (optional - Phantom will also check)
-        try {
-          const balance = await connection.getBalance(fromPublicKey);
-          if (balance < priceInLamports) {
-            setError(`Insufficient SOL balance. Required: ${paywallData.price} SOL. You have ${(balance / LAMPORTS_PER_SOL).toFixed(4)} SOL.`);
-            setLoading(false);
-            return;
-          }
-        } catch (err) {
-          console.warn('Could not check balance, continuing:', err.message);
-          // Continue - Phantom will handle balance check
-        }
+        // Create a connection for transaction creation (we'll skip balance check)
+        const connection = new Connection(CHAIN_CONFIG.SOLANA_MAINNET_RPC, 'confirmed');
+        
+        // Skip balance check - Phantom will handle it and show error if insufficient
+        // This avoids RPC rate limit issues blocking the payment flow
+        console.log('Skipping balance check - Phantom will handle it');
 
         // Create transaction
+        console.log('Creating transaction...');
         const transaction = new Transaction();
 
         // Add transfer instruction
@@ -105,22 +112,38 @@ function Paywall() {
         );
 
         // Get recent blockhash and set fee payer
+        console.log('Getting blockhash...');
+        let blockhash;
         try {
-          const { blockhash } = await connection.getLatestBlockhash('finalized');
-          transaction.recentBlockhash = blockhash;
+          const blockhashResult = await connection.getLatestBlockhash('finalized');
+          blockhash = blockhashResult.blockhash;
         } catch (err) {
-          // Fallback to confirmed
-          const { blockhash } = await connection.getLatestBlockhash('confirmed');
-          transaction.recentBlockhash = blockhash;
+          console.warn('Failed to get finalized blockhash, trying confirmed:', err.message);
+          try {
+            const blockhashResult = await connection.getLatestBlockhash('confirmed');
+            blockhash = blockhashResult.blockhash;
+          } catch (err2) {
+            console.error('Failed to get blockhash from both sources:', err2);
+            setError('Failed to connect to Solana network. Please try again.');
+            setLoading(false);
+            return;
+          }
         }
+        transaction.recentBlockhash = blockhash;
         transaction.feePayer = fromPublicKey;
 
+        console.log('Transaction prepared, requesting signature from Phantom...');
+        console.log('This should open Phantom wallet now...');
+
         // Request signature and send from Phantom
+        // THIS IS WHERE PHANTOM SHOULD POP UP
         let signature;
         try {
           // Phantom's signAndSendTransaction signs and sends the transaction
           // It returns the signature as a string or wrapped in an object
+          console.log('Calling window.solana.signAndSendTransaction...');
           const result = await window.solana.signAndSendTransaction(transaction);
+          console.log('Phantom returned:', result);
           
           // Phantom can return signature as string or { signature: string }
           if (typeof result === 'string') {

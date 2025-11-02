@@ -7,8 +7,10 @@ export const CHAIN_CONFIG = {
   BNB_RPC_URL: 'https://bsc-dataseed.binance.org/',
   BNB_TESTNET_RPC_URL: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   
-  // Solana Configuration
-  SOLANA_MAINNET_RPC: 'https://mainnet.helius-rpc.com/?api-key=89ad9e93-6e87-4b75-be27-dd2428ce64db',
+  // Solana Configuration - Uses environment variable with fallback
+  // For Vite frontend: Use VITE_SOLANA_RPC_URL in .env
+  // For backend: Use SOLANA_RPC_URL in .env
+  SOLANA_MAINNET_RPC: import.meta.env?.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
   SOLANA_DEVNET_RPC: 'https://api.devnet.solana.com',
   SOLANA_EXPLORER: 'https://solscan.io',
   SOLANA_DEVNET_EXPLORER: 'https://solscan.io?cluster=devnet',
