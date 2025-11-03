@@ -11,10 +11,20 @@ function App() {
 
       {/* Hero Section */}
       <section className="landing-hero" >
+        <video 
+          className="hero-background-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-background-overlay"></div>
         <div className="landing-hero-content">
           
 
-          <h1 className="landing-hero-title" style={{ marginTop: '50px' }}>
+          <h1 className="landing-hero-title" style={{ marginTop: '350px' }}>
             Monetize Your Content<br />
             <span className="gradient-text">With Crypto Paywalls</span>
           </h1>
