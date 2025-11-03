@@ -10,9 +10,12 @@ function Header({ transparent = false }) {
       <div className="nav-links">
         <Link to="/create" className="nav-link">Create Paywall</Link>
         <Link to="/marketplace" className="nav-link">Marketplace</Link>
-        <a href="https://x.com/lockpayx402?s=21" target="_blank" rel="noopener noreferrer" className="nav-link">Community</a>
+        <a href="https://x.com/lockpayx402?s=21" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-icon" aria-label="X (Twitter)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"/>
+          </svg>
+        </a>
         <Link to="/docs" className="nav-link">Documentation</Link>
-        <a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer" className="nav-link nav-link-highlight">Buy $LOCK</a>
       </div>
     </nav>
   );

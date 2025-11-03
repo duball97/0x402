@@ -128,6 +128,24 @@ nav h1 {
   display: none;
 }
 
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+}
+
+.nav-link-icon svg {
+  transition: all 0.2s;
+}
+
+.nav-link-icon:hover svg {
+  color: #01c3f3;
+  transform: scale(1.1);
+}
+
 .nav-subtitle {
   font-size: 13px;
   color: #888;
