@@ -35,11 +35,6 @@ function App() {
 
           <div className="landing-hero-stats">
             <div className="stat-item">
-              <div className="stat-value">$LOCK</div>
-              <div className="stat-label">Native Token</div>
-            </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
               <div className="stat-value">2-5s</div>
               <div className="stat-label">Settlement</div>
             </div>

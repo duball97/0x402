@@ -495,7 +495,7 @@ const address = await signer.getAddress();`}</code></pre>
               
               <div className="faq-item">
                 <h4>Can I accept other currencies?</h4>
-                <p>Currently we support native BNB payments on BNB Chain. Fast, secure, and low-cost transactions powered by the $LOCK ecosystem. Additional token support may be added based on community demand.</p>
+                <p>Currently we support native BNB payments on BNB Chain. Fast, secure, and low-cost transactions. Additional token support may be added based on community demand.</p>
               </div>
               
               <div className="faq-item">
