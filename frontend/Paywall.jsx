@@ -200,6 +200,26 @@ function Paywall() {
           console.log('Transaction submitted but confirmation pending. Access granted.');
         }
 
+        // Record purchase
+        try {
+          await fetch('/api/record-purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paywallId: id,
+              buyerWalletAddress: publicKeyStr,
+              transactionHash: signature,
+              network: 'Solana',
+              amountPaid: priceNum,
+              currency: 'SOL'
+            })
+          });
+          console.log('Purchase recorded successfully');
+        } catch (err) {
+          console.warn('Failed to record purchase (non-critical):', err);
+          // Don't block the user if purchase recording fails
+        }
+
         setPaid(true);
         setLoading(false);
       } else {
@@ -266,6 +286,29 @@ function Paywall() {
         // Wait for confirmation
         await tx.wait();
         console.log('Transaction confirmed!');
+
+        // Get buyer address for recording purchase
+        const buyerAddress = await signer.getAddress();
+        
+        // Record purchase
+        try {
+          await fetch('/api/record-purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paywallId: id,
+              buyerWalletAddress: buyerAddress,
+              transactionHash: tx.hash,
+              network: 'BNB Chain',
+              amountPaid: paywallData.price,
+              currency: 'BNB'
+            })
+          });
+          console.log('Purchase recorded successfully');
+        } catch (err) {
+          console.warn('Failed to record purchase (non-critical):', err);
+          // Don't block the user if purchase recording fails
+        }
         
         setPaid(true);
         setLoading(false);

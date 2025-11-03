@@ -60,17 +60,64 @@ function Create() {
         }),
       });
 
+      // Check if response is OK
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error occurred' }));
+        console.error('API error response:', { status: res.status, error: errorData });
+        throw new Error(errorData.error || `Server error: ${res.status}`);
+      }
+
       const data = await res.json();
+      
+      // Log the response for debugging
+      console.log('API response received:', { 
+        hasPaywallLink: !!data?.paywall_link, 
+        paywallId: data?.paywall_id,
+        network: data?.network 
+      });
+      
+      // Validate that we have the required data
+      if (!data || !data.paywall_link) {
+        console.error('Invalid API response - missing paywall_link:', data);
+        // If we have a paywall_id, construct a fallback link
+        if (data?.paywall_id) {
+          const fallbackLink = `${window.location.origin}/paywall/${data.paywall_id}`;
+          console.warn('Using fallback link:', fallbackLink);
+          setResult({ ...data, paywall_link: fallbackLink });
+          return;
+        }
+        throw new Error('Invalid response from server. Paywall link not found.');
+      }
+
       setResult(data);
     } catch (err) {
-      setError(err.message);
+      console.error('Error creating paywall:', err);
+      setError(err.message || 'Failed to create paywall. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const copyLink = (link) => {
-    navigator.clipboard.writeText(link);
+  const copyLink = async (link) => {
+    try {
+      await navigator.clipboard.writeText(link);
+      // Optional: Show a toast notification
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = link;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {
+        console.error('Fallback copy failed:', e);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
@@ -225,19 +272,38 @@ function Create() {
               <div className="success-icon">✓</div>
               <h3>Paywall Created!</h3>
 
-              <div className="result-section">
-                <div className="result-label">Paywall Link</div>
-                <div className="link-box">
-                  <code>{result.paywall_link}</code>
-                  <button
-                    type="button"
-                    onClick={() => copyLink(result.paywall_link)}
-                    className="copy-btn"
-                  >
-                    Copy
-                  </button>
+              {result.paywall_link ? (
+                <div className="result-section">
+                  <div className="result-label">Paywall Link</div>
+                  <div className="link-box">
+                    <code>{result.paywall_link}</code>
+                    <button
+                      type="button"
+                      onClick={() => copyLink(result.paywall_link)}
+                      className="copy-btn"
+                    >
+                      Copy
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="result-section">
+                  <div className="result-label">Paywall Link</div>
+                  <div className="link-box">
+                    <code style={{ color: '#ff6b6b' }}>Link not available. Paywall ID: {result.paywall_id || paywallId}</code>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const fallbackLink = `${window.location.origin}/paywall/${result.paywall_id || paywallId}`;
+                        copyLink(fallbackLink);
+                      }}
+                      className="copy-btn"
+                    >
+                      Copy Fallback
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="result-section">
                 <div className="result-label">Price</div>

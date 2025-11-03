@@ -94,13 +94,30 @@ export default async function handler(req, res) {
 
   // Determine base domain for generated links
   const isProd = (process.env.VERCEL_ENV === 'production') || (process.env.NODE_ENV === 'production');
-  const rawBase = process.env.PUBLIC_SITE_URL ||
+  let rawBase = process.env.PUBLIC_SITE_URL ||
     process.env.NEXT_PUBLIC_BASE_URL ||
     process.env.BASE_DOMAIN ||
     (isProd ? 'https://lockpay.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
 
+  // Fallback: try to get from request headers if available
+  if (!rawBase || rawBase === 'undefined' || rawBase === 'null') {
+    const host = req.headers?.host || req.headers?.['x-forwarded-host'];
+    const protocol = req.headers?.['x-forwarded-proto'] || (req.headers?.referer?.startsWith('https') ? 'https' : 'http');
+    if (host) {
+      rawBase = `${protocol}://${host}`;
+    } else {
+      rawBase = 'https://lockpay.io'; // Ultimate fallback
+    }
+  }
+
   // Normalize (remove trailing slash)
   const baseDomain = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;
+  
+  // Ensure baseDomain is valid
+  if (!baseDomain || baseDomain.includes('undefined') || baseDomain.includes('null')) {
+    console.error('Invalid baseDomain detected:', baseDomain);
+    return res.status(500).json({ error: 'Server configuration error. Please contact support.' });
+  }
 
   const paywallData = {
     id,
@@ -126,14 +143,33 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to create paywall', details: error.message });
   }
 
-  res.status(200).json({
+  // Ensure we have valid data before responding
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    console.error('Supabase insert returned no data');
+    return res.status(500).json({ error: 'Failed to create paywall. Please try again.' });
+  }
+
+  const paywallLink = `${baseDomain}/paywall/${id}`;
+  
+  // Validate the link was constructed correctly
+  if (!paywallLink || !paywallLink.includes('/paywall/')) {
+    console.error('Invalid paywall link constructed:', paywallLink);
+    return res.status(500).json({ error: 'Server configuration error. Please contact support.' });
+  }
+
+  const responseData = {
     paywall_id: id,
-    paywall_link: `${baseDomain}/paywall/${id}`,
+    paywall_link: paywallLink,
     price,
     currency: selectedNetwork === 'Solana' ? 'SOL' : 'BNB',
     status: "created",
     walletAddress: wallet.walletAddress,
     network: wallet.network,
     nonCustodial: wallet.nonCustodial
-  });
+  };
+
+  // Log for debugging (remove in production if needed)
+  console.log('Paywall created successfully:', { id, paywall_link: paywallLink, network: wallet.network });
+
+  res.status(200).json(responseData);
 }

@@ -6,6 +6,7 @@ import Create from './Create';
 import Paywall from './Paywall';
 import Marketplace from './Marketplace';
 import Docs from './Docs';
+import MyPurchases from './MyPurchases';
 import './styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/paywall/:id" element={<Paywall />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/docs" element={<Docs />} />
+        <Route path="/my-purchases" element={<MyPurchases />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
