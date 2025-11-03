@@ -152,7 +152,7 @@ function Marketplace() {
             <ul>
               <li><a href="/marketplace">Marketplace</a></li>
               <li><a href="/community">Join Community</a></li>
-              <li><a href="https://x.com/lockpayx402?s=21" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
+              <li><a href="https://x.com/LockPay402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
               <li><a href="/docs">Documentation</a></li>
             </ul>
           </div>
