@@ -1,5 +1,5 @@
 {
-  "name": "payx402",
+  "name": "lockpay",
   "version": "1.0.0",
   "description": "Turn any link into instant crypto revenue. Crypto-native paywalls powered by Coinbase CDP & x402 protocol.",
   "main": "api/paywall.js",
@@ -33,6 +33,6 @@
     "nodemon": "^3.0.1",
     "vite": "^7.1.12"
   },
-  "author": "Payx402",
+  "author": "LockPay",
   "license": "MIT"
 }

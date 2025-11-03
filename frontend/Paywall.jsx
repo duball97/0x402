@@ -329,15 +329,15 @@ function Paywall() {
                   display: 'block',
                   textAlign: 'center',
                   padding: '14px 28px',
-                  background: '#4a1a3d',
+                  background: 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)',
                   color: 'white',
                   borderRadius: '8px',
                   textDecoration: 'none',
                   fontWeight: '500',
                   transition: 'background 0.2s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = '#5a2a4d'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#4a1a3d'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0198d8 0%, #01c3f3 100%)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)'}
               >
                 Access Content →
               </a>

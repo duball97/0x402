@@ -1,11 +1,11 @@
-# Payx402
+# LockPay
 
 > Crypto-native paywalls powered by BNB Chain and the HTTP 402 protocol
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![BNB Chain](https://img.shields.io/badge/Chain-BNB-yellow.svg)](https://www.bnbchain.org/)
 
-Payx402 is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, Payx402 makes payments programmable for AI agents and automated systems.
+LockPay is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, LockPay makes payments programmable for AI agents and automated systems.
 
 ## ✨ Features
 
@@ -45,8 +45,8 @@ Payx402 is a decentralized paywall platform that enables creators, developers, a
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/payx402.git
-cd payx402
+git clone https://github.com/yourusername/lockpay.git
+cd lockpay
 ```
 
 2. **Install dependencies**
@@ -139,7 +139,7 @@ Visit `http://localhost:3000` to see your app running!
 
 ### HTTP 402 Protocol
 
-Payx402 implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
+LockPay implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
 
 ```http
 HTTP/1.1 402 Payment Required
@@ -155,7 +155,7 @@ This enables AI agents and automated systems to:
 
 ## 🎨 Design Philosophy
 
-Payx402 follows modern web design principles inspired by Vercel:
+LockPay follows modern web design principles inspired by Vercel:
 
 - **Minimalism** - Clean, uncluttered interfaces
 - **Clarity** - Clear information hierarchy
@@ -211,7 +211,7 @@ GET /api/x402?price=0.01
 - [ ] API key management
 
 ### Phase 3: Advanced Features
-- [ ] $PAYX402 token utilities
+- [ ] $LOCK token utilities
 - [ ] Staking rewards
 - [ ] Governance system
 - [ ] White-label solutions
@@ -268,10 +268,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Website:** [payx402.io](https://payx402.io)
-- **Documentation:** [payx402.io/docs](https://payx402.io/docs)
-- **Twitter/X:** [@payx402](https://x.com/payx402)
-- **GitHub:** [github.com/payx402](https://github.com/payx402)
+- **Website:** [lockpay.io](https://lockpay.io)
+- **Documentation:** [lockpay.io/docs](https://lockpay.io/docs)
+- **Twitter/X:** [@lockpay](https://x.com/lockpayx402?s=21)
+- **GitHub:** [github.com/lockpay](https://github.com/lockpay)
 
 ## 🙏 Acknowledgments
 
@@ -282,9 +282,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Discord:** [Join our community](https://discord.gg/payx402)
-- **Twitter:** [@payx402](https://x.com/payx402)
-- **Email:** support@payx402.io
+- **Discord:** [Join our community](https://discord.gg/lockpay)
+- **Twitter:** [@lockpay](https://x.com/lockpayx402?s=21)
+- **Email:** support@lockpay.io
 
 ---
 

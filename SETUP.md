@@ -1,6 +1,6 @@
-# Payx402 Setup Guide 🚀
+# LockPay Setup Guide 🚀
 
-Turn any link into instant crypto revenue with Payx402!
+Turn any link into instant crypto revenue with LockPay!
 
 ## TL;DR - Quickest Start
 
@@ -96,7 +96,7 @@ curl http://localhost:8080/
 You should see:
 ```json
 {
-  "message": "Payx402 API is live",
+  "message": "LockPay API is live",
   "version": "1.0.0",
   "powered_by": "@CoinbaseDev + x402"
 }

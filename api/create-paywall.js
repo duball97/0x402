@@ -97,7 +97,7 @@ export default async function handler(req, res) {
   const rawBase = process.env.PUBLIC_SITE_URL ||
     process.env.NEXT_PUBLIC_BASE_URL ||
     process.env.BASE_DOMAIN ||
-    (isProd ? 'https://payx402.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
+    (isProd ? 'https://lockpay.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
 
   // Normalize (remove trailing slash)
   const baseDomain = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;

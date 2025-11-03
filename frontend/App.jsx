@@ -35,7 +35,7 @@ function App() {
 
           <div className="landing-hero-stats">
             <div className="stat-item">
-              <div className="stat-value">$PX402</div>
+              <div className="stat-value">$LOCK</div>
               <div className="stat-label">Native Token</div>
             </div>
             <div className="stat-divider"></div>
@@ -60,7 +60,7 @@ function App() {
       {/* Features Section */}
       <section className="landing-features">
         <div className="section-header">
-          <h2 className="section-title">Why Payx402</h2>
+          <h2 className="section-title">Why LockPay</h2>
           <p className="section-subtitle">
             Built for creators, developers, and businesses who want full control
           </p>
@@ -82,7 +82,7 @@ function App() {
           <div className="feature-card">
             <h3 className="feature-title">Non-Custodial Control</h3>
             <p className="feature-description">
-              You own your wallet. Payx402 never holds your funds. Payments flow directly 
+              You own your wallet. LockPay never holds your funds. Payments flow directly 
               from buyer to seller on-chain with full transparency and auditability.
             </p>
             <div className="feature-metric">
