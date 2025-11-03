@@ -20,7 +20,7 @@ function App() {
           </h1>
 
           <p className="landing-hero-subtitle">
-            Accept BNB payments instantly. No platform fees. Non-custodial. Built on the HTTP 402 protocol 
+            Accept crypto payments instantly. No platform fees. Non-custodial. Built on the HTTP 402 protocol 
             to enable programmable payments for AI agents and automated systems.
           </p>
 
