@@ -2075,7 +2075,7 @@ footer {
 }
 
 .landing-hero-title {
-  font-size: clamp(48px, 8vw, 84px);
+  font-size: clamp(42px, 6.5vw, 70px);
   font-weight: 800;
   line-height: 1.1;
   margin: 0 0 32px 0;
@@ -2772,10 +2772,7 @@ footer {
   margin: 0 0 20px 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  text-align: center;
 }
 
 .cta-description {
@@ -2924,13 +2921,6 @@ footer {
 
   .cta-title {
     font-size: clamp(32px, 4vw, 47px);
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .cta-title .section-icon {
-    width: 48px;
-    height: 48px;
   }
 
   .cta-description {

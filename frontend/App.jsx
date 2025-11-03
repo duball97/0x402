@@ -465,17 +465,6 @@ function App() {
       <section className="landing-cta">
         <div className="cta-content">
           <h2 className="cta-title">
-            <svg className="section-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 11H5C3.895 11 3 11.895 3 13V20C3 21.105 3.895 22 5 22H19C20.105 22 21 21.105 21 20V13C21 11.895 20.105 11 19 11Z" stroke="url(#lockGradient3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M7 11V7C7 3.686 9.686 1 13 1C16.314 1 19 3.686 19 7V11" stroke="url(#lockGradient3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 16C12.552 16 13 15.552 13 15C13 14.448 12.552 14 12 14C11.448 14 11 14.448 11 15C11 15.552 11.448 16 12 16Z" fill="url(#lockGradient3)"/>
-              <defs>
-                <linearGradient id="lockGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#01c3f3" />
-                  <stop offset="100%" stopColor="#0178c8" />
-                </linearGradient>
-              </defs>
-            </svg>
             Ready to Get Started?
           </h2>
           <p className="cta-description">
