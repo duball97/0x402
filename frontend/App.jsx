@@ -75,7 +75,7 @@ function App() {
               <div className="paywall-preview-content">
                 <div className="paywall-preview-title">Premium Content</div>
                 <div className="paywall-preview-price">0.01 SOL</div>
-                <div className="paywall-preview-button">Pay with Phantom</div>
+                <div className="paywall-preview-button">Pay with wallet</div>
                 <div className="paywall-preview-features">
                   <div className="paywall-preview-feature">🔒 Secure Payment</div>
                   <div className="paywall-preview-feature">⚡ Instant Access</div>

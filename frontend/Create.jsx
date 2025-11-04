@@ -359,7 +359,7 @@ function Create() {
                 </div>
 
                 <button className="preview-pay-btn" disabled>
-                  Pay with {network === 'Solana' ? 'Phantom' : 'Crypto'}
+                  Pay with {network === 'Solana' ? 'Crypto' : 'Crypto'}
                 </button>
 
                 <div className="preview-features">
