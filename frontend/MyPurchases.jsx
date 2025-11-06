@@ -105,76 +105,93 @@ function MyPurchases() {
     <>
       <Header />
       
-      <div className="main-layout">
-        <section className="hero">
-          <div className="hero-content">
-            <h2>My Purchases</h2>
-            <p className="hero-description">View all the paywalls you've purchased</p>
-          </div>
+      <main className="my-purchases-page">
+        <div className="my-purchases-shell">
+          <header className="my-purchases-hero">
+            <span className="my-purchases-eyebrow">Your Library</span>
+            <h1>My Purchases</h1>
+            <p className="my-purchases-description">
+              View all the paywalls you've purchased
+            </p>
+          </header>
 
           {!walletAddress ? (
-            <div className="wallet-connect-section">
-              <p style={{ marginBottom: '24px', color: '#aaaaaa' }}>
-                Connect your wallet to view your purchases
-              </p>
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <section className="my-purchases-panel wallet-connect-panel">
+              <div className="wallet-connect-copy">
+                <h3>Connect a wallet</h3>
+                <p>
+                  Choose the network you used to unlock content. We&apos;ll surface every purchase tied to that address.
+                </p>
+              </div>
+
+              <div className="wallet-connect-options">
                 <button
                   onClick={() => connectWallet('solana')}
                   disabled={loading}
-                  className="submit-btn"
-                  style={{ minWidth: '200px' }}
+                  className="wallet-option"
                 >
-                  {loading ? 'Connecting...' : 'Connect Phantom (Solana)'}
+                  <div className="wallet-option-main">
+                    <span className="wallet-option-label">Phantom</span>
+                    <span className="wallet-option-sub">Solana</span>
+                  </div>
+                  <span className="wallet-option-action">
+                    {loading ? 'Connecting...' : 'Connect'}
+                  </span>
                 </button>
                 <button
                   onClick={() => connectWallet('bnb')}
                   disabled={loading}
-                  className="submit-btn"
-                  style={{ minWidth: '200px' }}
+                  className="wallet-option"
                 >
-                  {loading ? 'Connecting...' : 'Connect MetaMask (BNB)'}
-                </button>
-              </div>
-              {error && (
-                <div className="validation-error" style={{ marginTop: '16px' }}>
-                  {error}
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="purchases-section">
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                marginBottom: '24px',
-                flexWrap: 'wrap',
-                gap: '16px'
-              }}>
-                <div>
-                  <p style={{ color: '#aaaaaa', margin: 0 }}>
-                    Connected: <code style={{ color: '#01c3f3' }}>{walletAddress}</code>
-                  </p>
-                  <p style={{ color: '#888', margin: '4px 0 0 0', fontSize: '14px' }}>
-                    Network: {walletType === 'solana' ? 'Solana' : 'BNB Chain'}
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    setWalletAddress(null);
-                    setWalletType(null);
-                    setPurchases([]);
-                  }}
-                  className="cta-secondary"
-                  style={{ padding: '8px 16px', fontSize: '14px' }}
-                >
-                  Disconnect
+                  <div className="wallet-option-main">
+                    <span className="wallet-option-label">MetaMask</span>
+                    <span className="wallet-option-sub">BNB Chain</span>
+                  </div>
+                  <span className="wallet-option-action">
+                    {loading ? 'Connecting...' : 'Connect'}
+                  </span>
                 </button>
               </div>
 
+              <p className="wallet-connect-hint">
+                You can connect either network at any time. We only read your public wallet address.
+              </p>
+
+              {error && (
+                <div className="validation-error wallet-connect-error">
+                  {error}
+                </div>
+              )}
+            </section>
+          ) : (
+            <section className="my-purchases-panel purchases-panel">
+              <div className="wallet-summary">
+                <div className="wallet-summary-info">
+                  <span className="wallet-summary-label">Connected wallet</span>
+                  <p className="wallet-summary-address">
+                    <code>{walletAddress}</code>
+                  </p>
+                </div>
+                <div className="wallet-summary-actions">
+                  <span className="wallet-network-pill">
+                    {walletType === 'solana' ? 'Solana' : 'BNB Chain'}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setWalletAddress(null);
+                      setWalletType(null);
+                      setPurchases([]);
+                    }}
+                    className="cta-secondary wallet-disconnect-btn"
+                  >
+                    Disconnect
+                  </button>
+                </div>
+              </div>
+
               {fetching ? (
-                <div style={{ textAlign: 'center', padding: '40px' }}>
-                  <div className="loading-spinner" style={{ marginBottom: '16px' }}></div>
+                <div className="purchases-loading">
+                  <div className="loading-spinner"></div>
                   <p className="loading-text">Loading purchases...</p>
                 </div>
               ) : error ? (
@@ -182,18 +199,10 @@ function MyPurchases() {
                   {error}
                 </div>
               ) : purchases.length === 0 ? (
-                <div style={{ 
-                  textAlign: 'center', 
-                  padding: '60px 20px',
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255, 255, 255, 0.05)'
-                }}>
-                  <p style={{ color: '#aaaaaa', fontSize: '18px', margin: 0 }}>
-                    No purchases found
-                  </p>
-                  <p style={{ color: '#888', fontSize: '14px', margin: '8px 0 0 0' }}>
-                    Purchases made with this wallet will appear here
+                <div className="purchases-empty">
+                  <h4>No purchases yet</h4>
+                  <p>
+                    Purchases made with this wallet will appear here. Head to the marketplace to discover new paywalls.
                   </p>
                 </div>
               ) : (
@@ -201,63 +210,46 @@ function MyPurchases() {
                   {purchases.map((purchase) => (
                     <div key={purchase.id} className="purchase-card">
                       <div className="purchase-header">
-                        <div>
-                          <h3 style={{ margin: '0 0 8px 0', color: '#ffffff' }}>
+                        <div className="purchase-heading">
+                          <h3 className="purchase-title">
                             {purchase.paywall?.description || `Paywall ${purchase.paywallId}`}
                           </h3>
-                          <p style={{ margin: 0, color: '#aaaaaa', fontSize: '14px' }}>
+                          <p className="purchase-date">
                             Purchased {formatDate(purchase.purchasedAt)}
                           </p>
                         </div>
-                        <div style={{ textAlign: 'right' }}>
-                          <div style={{ 
-                            fontSize: '20px', 
-                            fontWeight: '700', 
-                            color: '#01c3f3',
-                            marginBottom: '4px'
-                          }}>
+                        <div className="purchase-meta">
+                          <span className="purchase-amount">
                             {purchase.amountPaid} {purchase.currency}
-                          </div>
-                          <div style={{ 
-                            fontSize: '12px', 
-                            color: '#888',
-                            textTransform: 'uppercase'
-                          }}>
-                            {purchase.network}
-                          </div>
+                          </span>
+                          <span className="purchase-network">{purchase.network}</span>
                         </div>
                       </div>
 
                       {purchase.paywall && (
-                        <div style={{ 
-                          marginTop: '16px',
-                          padding: '12px',
-                          background: 'rgba(1, 195, 243, 0.05)',
-                          borderRadius: '8px',
-                          border: '1px solid rgba(1, 195, 243, 0.1)'
-                        }}>
-                          <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#aaaaaa' }}>
-                            <strong style={{ color: '#ffffff' }}>Content URL:</strong>{' '}
-                            <a 
-                              href={purchase.paywall.url} 
-                              target="_blank" 
+                        <div className="purchase-body">
+                          <p className="purchase-detail">
+                            <span className="purchase-label">Content URL</span>
+                            <a
+                              href={purchase.paywall.url}
+                              target="_blank"
                               rel="noopener noreferrer"
-                              style={{ color: '#01c3f3', textDecoration: 'none' }}
+                              className="purchase-link"
                             >
                               {purchase.paywall.url}
                             </a>
                           </p>
-                          <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#aaaaaa' }}>
-                            <strong style={{ color: '#ffffff' }}>Paywall ID:</strong>{' '}
-                            <code style={{ color: '#01c3f3' }}>{purchase.paywallId}</code>
+                          <p className="purchase-detail">
+                            <span className="purchase-label">Paywall ID</span>
+                            <code className="purchase-code">{purchase.paywallId}</code>
                           </p>
-                          <p style={{ margin: 0, fontSize: '14px', color: '#aaaaaa' }}>
-                            <strong style={{ color: '#ffffff' }}>Transaction:</strong>{' '}
-                            <a 
+                          <p className="purchase-detail">
+                            <span className="purchase-label">Transaction</span>
+                            <a
                               href={getExplorerUrl(purchase.transactionHash, purchase.network)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{ color: '#01c3f3', textDecoration: 'none' }}
+                              className="purchase-link"
                             >
                               {purchase.transactionHash.slice(0, 8)}...{purchase.transactionHash.slice(-8)}
                             </a>
@@ -268,10 +260,10 @@ function MyPurchases() {
                   ))}
                 </div>
               )}
-            </div>
+            </section>
           )}
-        </section>
-      </div>
+        </div>
+      </main>
 
       <Footer />
     </>
