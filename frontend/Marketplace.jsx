@@ -126,7 +126,7 @@ function Marketplace() {
       <footer>
         <div className="footer-content">
           <div className="footer-section">
-            <h4>⚡ LockPay</h4>
+            <h4>⚡ Vaultx402</h4>
             <p>Crypto-native paywalls powered by Coinbase CDP and the x402 protocol</p>
           </div>
           <div className="footer-section">
@@ -152,13 +152,13 @@ function Marketplace() {
             <ul>
               <li><a href="/marketplace">Marketplace</a></li>
               <li><a href="/community">Join Community</a></li>
-              <li><a href="https://x.com/LockPay402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
+              <li><a href="https://x.com/Vaultx402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
               <li><a href="/docs">Documentation</a></li>
             </ul>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2025 LockPay. MIT License.</p>
+          <p>&copy; 2025 Vaultx402. MIT License.</p>
         </div>
       </footer>
     </>

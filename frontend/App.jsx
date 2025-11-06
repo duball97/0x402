@@ -86,7 +86,7 @@ function App() {
           <div className="showcase-content">
             <h2 className="showcase-title">Simple, Secure, Instant</h2>
             <p className="showcase-description">
-              LockPay makes monetizing digital content effortless. Create a paywall in seconds, 
+              Vaultx402 makes monetizing digital content effortless. Create a paywall in seconds, 
               share a single link, and receive payments directly to your wallet. No middlemen, 
               no platform fees—just pure, decentralized commerce.
             </p>
@@ -147,7 +147,7 @@ function App() {
                 </linearGradient>
               </defs>
             </svg>
-            Why LockPay
+            Why Vaultx402
           </h2>
           <p className="section-subtitle">
             Built for creators, developers, and businesses who want full control
@@ -194,7 +194,7 @@ function App() {
             </div>
             <h3 className="feature-title">Non-Custodial Control</h3>
             <p className="feature-description">
-              You own your wallet. LockPay never holds your funds. Payments flow directly 
+              You own your wallet. Vaultx402 never holds your funds. Payments flow directly 
               from buyer to seller on-chain with full transparency and auditability.
             </p>
             <div className="feature-metric">
@@ -307,7 +307,7 @@ function App() {
           <div className="how-it-works-header">
             <h2 className="how-it-works-title">How It Works</h2>
             <p className="how-it-works-description">
-              Get started with LockPay in three simple steps. No complex setup, no lengthy integrations—just 
+              Get started with Vaultx402 in three simple steps. No complex setup, no lengthy integrations—just 
               create, share, and get paid.
             </p>
           </div>

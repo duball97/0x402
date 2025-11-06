@@ -1,6 +1,6 @@
-# LockPay Setup Guide 🚀
+# Vaultx402 Setup Guide 🚀
 
-Turn any link into instant crypto revenue with LockPay!
+Turn any link into instant crypto revenue with Vaultx402!
 
 ## TL;DR - Quickest Start
 
@@ -96,7 +96,7 @@ curl http://localhost:8080/
 You should see:
 ```json
 {
-  "message": "LockPay API is live",
+  "message": "Vaultx402 API is live",
   "version": "1.0.0",
   "powered_by": "@CoinbaseDev + x402"
 }

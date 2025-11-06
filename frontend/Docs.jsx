@@ -11,7 +11,7 @@ function Docs() {
         <div className="docs-hero">
           <h1>Documentation</h1>
           <p className="docs-subtitle">
-            Everything you need to build, deploy, and monetize with LockPay
+            Everything you need to build, deploy, and monetize with Vaultx402
           </p>
         </div>
 
@@ -40,13 +40,13 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              LockPay is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on BNB Chain with MetaMask integration, LockPay brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              Vaultx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on BNB Chain with MetaMask integration, Vaultx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
             </p>
             <div className="info-card">
               <div className="info-card-icon">💡</div>
               <div>
-                <strong>What makes LockPay unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, LockPay enables instant, permissionless payments using native BNB on BNB Chain. No middlemen, no platform fees, no accounts needed.</p>
+                <strong>What makes Vaultx402 unique?</strong>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, Vaultx402 enables instant, permissionless payments using native BNB on BNB Chain. No middlemen, no platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -55,7 +55,7 @@ function Docs() {
           <section id="http-402" className="docs-section">
             <h2>HTTP 402 Protocol</h2>
             <p>
-              The HTTP 402 status code was reserved in 1997 for future use as "Payment Required" but remained largely unimplemented for decades. LockPay brings this protocol to life for the blockchain era.
+              The HTTP 402 status code was reserved in 1997 for future use as "Payment Required" but remained largely unimplemented for decades. Vaultx402 brings this protocol to life for the blockchain era.
             </p>
             
             <h3>Protocol Specification</h3>
@@ -139,7 +139,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
           {/* How It Works */}
           <section id="how-it-works" className="docs-section">
             <h2>How It Works</h2>
-            <p>LockPay uses a simple but powerful architecture:</p>
+            <p>Vaultx402 uses a simple but powerful architecture:</p>
             
             <div className="architecture-diagram">
               <div className="arch-step">
@@ -198,7 +198,7 @@ await signer.sendTransaction({
               
               <div className="feature-detail">
                 <h3>🔐 Non-Custodial Architecture</h3>
-                <p>LockPay <strong>never</strong> holds your funds. Payments go directly from payer to your wallet address. You retain full custody and control of your earnings at all times.</p>
+                <p>Vaultx402 <strong>never</strong> holds your funds. Payments go directly from payer to your wallet address. You retain full custody and control of your earnings at all times.</p>
               </div>
               
               <div className="feature-detail">
@@ -356,7 +356,7 @@ const address = await signer.getAddress();`}</code></pre>
               </div>
               <pre><code>{`{
   "paywall_id": "abc123",
-  "paywall_link": "https://lockpay.io/paywall/abc123",
+  "paywall_link": "https://vaultx402.io/paywall/abc123",
   "price": "0.01",
   "currency": "BNB",
   "status": "created",
@@ -396,7 +396,7 @@ const address = await signer.getAddress();`}</code></pre>
             <div className="security-grid">
               <div className="security-item">
                 <h4>🔐 Non-Custodial</h4>
-                <p>LockPay never holds or accesses your funds. All payments go directly to your wallet address.</p>
+                <p>Vaultx402 never holds or accesses your funds. All payments go directly to your wallet address.</p>
               </div>
               
               <div className="security-item">
@@ -475,12 +475,12 @@ const address = await signer.getAddress();`}</code></pre>
             <div className="faq-list">
               <div className="faq-item">
                 <h4>What are the fees?</h4>
-                <p>LockPay charges <strong>0% platform fees</strong>. The only costs are BNB Chain gas fees (typically $0.001-$0.01 per transaction).</p>
+                <p>Vaultx402 charges <strong>0% platform fees</strong>. The only costs are BNB Chain gas fees (typically $0.001-$0.01 per transaction).</p>
               </div>
               
               <div className="faq-item">
                 <h4>Do I need an account?</h4>
-                <p>No. LockPay is completely permissionless. Just provide a wallet address and start earning.</p>
+                <p>No. Vaultx402 is completely permissionless. Just provide a wallet address and start earning.</p>
               </div>
               
               <div className="faq-item">
@@ -500,7 +500,7 @@ const address = await signer.getAddress();`}</code></pre>
               
               <div className="faq-item">
                 <h4>Is this production-ready?</h4>
-                <p>Yes! LockPay is live on BNB Chain mainnet and ready for production use.</p>
+                <p>Yes! Vaultx402 is live on BNB Chain mainnet and ready for production use.</p>
               </div>
               
               <div className="faq-item">

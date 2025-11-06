@@ -1,6 +1,6 @@
 # Supabase Setup Instructions
 
-This guide will help you set up Supabase for the LockPay application.
+This guide will help you set up Supabase for the Vaultx402 application.
 
 ## Step 1: Create a Supabase Project
 
@@ -8,7 +8,7 @@ This guide will help you set up Supabase for the LockPay application.
 2. Sign up or log in to your account
 3. Click "New Project"
 4. Fill in the project details:
-   - **Project Name**: LockPay (or any name you prefer)
+   - **Project Name**: Vaultx402 (or any name you prefer)
    - **Database Password**: Create a strong password (save this!)
    - **Region**: Choose the region closest to your users
 5. Click "Create new project" and wait for it to initialize (takes ~2 minutes)

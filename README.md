@@ -1,11 +1,11 @@
-# LockPay
+# Vaultx402
 
 > Crypto-native paywalls powered by BNB Chain and the HTTP 402 protocol
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![BNB Chain](https://img.shields.io/badge/Chain-BNB-yellow.svg)](https://www.bnbchain.org/)
 
-LockPay is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, LockPay makes payments programmable for AI agents and automated systems.
+Vaultx402 is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, Vaultx402 makes payments programmable for AI agents and automated systems.
 
 ## ✨ Features
 
@@ -45,8 +45,8 @@ LockPay is a decentralized paywall platform that enables creators, developers, a
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/lockpay.git
-cd lockpay
+git clone https://github.com/yourusername/vaultx402.git
+cd vaultx402
 ```
 
 2. **Install dependencies**
@@ -139,7 +139,7 @@ Visit `http://localhost:3000` to see your app running!
 
 ### HTTP 402 Protocol
 
-LockPay implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
+Vaultx402 implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
 
 ```http
 HTTP/1.1 402 Payment Required
@@ -155,7 +155,7 @@ This enables AI agents and automated systems to:
 
 ## 🎨 Design Philosophy
 
-LockPay follows modern web design principles inspired by Vercel:
+Vaultx402 follows modern web design principles inspired by Vercel:
 
 - **Minimalism** - Clean, uncluttered interfaces
 - **Clarity** - Clear information hierarchy
@@ -268,10 +268,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Website:** [lockpay.io](https://lockpay.io)
-- **Documentation:** [lockpay.io/docs](https://lockpay.io/docs)
-- **Twitter/X:** [@lockpay](https://x.com/lockpayx402?s=21)
-- **GitHub:** [github.com/lockpay](https://github.com/lockpay)
+- **Website:** [vaultx402.io](https://vaultx402.io)
+- **Documentation:** [vaultx402.io/docs](https://vaultx402.io/docs)
+- **Twitter/X:** [@vaultx402](https://x.com/Vaultx402)
+- **GitHub:** [github.com/vaultx402](https://github.com/vaultx402)
 
 ## 🙏 Acknowledgments
 
@@ -282,9 +282,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Discord:** [Join our community](https://discord.gg/lockpay)
-- **Twitter:** [@lockpay](https://x.com/lockpayx402?s=21)
-- **Email:** support@lockpay.io
+- **Discord:** [Join our community](https://discord.gg/vaultx402)
+- **Twitter:** [@vaultx402](https://x.com/Vaultx402)
+- **Email:** support@vaultx402.io
 
 ---
 

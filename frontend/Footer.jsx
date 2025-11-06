@@ -4,7 +4,7 @@ function Footer() {
     <footer>
       <div className="footer-content">
         <div className="footer-section">
-          <h4>⚡ LockPay</h4>
+          <h4>⚡ Vaultx402</h4>
           <p>Crypto-native paywalls powered by BNB Chain and the x402 protocol</p>
         </div>
         <div className="footer-section">
@@ -29,14 +29,14 @@ function Footer() {
           <h4>Community</h4>
           <ul>
             <li><Link to="/marketplace">Marketplace</Link></li>
-            <li><a href="https://x.com/LockPay402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
+            <li><a href="https://x.com/Vaultx402" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
             <li><Link to="/docs">Documentation</Link></li>
-            <li><a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">Buy $LOCK</a></li>
+            <li><a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">Buy Token</a></li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2025 LockPay. MIT License.</p>
+        <p>&copy; 2025 Vaultx402. MIT License.</p>
       </div>
     </footer>
   );
