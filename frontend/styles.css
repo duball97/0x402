@@ -4177,7 +4177,28 @@ footer {
   justify-content: center;
   padding: 140px 60px 100px;
   overflow: hidden;
-  background: linear-gradient(180deg, #0a0a0a 0%, #0f0320 50%, #0a0a0a 100%);
+  background: #0a0a0a;
+}
+
+.hero-background-video-v2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.hero-background-overlay-v2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.7) 0%, rgba(15, 3, 32, 0.85) 50%, rgba(10, 10, 10, 0.9) 100%);
+  z-index: 1;
 }
 
 .hero-gradient-bg {

@@ -48,6 +48,17 @@ function App() {
 
       {/* Enhanced Hero Section with Floating Elements */}
       <section className="landing-hero-v2">
+        <video
+          className="hero-background-video-v2"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-background-overlay-v2"></div>
+
         <div className="hero-gradient-bg">
           <div className="gradient-orb gradient-orb-1"
                style={{
