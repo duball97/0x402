@@ -270,7 +270,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Website:** [vaultx402.io](https://vaultx402.io)
 - **Documentation:** [vaultx402.io/docs](https://vaultx402.io/docs)
-- **Twitter/X:** [@vaultx402](https://x.com/Vaultx402)
+- **Twitter/X:** [@vaultx402sol](https://x.com/vaultx402sol?s=21)
 - **GitHub:** [github.com/vaultx402](https://github.com/vaultx402)
 
 ## 🙏 Acknowledgments
@@ -283,7 +283,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - **Discord:** [Join our community](https://discord.gg/vaultx402)
-- **Twitter:** [@vaultx402](https://x.com/Vaultx402)
+- **Twitter:** [@vaultx402sol](https://x.com/vaultx402sol?s=21)
 - **Email:** support@vaultx402.io
 
 ---
