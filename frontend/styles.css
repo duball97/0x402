@@ -5522,10 +5522,11 @@ footer {
 
 /* Compact Button Style */
 .btn-compact {
-  padding: 10px 16px !important;
-  font-size: 14px !important;
+  padding: 8px 14px !important;
+  font-size: 13px !important;
   min-width: auto !important;
   white-space: nowrap !important;
+  gap: 6px !important;
 }
 
 .hero-cta-v2 {
