@@ -188,7 +188,7 @@ function App() {
             <div className="bento-icon-large">⚡</div>
             <h3 className="bento-title">Lightning Fast Settlements</h3>
             <p className="bento-desc">
-              Payments settle in 2-5 seconds on BNB Chain and Solana. No waiting days for
+              Payments settle in 2-5 seconds on Solana. No waiting days for
               traditional processors. Your money arrives instantly.
             </p>
             <div className="bento-metric-showcase">
@@ -263,12 +263,11 @@ function App() {
             <div className="bento-icon">🌐</div>
             <h3 className="bento-title">Multi-Chain Support</h3>
             <p className="bento-desc">
-              Works on BNB Chain and Solana. More chains coming soon.
+              Runs on Solana. More chains coming soon.
             </p>
             <div className="chain-badges">
-              <div className="chain-badge">BNB</div>
               <div className="chain-badge">SOL</div>
-              <div className="chain-badge chain-badge-soon">ETH Soon</div>
+              <div className="chain-badge chain-badge-soon">More Chains Soon</div>
             </div>
           </div>
 
@@ -311,7 +310,7 @@ function App() {
               </div>
               <h3 className="workflow-step-title">Create Your Paywall</h3>
               <p className="workflow-step-desc">
-                Enter your content URL, set your price in SOL or BNB, add your wallet
+                Enter your content URL, set your price in SOL, add your wallet
                 address. Takes less than 60 seconds.
               </p>
               <div className="workflow-visual">
@@ -392,7 +391,7 @@ function App() {
               <span className="counting-number">2.4</span>s
             </div>
             <div className="stat-large-label">Average Settlement</div>
-            <p className="stat-large-desc">Lightning fast payments on BNB Chain and Solana</p>
+            <p className="stat-large-desc">Lightning fast payments on Solana</p>
           </div>
 
           <div className="stat-card-large" data-animate id="stat-3">

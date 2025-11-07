@@ -40,7 +40,7 @@ function Marketplace() {
     const term = searchTerm.trim().toLowerCase();
     return paywalls
       .filter((paywall) => {
-        const normalizedNetwork = (paywall.network || 'BNB Chain').toLowerCase();
+        const normalizedNetwork = (paywall.network || 'Solana').toLowerCase();
         const matchesNetwork = networkFilter === 'all' || normalizedNetwork === networkFilter;
         const matchesTerm = term
           ? [paywall.id, paywall.description, paywall.currency]
@@ -61,29 +61,22 @@ function Marketplace() {
   }, [paywalls, networkFilter, searchTerm, sortOption]);
 
   const stats = useMemo(() => {
-    let bnbVolume = 0;
     let solanaVolume = 0;
-    let bnbCount = 0;
     let solanaCount = 0;
 
     paywalls.forEach((item) => {
       const price = parseFloat(item.price) || 0;
-      const network = (item.network || 'BNB Chain').toLowerCase();
+      const network = (item.network || 'Solana').toLowerCase();
 
       if (network.includes('sol')) {
         solanaVolume += price;
         solanaCount += 1;
-      } else {
-        bnbVolume += price;
-        bnbCount += 1;
       }
     });
 
     return {
       listings: paywalls.length,
-      bnbVolume,
       solanaVolume,
-      bnbCount,
       solanaCount,
     };
   }, [paywalls]);
@@ -126,11 +119,6 @@ function Marketplace() {
               <span className="metric-chip-value">{stats.listings}</span>
             </div>
             <div className="metric-chip">
-              <span className="metric-chip-label">BNB volume</span>
-              <span className="metric-chip-value">{stats.bnbVolume.toFixed(3)} BNB</span>
-              <span className="metric-chip-footnote">{stats.bnbCount} paywalls</span>
-            </div>
-            <div className="metric-chip">
               <span className="metric-chip-label">SOL volume</span>
               <span className="metric-chip-value">{stats.solanaVolume.toFixed(3)} SOL</span>
               <span className="metric-chip-footnote">{stats.solanaCount} paywalls</span>
@@ -158,8 +146,7 @@ function Marketplace() {
             <div className="network-pills" role="tablist" aria-label="Network filters">
               {[
                 { id: 'all', label: 'All' },
-                { id: 'bnb chain', label: 'BNB' },
-                { id: 'solana', label: 'Sol' },
+                { id: 'solana', label: 'Solana' },
               ].map((chip) => (
                 <button
                   key={chip.id}
@@ -240,7 +227,7 @@ function Marketplace() {
                   {filteredPaywalls.map((paywall) => (
                     <article key={paywall.id} className="market-card">
                       <header className="market-card__header">
-                        <span className="market-chip">{paywall.network || 'BNB Chain'}</span>
+                        <span className="market-chip">{paywall.network || 'Solana'}</span>
                         <span className="market-chip market-chip--outline">{paywall.currency}</span>
                       </header>
                       <div className="market-card__body">
@@ -254,7 +241,7 @@ function Marketplace() {
                         </div>
                         <div>
                           <dt>Network</dt>
-                          <dd>{paywall.network || 'BNB Chain'}</dd>
+                          <dd>{paywall.network || 'Solana'}</dd>
                         </div>
                       </dl>
                       <footer className="market-card__footer">
