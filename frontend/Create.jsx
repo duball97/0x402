@@ -166,7 +166,7 @@ function Create() {
                 <span className="step-index">02</span>
                 <div>
                   <h4>Set settlement</h4>
-                  <p>Pick the chain, amount, and where the funds should land.</p>
+                  <p>Choose your Solana price and where the funds should land.</p>
                 </div>
               </div>
               <div className="builder-step">
@@ -233,24 +233,19 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Settlement settings</h3>
-                  <p>Pick your chain, price, and payout recipient. Leave the wallet blank to auto-generate one.</p>
+                  <p>Set your Solana price and payout recipient. Leave the wallet blank to auto-generate one.</p>
                 </div>
               </div>
 
               <div className="network-toggle" role="tablist" aria-label="Network selector">
-                {['BNB Chain', 'Solana'].map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    className={`network-option ${network === option ? 'network-option-active' : ''}`}
-                    onClick={() => setNetwork(option)}
-                    role="tab"
-                    aria-selected={network === option}
-                  >
-                    <span className="option-label">{option}</span>
-                    <span className="option-footnote">{option === 'Solana' ? 'Phantom · SOL' : 'MetaMask · BNB'}</span>
-                  </button>
-                ))}
+                <div
+                  className="network-option network-option-active"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  <span className="option-label">Solana</span>
+                  <span className="option-footnote">Phantom · SOL</span>
+                </div>
               </div>
 
               <div className="field-grid">
@@ -274,7 +269,7 @@ function Create() {
                   <input
                     type="text"
                     id="walletAddress"
-                    placeholder={network === 'Solana' ? 'Enter a Solana address' : 'Enter a BNB address (0x…)'}
+                    placeholder="Enter a Solana address"
                     value={walletAddress}
                     onChange={(e) => setWalletAddress(e.target.value)}
                   />
@@ -417,7 +412,7 @@ function Create() {
                     </div>
                     <p className="preview-copy">{description || 'Describe the value buyers receive once they complete payment.'}</p>
                     <button className="preview-pay-btn" type="button" disabled>
-                      Pay with {network === 'Solana' ? 'Phantom' : 'MetaMask'}
+                      Pay with Phantom
                     </button>
                     <div className="preview-flags">
                       <span>⚡ Instant settlement</span>
