@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(mkdir:*)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(cat:*)",
+      "Bash(\"C:\\Users\\dubal\\Documents\\Solo\\BasketFrens\\0x402\\frontend\\styles.css\")"
     ],
     "deny": [],
     "ask": []

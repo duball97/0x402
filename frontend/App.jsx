@@ -1,487 +1,588 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
 function App() {
   const navigate = useNavigate();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState({});
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            setIsVisible(prev => ({ ...prev, [entry.target.id]: true }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      document.querySelectorAll('[data-animate]').forEach((el) => {
+        observer.observe(el);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <>
       <Header transparent />
 
-      {/* Hero Section */}
-      <section className="landing-hero" >
-        <video 
-          className="hero-background-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="hero-background-overlay"></div>
-        <div className="landing-hero-content">
-          
+      {/* Enhanced Hero Section with Floating Elements */}
+      <section className="landing-hero-v2">
+        <div className="hero-gradient-bg">
+          <div className="gradient-orb gradient-orb-1"
+               style={{
+                 transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+               }}></div>
+          <div className="gradient-orb gradient-orb-2"
+               style={{
+                 transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * -0.015}px)`
+               }}></div>
+          <div className="gradient-orb gradient-orb-3"
+               style={{
+                 transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`
+               }}></div>
+        </div>
 
-          <h1 className="landing-hero-title" style={{ marginTop: '350px' }}>
-            Monetize Your Content<br />
-            <span className="gradient-text">With Crypto Paywalls</span>
+        <div className="hero-grid-overlay"></div>
+
+        <div className="hero-content-v2">
+          <div className="hero-badge" data-animate id="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" strokeWidth="2"
+                    strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Built on HTTP 402 Protocol
+          </div>
+
+          <h1 className="hero-title-v2" data-animate id="hero-title">
+            The Future of Digital
+            <br />
+            <span className="hero-gradient-text">Payments is Here</span>
           </h1>
 
-          <p className="landing-hero-subtitle">
-            Accept crypto payments instantly. No platform fees. Non-custodial. Built on the HTTP 402 protocol 
-            to enable programmable payments for AI agents and automated systems.
+          <p className="hero-description-v2" data-animate id="hero-desc">
+            Transform your content into revenue with blockchain-powered paywalls.
+            Zero fees. Instant settlements. Complete control. Built for creators,
+            developers, and AI agents.
           </p>
 
-          <div className="landing-hero-cta">
-            <button onClick={() => navigate('/create')} className="cta-primary">
-              Start Building
+          <div className="hero-cta-v2" data-animate id="hero-cta">
+            <button onClick={() => navigate('/create')} className="btn-primary-v2 btn-compact">
+              <span>Create Paywall</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
-            <button onClick={() => navigate('/docs')} className="cta-secondary">
-              Documentation
+            <button onClick={() => navigate('/docs')} className="btn-secondary-v2 btn-compact">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+              </svg>
+              View Docs
             </button>
           </div>
 
-          <div className="landing-hero-stats">
-            <div className="stat-item">
-              <div className="stat-value">2-5s</div>
-              <div className="stat-label">Settlement</div>
+          <div className="hero-stats-v2" data-animate id="hero-stats">
+            <div className="stat-box-v2">
+              <div className="stat-icon-v2">⚡</div>
+              <div className="stat-content-v2">
+                <div className="stat-value-v2">2-5s</div>
+                <div className="stat-label-v2">Settlement Time</div>
+              </div>
             </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
-              <div className="stat-value">0%</div>
-              <div className="stat-label">Fees</div>
+            <div className="stat-box-v2">
+              <div className="stat-icon-v2">💎</div>
+              <div className="stat-content-v2">
+                <div className="stat-value-v2">0%</div>
+                <div className="stat-label-v2">Platform Fees</div>
+              </div>
             </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
-              <div className="stat-value">&lt;$0.01</div>
-              <div className="stat-label">Gas Cost</div>
+            <div className="stat-box-v2">
+              <div className="stat-icon-v2">🔒</div>
+              <div className="stat-content-v2">
+                <div className="stat-value-v2">100%</div>
+                <div className="stat-label-v2">Self-Custodial</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hero-floating-cards">
+          <div className="floating-card floating-card-1">
+            <div className="card-glow"></div>
+            <div className="card-content-mini">
+              <div className="card-mini-header">Payment Received ✓</div>
+              <div className="card-mini-amount">0.05 SOL</div>
+            </div>
+          </div>
+          <div className="floating-card floating-card-2">
+            <div className="card-glow"></div>
+            <div className="card-content-mini">
+              <div className="card-mini-header">Transaction</div>
+              <div className="card-mini-status">Confirmed in 2.3s</div>
+            </div>
+          </div>
+          <div className="floating-card floating-card-3">
+            <div className="card-glow"></div>
+            <div className="card-content-mini">
+              <div className="card-mini-header">Gas Fee</div>
+              <div className="card-mini-amount">$0.008</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Showcase Section */}
-      <section className="landing-showcase">
-        <div className="showcase-container">
-          <div className="showcase-image">
-            <div className="paywall-preview">
-              <div className="paywall-preview-header">
-                <div className="paywall-preview-dot"></div>
-                <div className="paywall-preview-dot"></div>
-                <div className="paywall-preview-dot"></div>
+      {/* Bento Grid Features Section */}
+      <section className="bento-section" data-animate id="bento-section">
+        <div className="section-header-v2">
+          <span className="section-label">POWERFUL FEATURES</span>
+          <h2 className="section-title-v2">Everything You Need, Nothing You Don't</h2>
+          <p className="section-desc-v2">
+            Built for speed, security, and simplicity. Every feature designed to help you
+            monetize faster and earn more.
+          </p>
+        </div>
+
+        <div className="bento-grid">
+          <div className="bento-card bento-large" data-animate id="bento-1">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon-large">⚡</div>
+            <h3 className="bento-title">Lightning Fast Settlements</h3>
+            <p className="bento-desc">
+              Payments settle in 2-5 seconds on BNB Chain and Solana. No waiting days for
+              traditional processors. Your money arrives instantly.
+            </p>
+            <div className="bento-metric-showcase">
+              <div className="metric-bar">
+                <div className="metric-bar-fill" style={{width: '95%'}}></div>
               </div>
-              <div className="paywall-preview-content">
-                <div className="paywall-preview-title">Premium Content</div>
-                <div className="paywall-preview-price">0.01 SOL</div>
-                <div className="paywall-preview-button">Pay with wallet</div>
-                <div className="paywall-preview-features">
-                  <div className="paywall-preview-feature">🔒 Secure Payment</div>
-                  <div className="paywall-preview-feature">⚡ Instant Access</div>
+              <div className="metric-labels">
+                <span>Vaultx402: 2-5s</span>
+                <span className="metric-muted">Traditional: 3-7 days</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bento-card" data-animate id="bento-2">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon">🔒</div>
+            <h3 className="bento-title">100% Non-Custodial</h3>
+            <p className="bento-desc">
+              You own your wallet, you control your funds. We never touch your money.
+            </p>
+            <div className="trust-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor"
+                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Self-Custodial
+            </div>
+          </div>
+
+          <div className="bento-card" data-animate id="bento-3">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon">💎</div>
+            <h3 className="bento-title">Zero Platform Fees</h3>
+            <p className="bento-desc">
+              Keep 100% of your revenue. Only pay minimal gas fees (typically &lt;$0.01).
+            </p>
+            <div className="fee-comparison">
+              <div className="fee-row">
+                <span>Vaultx402</span>
+                <span className="fee-value success">0%</span>
+              </div>
+              <div className="fee-row muted">
+                <span>Competitors</span>
+                <span className="fee-value">2-10%</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bento-card bento-wide" data-animate id="bento-4">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon">🤖</div>
+            <h3 className="bento-title">Built for AI Agents & Automation</h3>
+            <p className="bento-desc">
+              HTTP 402 protocol enables autonomous agents to discover payment requirements
+              and transact programmatically. The future of machine-to-machine commerce.
+            </p>
+            <div className="code-preview">
+              <div className="code-line">
+                <span className="code-comment">// AI agents can automatically detect and pay</span>
+              </div>
+              <div className="code-line">
+                <span className="code-keyword">const</span> paywall = <span className="code-keyword">await</span> <span className="code-function">detectPaywall</span>(<span className="code-string">url</span>);
+              </div>
+              <div className="code-line">
+                <span className="code-keyword">await</span> paywall.<span className="code-function">pay</span>();
+              </div>
+            </div>
+          </div>
+
+          <div className="bento-card" data-animate id="bento-5">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon">🌐</div>
+            <h3 className="bento-title">Multi-Chain Support</h3>
+            <p className="bento-desc">
+              Works on BNB Chain and Solana. More chains coming soon.
+            </p>
+            <div className="chain-badges">
+              <div className="chain-badge">BNB</div>
+              <div className="chain-badge">SOL</div>
+              <div className="chain-badge chain-badge-soon">ETH Soon</div>
+            </div>
+          </div>
+
+          <div className="bento-card" data-animate id="bento-6">
+            <div className="bento-card-bg"></div>
+            <div className="bento-icon">🚀</div>
+            <h3 className="bento-title">Setup in 60 Seconds</h3>
+            <p className="bento-desc">
+              No signup, no complex integration. Just create and share.
+            </p>
+            <div className="setup-steps-mini">
+              <div className="step-mini">1. Create</div>
+              <div className="step-arrow-mini">→</div>
+              <div className="step-mini">2. Share</div>
+              <div className="step-arrow-mini">→</div>
+              <div className="step-mini">3. Earn</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visual How It Works Section */}
+      <section className="workflow-section" data-animate id="workflow">
+        <div className="section-header-v2">
+          <span className="section-label">SIMPLE PROCESS</span>
+          <h2 className="section-title-v2">From Idea to Revenue in 3 Steps</h2>
+          <p className="section-desc-v2">
+            No complex setup, no technical knowledge required. Create, share, and start earning.
+          </p>
+        </div>
+
+        <div className="workflow-container">
+          <div className="workflow-line"></div>
+
+          <div className="workflow-step" data-animate id="workflow-1">
+            <div className="workflow-card">
+              <div className="workflow-number">01</div>
+              <div className="workflow-icon-wrapper">
+                <div className="workflow-icon">✏️</div>
+              </div>
+              <h3 className="workflow-step-title">Create Your Paywall</h3>
+              <p className="workflow-step-desc">
+                Enter your content URL, set your price in SOL or BNB, add your wallet
+                address. Takes less than 60 seconds.
+              </p>
+              <div className="workflow-visual">
+                <div className="mini-form">
+                  <div className="mini-input">Content URL</div>
+                  <div className="mini-input">Price: 0.01 SOL</div>
+                  <div className="mini-input">Wallet Address</div>
+                  <div className="mini-button">Create Paywall</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="showcase-content">
-            <h2 className="showcase-title">Simple, Secure, Instant</h2>
-            <p className="showcase-description">
-              Vaultx402 makes monetizing digital content effortless. Create a paywall in seconds, 
-              share a single link, and receive payments directly to your wallet. No middlemen, 
-              no platform fees—just pure, decentralized commerce.
-            </p>
-            <div className="showcase-features">
-              <div className="showcase-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17L4 12" stroke="url(#checkGrad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <defs>
-                    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#01c3f3" />
-                      <stop offset="100%" stopColor="#0178c8" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span>One-click paywall creation</span>
+
+          <div className="workflow-step" data-animate id="workflow-2">
+            <div className="workflow-card">
+              <div className="workflow-number">02</div>
+              <div className="workflow-icon-wrapper">
+                <div className="workflow-icon">🔗</div>
               </div>
-              <div className="showcase-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17L4 12" stroke="url(#checkGrad2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <defs>
-                    <linearGradient id="checkGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#01c3f3" />
-                      <stop offset="100%" stopColor="#0178c8" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span>Direct wallet-to-wallet payments</span>
+              <h3 className="workflow-step-title">Share Your Link</h3>
+              <p className="workflow-step-desc">
+                Get a unique paywall link. Share it on social media, embed on your website,
+                or send directly to customers.
+              </p>
+              <div className="workflow-visual">
+                <div className="share-preview">
+                  <div className="share-link">vaultx402.com/p/abc123</div>
+                  <div className="share-icons">
+                    <div className="share-icon">🐦</div>
+                    <div className="share-icon">📧</div>
+                    <div className="share-icon">💬</div>
+                    <div className="share-icon">📋</div>
+                  </div>
+                </div>
               </div>
-              <div className="showcase-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17L4 12" stroke="url(#checkGrad3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <defs>
-                    <linearGradient id="checkGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#01c3f3" />
-                      <stop offset="100%" stopColor="#0178c8" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span>Works with BNB Chain & Solana</span>
+            </div>
+          </div>
+
+          <div className="workflow-step" data-animate id="workflow-3">
+            <div className="workflow-card">
+              <div className="workflow-number">03</div>
+              <div className="workflow-icon-wrapper">
+                <div className="workflow-icon">💰</div>
+              </div>
+              <h3 className="workflow-step-title">Get Paid Instantly</h3>
+              <p className="workflow-step-desc">
+                Customers pay with their wallet, funds arrive in yours within seconds.
+                No middlemen, no delays, no fees.
+              </p>
+              <div className="workflow-visual">
+                <div className="payment-flow">
+                  <div className="flow-box">Customer 👤</div>
+                  <div className="flow-arrow">→</div>
+                  <div className="flow-box">Blockchain ⛓️</div>
+                  <div className="flow-arrow">→</div>
+                  <div className="flow-box success">You 💎</div>
+                </div>
+                <div className="payment-time">⚡ 2-5 seconds</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="landing-features">
-        <div className="section-header">
-          <h2 className="section-title">
-            <svg className="section-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#whyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 17L12 22L22 17" stroke="url(#whyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 12L12 17L22 12" stroke="url(#whyGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <defs>
-                <linearGradient id="whyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#01c3f3" />
-                  <stop offset="100%" stopColor="#0178c8" />
-                </linearGradient>
-              </defs>
-            </svg>
-            Why Vaultx402
-          </h2>
-          <p className="section-subtitle">
-            Built for creators, developers, and businesses who want full control
+      {/* Stats Section */}
+      <section className="stats-section" data-animate id="stats">
+        <div className="stats-grid">
+          <div className="stat-card-large" data-animate id="stat-1">
+            <div className="stat-card-bg"></div>
+            <div className="stat-large-number">$0</div>
+            <div className="stat-large-label">Setup Cost</div>
+            <p className="stat-large-desc">No signup fees, no monthly subscriptions, no hidden charges</p>
+          </div>
+
+          <div className="stat-card-large" data-animate id="stat-2">
+            <div className="stat-card-bg"></div>
+            <div className="stat-large-number">
+              <span className="counting-number">2.4</span>s
+            </div>
+            <div className="stat-large-label">Average Settlement</div>
+            <p className="stat-large-desc">Lightning fast payments on BNB Chain and Solana</p>
+          </div>
+
+          <div className="stat-card-large" data-animate id="stat-3">
+            <div className="stat-card-bg"></div>
+            <div className="stat-large-number">100%</div>
+            <div className="stat-large-label">Revenue Kept</div>
+            <p className="stat-large-desc">Zero platform fees means you keep everything you earn</p>
+          </div>
+
+          <div className="stat-card-large" data-animate id="stat-4">
+            <div className="stat-card-bg"></div>
+            <div className="stat-large-number">&lt;60s</div>
+            <div className="stat-large-label">Setup Time</div>
+            <p className="stat-large-desc">From creation to your first paywall in under a minute</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases Cards Section */}
+      <section className="use-cases-section-v2" data-animate id="use-cases">
+        <div className="section-header-v2">
+          <span className="section-label">USE CASES</span>
+          <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
+          <p className="section-desc-v2">
+            Whether you're a solo creator or building the next big platform,
+            Vaultx402 scales with you.
           </p>
         </div>
 
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="url(#icon1)" strokeWidth="2"/>
-                <path d="M12 6V12L16 14" stroke="url(#icon1)" strokeWidth="2" strokeLinecap="round"/>
-                <defs>
-                  <linearGradient id="icon1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+        <div className="use-cases-grid-v2">
+          <div className="use-case-card-v2" data-animate id="usecase-1">
+            <div className="use-case-bg"></div>
+            <div className="use-case-header-v2">
+              <div className="use-case-icon-v2">📝</div>
+              <span className="use-case-badge">Content Creators</span>
             </div>
-            <h3 className="feature-title">Instant Settlements</h3>
-            <p className="feature-description">
-              Payments settle in 2-5 seconds on BNB Chain. No waiting days for traditional 
-              payment processors. Funds arrive in your wallet immediately upon payment.
+            <h3 className="use-case-title-v2">Premium Content & Media</h3>
+            <p className="use-case-desc-v2">
+              Monetize articles, videos, podcasts, research papers, exclusive tutorials,
+              and more. One-time payments or recurring access.
             </p>
-            <div className="feature-metric">
-              <span className="metric-value">2-5s</span>
-              <span className="metric-label">average settlement time</span>
+            <div className="use-case-examples">
+              <div className="example-tag">Articles</div>
+              <div className="example-tag">Videos</div>
+              <div className="example-tag">Courses</div>
+              <div className="example-tag">Research</div>
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 11H6C4.9 11 4 11.9 4 13V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V13C20 11.9 19.1 11 18 11Z" stroke="url(#icon2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M7 11V7C7 4.24 9.24 2 12 2C14.76 2 17 4.24 17 7V11" stroke="url(#icon2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="icon2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          <div className="use-case-card-v2" data-animate id="usecase-2">
+            <div className="use-case-bg"></div>
+            <div className="use-case-header-v2">
+              <div className="use-case-icon-v2">⚡</div>
+              <span className="use-case-badge">Developers</span>
             </div>
-            <h3 className="feature-title">Non-Custodial Control</h3>
-            <p className="feature-description">
-              You own your wallet. Vaultx402 never holds your funds. Payments flow directly 
-              from buyer to seller on-chain with full transparency and auditability.
+            <h3 className="use-case-title-v2">API & Service Monetization</h3>
+            <p className="use-case-desc-v2">
+              Per-request pricing for AI models, data feeds, compute resources,
+              and developer tools. Perfect for automation and high-volume use.
             </p>
-            <div className="feature-metric">
-              <span className="metric-value">100%</span>
-              <span className="metric-label">self-custodial</span>
+            <div className="use-case-examples">
+              <div className="example-tag">AI APIs</div>
+              <div className="example-tag">Data Feeds</div>
+              <div className="example-tag">Compute</div>
+              <div className="example-tag">Tools</div>
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="url(#icon3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M14 2V8H20" stroke="url(#icon3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M9 15L11 17L15 13" stroke="url(#icon3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="icon3" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          <div className="use-case-card-v2" data-animate id="usecase-3">
+            <div className="use-case-bg"></div>
+            <div className="use-case-header-v2">
+              <div className="use-case-icon-v2">📦</div>
+              <span className="use-case-badge">Merchants</span>
             </div>
-            <h3 className="feature-title">HTTP 402 Protocol</h3>
-            <p className="feature-description">
-              Built on the HTTP 402 "Payment Required" standard. Enables AI agents, bots, 
-              and automated systems to discover payment requirements and transact programmatically.
+            <h3 className="use-case-title-v2">Digital Products & Downloads</h3>
+            <p className="use-case-desc-v2">
+              Sell software, templates, design assets, ebooks, music, and any digital
+              file. Instant delivery with blockchain verification.
             </p>
-            <div className="feature-metric">
-              <span className="metric-value">Machine-Readable</span>
-              <span className="metric-label">protocol specification</span>
+            <div className="use-case-examples">
+              <div className="example-tag">Software</div>
+              <div className="example-tag">Templates</div>
+              <div className="example-tag">Assets</div>
+              <div className="example-tag">Ebooks</div>
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="url(#icon4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="icon4" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          <div className="use-case-card-v2" data-animate id="usecase-4">
+            <div className="use-case-bg"></div>
+            <div className="use-case-header-v2">
+              <div className="use-case-icon-v2">🤖</div>
+              <span className="use-case-badge">AI & Automation</span>
             </div>
-            <h3 className="feature-title">Zero Platform Fees</h3>
-            <p className="feature-description">
-              Keep 100% of your revenue. No platform cuts, transaction fees, or hidden charges. 
-              Only pay minimal gas fees on BNB Chain (typically less than $0.01 per transaction).
+            <h3 className="use-case-title-v2">Autonomous Agent Payments</h3>
+            <p className="use-case-desc-v2">
+              Enable AI agents to discover, negotiate, and pay for services autonomously.
+              HTTP 402 native for machine-to-machine commerce.
             </p>
-            <div className="feature-metric">
-              <span className="metric-value">0%</span>
-              <span className="metric-label">platform fees</span>
-            </div>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="url(#icon5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="icon5" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <h3 className="feature-title">Developer-Friendly API</h3>
-            <p className="feature-description">
-              RESTful API with comprehensive documentation. Integrate paywalls into your 
-              application with a few lines of code. Web3-compatible with MetaMask support.
-            </p>
-            <div className="feature-metric">
-              <span className="metric-value">RESTful</span>
-              <span className="metric-label">API endpoints</span>
-            </div>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#icon6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="url(#icon6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="url(#icon6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="icon6" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <h3 className="feature-title">BNB Chain Infrastructure</h3>
-            <p className="feature-description">
-              Built on BNB Chain for fast, low-cost transactions. EVM-compatible smart contracts 
-              ensure security and transparency. Battle-tested infrastructure at scale.
-            </p>
-            <div className="feature-metric">
-              <span className="metric-value">&lt;$0.01</span>
-              <span className="metric-label">gas cost</span>
+            <div className="use-case-examples">
+              <div className="example-tag">AI Agents</div>
+              <div className="example-tag">Bots</div>
+              <div className="example-tag">M2M</div>
+              <div className="example-tag">IoT</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="landing-how-it-works">
-        <div className="how-it-works-container">
-          <div className="how-it-works-header">
-            <h2 className="how-it-works-title">How It Works</h2>
-            <p className="how-it-works-description">
-              Get started with Vaultx402 in three simple steps. No complex setup, no lengthy integrations—just 
-              create, share, and get paid.
-            </p>
-          </div>
-          <div className="how-it-works-steps">
-            <div className="how-it-works-step">
-              <div className="step-number">1</div>
-              <div className="step-content">
-                <h3 className="step-title">Create Your Paywall</h3>
-                <p className="step-description">
-                  Enter your content URL, set a price, and choose your wallet address. 
-                  Get a unique paywall link in seconds.
-                </p>
-              </div>
-            </div>
-            <div className="step-arrow">→</div>
-            <div className="how-it-works-step">
-              <div className="step-number">2</div>
-              <div className="step-content">
-                <h3 className="step-title">Share the Link</h3>
-                <p className="step-description">
-                  Share your paywall link anywhere—social media, email, or embed it directly 
-                  in your website. One link, unlimited access.
-                </p>
-              </div>
-            </div>
-            <div className="step-arrow">→</div>
-            <div className="how-it-works-step">
-              <div className="step-number">3</div>
-              <div className="step-content">
-                <h3 className="step-title">Receive Payments</h3>
-                <p className="step-description">
-                  Payments flow directly to your wallet. No waiting, no fees, no intermediaries. 
-                  Instant settlements in 2-5 seconds.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="landing-tech">
-        <div className="section-header">
-          <h2 className="section-title">
-            <svg className="section-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#useCaseGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 17L12 22L22 17" stroke="url(#useCaseGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 12L12 17L22 12" stroke="url(#useCaseGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <defs>
-                <linearGradient id="useCaseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#01c3f3" />
-                  <stop offset="100%" stopColor="#0178c8" />
-                </linearGradient>
-              </defs>
-            </svg>
-            Built for Every Use Case
-          </h2>
-          <p className="section-subtitle">
-            From content creators to enterprise APIs
-          </p>
+      {/* Enhanced CTA Section */}
+      <section className="cta-section-v2" data-animate id="cta">
+        <div className="cta-gradient-bg">
+          <div className="cta-orb cta-orb-1"></div>
+          <div className="cta-orb cta-orb-2"></div>
         </div>
 
-        <div className="use-cases-grid">
-          <div className="use-case-item">
-            <div className="use-case-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="url(#useIcon1)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M14 2V8H20" stroke="url(#useIcon1)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="useIcon1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+        <div className="cta-container-v2">
+          <div className="cta-content-v2">
+            <div className="cta-badge-v2">
+              <span className="pulse-dot"></span>
+              Ready to Launch
             </div>
-            <div className="use-case-header">
-              <h3 className="use-case-name">Premium Content</h3>
-              <span className="use-case-tag">Creators</span>
-            </div>
-            <p className="use-case-description">
-              Articles, videos, research papers, courses, and exclusive content. 
-              One-time purchases or subscription models.
+
+            <h2 className="cta-title-v2">
+              Start Earning in the Next
+              <br />
+              <span className="cta-highlight">60 Seconds</span>
+            </h2>
+
+            <p className="cta-desc-v2">
+              No signup. No credit card. No technical knowledge required.
+              <br />
+              Just create your paywall and start monetizing your content today.
             </p>
+
+            <div className="cta-buttons-v2">
+              <button onClick={() => navigate('/create')} className="cta-btn-primary-v2">
+                <span>Create Free Paywall</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <button onClick={() => navigate('/docs')} className="cta-btn-secondary-v2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                        strokeLinejoin="round"/>
+                </svg>
+                <span>Read Docs</span>
+              </button>
+            </div>
+
+            <div className="cta-trust-line">
+              <div className="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                No Credit Card
+              </div>
+              <div className="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Free Forever
+              </div>
+              <div className="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Setup in 60s
+              </div>
+            </div>
           </div>
 
-          <div className="use-case-item">
-            <div className="use-case-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="url(#useIcon2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="useIcon2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          <div className="cta-visual">
+            <div className="floating-paywall-card">
+              <div className="paywall-card-glow"></div>
+              <div className="paywall-card-header">
+                <div className="paywall-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div className="paywall-card-body">
+                <div className="paywall-card-title">Your Premium Content</div>
+                <div className="paywall-card-price">0.01 SOL</div>
+                <div className="paywall-card-button">Pay with Wallet</div>
+                <div className="paywall-card-features">
+                  <div className="paywall-feature">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                    Secure Payment
+                  </div>
+                  <div className="paywall-feature">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                    Instant Access
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="use-case-header">
-              <h3 className="use-case-name">API Monetization</h3>
-              <span className="use-case-tag">Developers</span>
-            </div>
-            <p className="use-case-description">
-              Per-request pricing for AI models, data feeds, compute resources, 
-              and developer tools. Built for automation.
-            </p>
-          </div>
-
-          <div className="use-case-item">
-            <div className="use-case-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 15V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V15" stroke="url(#useIcon3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M7 10L12 15L17 10" stroke="url(#useIcon3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 15V3" stroke="url(#useIcon3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="useIcon3" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <div className="use-case-header">
-              <h3 className="use-case-name">Digital Downloads</h3>
-              <span className="use-case-tag">Merchants</span>
-            </div>
-            <p className="use-case-description">
-              Software, templates, assets, and files. Instant delivery upon payment 
-              with cryptographic verification.
-            </p>
-          </div>
-
-          <div className="use-case-item">
-            <div className="use-case-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#useIcon4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="url(#useIcon4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="url(#useIcon4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <defs>
-                  <linearGradient id="useIcon4" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#01c3f3" />
-                    <stop offset="100%" stopColor="#0178c8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <div className="use-case-header">
-              <h3 className="use-case-name">AI Agent Access</h3>
-              <span className="use-case-tag">Automation</span>
-            </div>
-            <p className="use-case-description">
-              Enable autonomous agents to pay for services programmatically. 
-              HTTP 402 native for machine-to-machine payments.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="landing-cta">
-        <div className="cta-content">
-          <h2 className="cta-title">
-            Ready to Get Started?
-          </h2>
-          <p className="cta-description">
-            Create your first paywall in under 60 seconds. No signup required.
-          </p>
-          <div className="cta-buttons">
-            <button onClick={() => navigate('/create')} className="cta-primary">
-              Create Paywall
-            </button>
-            <button onClick={() => navigate('/docs')} className="cta-secondary">
-              View Documentation
-            </button>
           </div>
         </div>
       </section>

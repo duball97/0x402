@@ -4,7 +4,7 @@ function Footer() {
     <footer>
       <div className="footer-content">
         <div className="footer-section">
-          <h4>⚡ Vaultx402</h4>
+          <img src="/newlogo.png" alt="Vaultx402" className="footer-logo" />
           <p>Crypto-native paywalls powered by BNB Chain and the x402 protocol</p>
         </div>
         <div className="footer-section">
