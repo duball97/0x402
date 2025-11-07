@@ -13,6 +13,8 @@ function Create() {
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState(null);
 
+  const network = 'Solana';
+
   const createPaywall = async (e) => {
     e.preventDefault();
 
@@ -119,7 +121,6 @@ function Create() {
     }
   };
 
-  const network = 'Solana';
   const paywallCurrencyLabel = 'SOL';
   const paywallNetworkLabel = 'Solana';
   const previewDomain = (() => {
