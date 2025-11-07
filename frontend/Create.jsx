@@ -8,7 +8,6 @@ function Create() {
   const [description, setDescription] = useState('');
   const [paywallId, setPaywallId] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
-  const [network, setNetwork] = useState('BNB Chain');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
