@@ -119,8 +119,9 @@ function Create() {
     }
   };
 
-  const paywallCurrencyLabel = network === 'Solana' ? 'SOL' : 'BNB';
-  const paywallNetworkLabel = network === 'Solana' ? 'Solana' : 'BNB Chain';
+  const network = 'Solana';
+  const paywallCurrencyLabel = 'SOL';
+  const paywallNetworkLabel = 'Solana';
   const previewDomain = (() => {
     if (!url) return 'your-url.com';
     try {
