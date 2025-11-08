@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
 import { PublicKey } from '@solana/web3.js';
 import { isPhantomInstalled, connectPhantom } from './config';
 import Header from './Header';
@@ -7,44 +6,25 @@ import Footer from './Footer';
 
 function MyPurchases() {
   const [walletAddress, setWalletAddress] = useState(null);
-  const [walletType, setWalletType] = useState(null); // 'solana' or 'bnb'
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
 
-  const connectWallet = async (type) => {
+  const connectWallet = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      if (type === 'solana') {
-        if (!isPhantomInstalled()) {
-          setError('Please install Phantom wallet. Get it at https://phantom.app/');
-          setLoading(false);
-          return;
-        }
-
-        const publicKeyStr = await connectPhantom();
-        setWalletAddress(publicKeyStr);
-        setWalletType('solana');
-        await fetchPurchases(publicKeyStr);
-      } else if (type === 'bnb') {
-        if (!window.ethereum) {
-          setError('Please install MetaMask or another Web3 wallet');
-          setLoading(false);
-          return;
-        }
-
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send('eth_requestAccounts', []);
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        
-        setWalletAddress(address);
-        setWalletType('bnb');
-        await fetchPurchases(address);
+      if (!isPhantomInstalled()) {
+        setError('Please install Phantom wallet. Get it at https://phantom.app/');
+        setLoading(false);
+        return;
       }
+
+      const publicKeyStr = await connectPhantom();
+      setWalletAddress(publicKeyStr);
+      await fetchPurchases(publicKeyStr);
     } catch (err) {
       console.error('Wallet connection error:', err);
       setError(err.message || 'Failed to connect wallet');
@@ -93,13 +73,7 @@ function MyPurchases() {
     });
   };
 
-  const getExplorerUrl = (txHash, network) => {
-    if (network === 'Solana') {
-      return `https://solscan.io/tx/${txHash}`;
-    } else {
-      return `https://bscscan.com/tx/${txHash}`;
-    }
-  };
+  const getExplorerUrl = (txHash) => `https://solscan.io/tx/${txHash}`;
 
   return (
     <>
@@ -126,7 +100,7 @@ function MyPurchases() {
 
               <div className="wallet-connect-options">
                 <button
-                  onClick={() => connectWallet('solana')}
+                  onClick={connectWallet}
                   disabled={loading}
                   className="wallet-option"
                 >
@@ -138,23 +112,10 @@ function MyPurchases() {
                     {loading ? 'Connecting...' : 'Connect'}
                   </span>
                 </button>
-                <button
-                  onClick={() => connectWallet('bnb')}
-                  disabled={loading}
-                  className="wallet-option"
-                >
-                  <div className="wallet-option-main">
-                    <span className="wallet-option-label">MetaMask</span>
-                    <span className="wallet-option-sub">BNB Chain</span>
-                  </div>
-                  <span className="wallet-option-action">
-                    {loading ? 'Connecting...' : 'Connect'}
-                  </span>
-                </button>
               </div>
 
               <p className="wallet-connect-hint">
-                You can connect either network at any time. We only read your public wallet address.
+                Connect your Phantom wallet to restore purchases tied to your Solana address. We only read your public key.
               </p>
 
               {error && (
@@ -174,12 +135,11 @@ function MyPurchases() {
                 </div>
                 <div className="wallet-summary-actions">
                   <span className="wallet-network-pill">
-                    {walletType === 'solana' ? 'Solana' : 'BNB Chain'}
+                    Solana
                   </span>
                   <button
                     onClick={() => {
                       setWalletAddress(null);
-                      setWalletType(null);
                       setPurchases([]);
                     }}
                     className="cta-secondary wallet-disconnect-btn"
@@ -222,7 +182,7 @@ function MyPurchases() {
                           <span className="purchase-amount">
                             {purchase.amountPaid} {purchase.currency}
                           </span>
-                          <span className="purchase-network">{purchase.network}</span>
+                          <span className="purchase-network">Solana</span>
                         </div>
                       </div>
 
@@ -246,7 +206,7 @@ function MyPurchases() {
                           <p className="purchase-detail">
                             <span className="purchase-label">Transaction</span>
                             <a
-                              href={getExplorerUrl(purchase.transactionHash, purchase.network)}
+                              href={getExplorerUrl(purchase.transactionHash)}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="purchase-link"

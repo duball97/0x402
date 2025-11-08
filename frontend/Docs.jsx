@@ -40,13 +40,13 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              Vaultx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on BNB Chain with MetaMask integration, Vaultx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              Vaultx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on Solana with first-class Phantom integration, Vaultx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
             </p>
             <div className="info-card">
               <div className="info-card-icon">💡</div>
               <div>
                 <strong>What makes Vaultx402 unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, Vaultx402 enables instant, permissionless payments using native BNB on BNB Chain. No middlemen, no platform fees, no accounts needed.</p>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, Vaultx402 enables instant, permissionless payments using native SOL on Solana. No middlemen, no platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -65,9 +65,9 @@ function Docs() {
                 <span className="code-lang">HTTP</span>
               </div>
               <pre><code>{`HTTP/1.1 402 Payment Required
-X-Payment-Required: 0.01 BNB
-X-Payment-Address: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb
-X-Payment-Network: bnb-chain
+X-Payment-Required: 0.01 SOL
+X-Payment-Address: 7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5
+X-Payment-Network: solana
 X-Payment-Memo: paywall-abc123`}</code></pre>
             </div>
 
@@ -114,7 +114,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <div className="step-number">2</div>
                 <div className="step-content">
                   <h4>Set Your Price</h4>
-                  <p>Choose your price in BNB. Minimum is 0.00001 BNB (about $0.006 at current rates).</p>
+                  <p>Choose your price in SOL. Most creators start between 0.01 and 0.05 SOL, but you can set any amount you like.</p>
                 </div>
               </div>
               
@@ -122,7 +122,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <div className="step-number">3</div>
                 <div className="step-content">
                   <h4>Add Wallet Address</h4>
-                  <p>Provide your BNB Chain wallet address to receive payments. If omitted, we'll generate a non-custodial wallet for you.</p>
+                  <p>Provide your Solana wallet address to receive payments. If omitted, we'll generate a non-custodial wallet for you.</p>
                 </div>
               </div>
               
@@ -156,7 +156,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
               <div className="arch-arrow">→</div>
               <div className="arch-step">
                 <div className="arch-icon">💳</div>
-                <h4>3. MetaMask Opens</h4>
+                <h4>3. Phantom Opens</h4>
                 <p>User confirms transaction</p>
               </div>
               <div className="arch-arrow">→</div>
@@ -171,18 +171,26 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
             <div className="code-block">
               <div className="code-header">
                 <span>Transaction Flow</span>
-                <span className="code-lang">Solidity</span>
+                <span className="code-lang">JavaScript</span>
               </div>
               <pre><code>{`// 1. User initiates payment
-await signer.sendTransaction({
-  to: creatorWallet,
-  value: ethers.parseEther(price)
-});
+const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+const fromPublicKey = window.solana.publicKey;
+const toPublicKey = new PublicKey(paywall.walletAddress);
+const lamports = Math.floor(paywall.price * LAMPORTS_PER_SOL);
 
-// 2. Transaction broadcasts to BNB Chain
-// 3. Confirmed in ~3 seconds
-// 4. Creator receives funds instantly
-// 5. No platform fees, no intermediaries`}</code></pre>
+const transaction = new Transaction().add(
+  SystemProgram.transfer({
+    fromPubkey: fromPublicKey,
+    toPubkey: toPublicKey,
+    lamports,
+  })
+);
+
+const { signature } = await window.solana.signAndSendTransaction(transaction);
+await connection.confirmTransaction(signature, 'confirmed');
+
+// Funds arrive in the creator's wallet within seconds`}</code></pre>
             </div>
           </section>
 
@@ -192,8 +200,8 @@ await signer.sendTransaction({
             
             <div className="feature-list">
               <div className="feature-detail">
-                <h3>🪙 Native BNB Payments</h3>
-                <p>Accept payments in native BNB on BNB Chain. No token contracts, no wrapping, no complexity. Pure, simple cryptocurrency payments with 2-5 second finality.</p>
+                <h3>🪙 Native SOL Payments</h3>
+                <p>Accept payments in native SOL on Solana. No token contracts, no wrapping, no complexity. Pure, simple cryptocurrency payments with sub-second finality.</p>
               </div>
               
               <div className="feature-detail">
@@ -203,12 +211,12 @@ await signer.sendTransaction({
               
               <div className="feature-detail">
                 <h3>⚡ Instant Settlements</h3>
-                <p>BNB Chain's 3-second block time means payments confirm almost instantly. No waiting periods, no settlement delays, no payment processors.</p>
+                <p>Solana's lightning-fast finality means payments confirm in seconds. No waiting periods, no settlement delays, no payment processors.</p>
               </div>
               
               <div className="feature-detail">
                 <h3>💰 Zero Platform Fees</h3>
-                <p>We take <strong>0%</strong> of your revenue. The only costs are BNB Chain gas fees (typically &lt;$0.01 per transaction).</p>
+                <p>We take <strong>0%</strong> of your revenue. The only costs are Solana network fees (typically fractions of a cent per transaction).</p>
               </div>
               
               <div className="feature-detail">
@@ -233,10 +241,10 @@ await signer.sendTransaction({
                 <strong>Frontend:</strong> React + Vite
               </div>
               <div className="tech-item">
-                <strong>Blockchain:</strong> BNB Chain (EVM Compatible)
+                <strong>Blockchain:</strong> Solana
               </div>
               <div className="tech-item">
-                <strong>Web3:</strong> Ethers.js v6 + MetaMask
+                <strong>Web3:</strong> @solana/web3.js + Phantom
               </div>
               <div className="tech-item">
                 <strong>Backend:</strong> Vercel Serverless Functions
@@ -252,24 +260,33 @@ await signer.sendTransaction({
             <h3>Smart Contract Interaction</h3>
             <div className="code-block">
               <div className="code-header">
-                <span>Native BNB Transfer</span>
+                <span>Native SOL Transfer</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`import { ethers } from 'ethers';
+              <pre><code>{`import {
+  Connection,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+  LAMPORTS_PER_SOL,
+} from '@solana/web3.js';
 
-// Connect to MetaMask
-const provider = new ethers.BrowserProvider(window.ethereum);
-const signer = await provider.getSigner();
+// Connect to Phantom
+const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+const fromPublicKey = window.solana.publicKey;
+const toPublicKey = new PublicKey('CreatorWalletPublicKey');
 
-// Send native BNB payment
-const tx = await signer.sendTransaction({
-  to: '0xCreatorWalletAddress',
-  value: ethers.parseEther('0.01') // 0.01 BNB
-});
+const transaction = new Transaction().add(
+  SystemProgram.transfer({
+    fromPubkey: fromPublicKey,
+    toPubkey: toPublicKey,
+    lamports: Math.floor(0.01 * LAMPORTS_PER_SOL),
+  })
+);
 
-// Wait for confirmation
-await tx.wait();
-console.log('Payment confirmed!', tx.hash);`}</code></pre>
+const { signature } = await window.solana.signAndSendTransaction(transaction);
+await connection.confirmTransaction(signature, 'confirmed');
+console.log('Payment confirmed!', signature);`}</code></pre>
             </div>
           </section>
 
@@ -280,49 +297,32 @@ console.log('Payment confirmed!', tx.hash);`}</code></pre>
             <h3>Network Configuration</h3>
             <div className="code-block">
               <div className="code-header">
-                <span>BNB Chain Config</span>
+                <span>Solana Config</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`export const BNB_CHAIN_CONFIG = {
-  chainId: 56,
-  chainName: 'BNB Smart Chain',
-  nativeCurrency: {
-    name: 'BNB',
-    symbol: 'BNB',
-    decimals: 18
-  },
-  rpcUrls: ['https://bsc-dataseed.binance.org/'],
-  blockExplorerUrls: ['https://bscscan.com']
+              <pre><code>{`export const SOLANA_CONFIG = {
+  rpcUrl: import.meta.env.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
+  explorer: 'https://solscan.io'
 };
 
-// Auto-switch to BNB Chain
-await window.ethereum.request({
-  method: 'wallet_addEthereumChain',
-  params: [BNB_CHAIN_CONFIG]
-});`}</code></pre>
+const connection = new Connection(SOLANA_CONFIG.rpcUrl, 'confirmed');`}</code></pre>
             </div>
 
-            <h3>MetaMask Detection</h3>
+            <h3>Phantom Detection</h3>
             <div className="code-block">
               <div className="code-header">
                 <span>Check for Web3 Wallet</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`// Check if MetaMask is installed
-if (!window.ethereum) {
-  alert('Please install MetaMask to make payments');
+              <pre><code>{`// Check if Phantom is installed
+if (!window.solana || !window.solana.isPhantom) {
+  alert('Please install Phantom to make payments');
   return;
 }
 
 // Request account access
-await window.ethereum.request({ 
-  method: 'eth_requestAccounts' 
-});
-
-// Get connected wallet address
-const provider = new ethers.BrowserProvider(window.ethereum);
-const signer = await provider.getSigner();
-const address = await signer.getAddress();`}</code></pre>
+const { publicKey } = await window.solana.connect();
+const address = publicKey.toString();`}</code></pre>
             </div>
           </section>
 
@@ -345,7 +345,7 @@ const address = await signer.getAddress();`}</code></pre>
   "url": "https://example.com/premium-content",
   "price": "0.01",
   "description": "Access to premium article",
-  "walletAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+  "walletAddress": "7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5"
 }`}</code></pre>
             </div>
 
@@ -358,10 +358,10 @@ const address = await signer.getAddress();`}</code></pre>
   "paywall_id": "abc123",
   "paywall_link": "https://vaultx402.io/paywall/abc123",
   "price": "0.01",
-  "currency": "BNB",
+  "currency": "SOL",
   "status": "created",
-  "walletAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
-  "network": "BNB Chain"
+  "walletAddress": "7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5",
+  "network": "Solana"
 }`}</code></pre>
             </div>
 
@@ -380,10 +380,10 @@ const address = await signer.getAddress();`}</code></pre>
   "id": "abc123",
   "url": "https://example.com/premium-content",
   "price": "0.01",
-  "currency": "BNB",
+  "currency": "SOL",
   "status": "active",
-  "walletAddress": "0x742d35Cc...",
-  "network": "BNB Chain",
+  "walletAddress": "7zQd9dJL...",
+  "network": "Solana",
   "createdAt": "2025-10-31T12:00:00Z"
 }`}</code></pre>
             </div>
@@ -400,18 +400,18 @@ const address = await signer.getAddress();`}</code></pre>
               </div>
               
               <div className="security-item">
-                <h4>🛡️ BNB Chain Security</h4>
-                <p>Built on BNB Chain, secured by Proof of Staked Authority (PoSA) consensus with 21 validators.</p>
+                <h4>🛡️ Solana Security</h4>
+                <p>Built on Solana, secured by a high-performance proof-of-stake network with rapid finality.</p>
               </div>
               
               <div className="security-item">
                 <h4>✅ Verified Transactions</h4>
-                <p>All payments are transparent and verifiable on BscScan. No hidden fees, no opaque processing.</p>
+                <p>All payments are transparent and verifiable on Solscan. No hidden fees, no opaque processing.</p>
               </div>
               
               <div className="security-item">
-                <h4>🔒 MetaMask Security</h4>
-                <p>Transactions require explicit user approval through MetaMask. No automatic or hidden charges.</p>
+                <h4>🔒 Phantom Security</h4>
+                <p>Transactions require explicit user approval through Phantom. No automatic or hidden charges.</p>
               </div>
             </div>
 
@@ -419,9 +419,9 @@ const address = await signer.getAddress();`}</code></pre>
             <ul className="best-practices">
               <li>Always verify the recipient address before sending payments</li>
               <li>Use hardware wallets (Ledger, Trezor) for large amounts</li>
-              <li>Double-check you're on the correct network (BNB Chain)</li>
+              <li>Double-check you're on the correct network (Solana mainnet)</li>
               <li>Keep your seed phrase secure and never share it</li>
-              <li>Enable MetaMask's transaction security features</li>
+              <li>Enable Phantom's transaction security features</li>
             </ul>
           </section>
 
@@ -475,7 +475,7 @@ const address = await signer.getAddress();`}</code></pre>
             <div className="faq-list">
               <div className="faq-item">
                 <h4>What are the fees?</h4>
-                <p>Vaultx402 charges <strong>0% platform fees</strong>. The only costs are BNB Chain gas fees (typically $0.001-$0.01 per transaction).</p>
+                <p>Vaultx402 charges <strong>0% platform fees</strong>. The only costs are Solana network fees (typically fractions of a cent per transaction).</p>
               </div>
               
               <div className="faq-item">
@@ -485,27 +485,27 @@ const address = await signer.getAddress();`}</code></pre>
               
               <div className="faq-item">
                 <h4>Which wallets are supported?</h4>
-                <p>Any BNB Chain-compatible wallet works. MetaMask, Trust Wallet, Binance Wallet, WalletConnect, and more.</p>
+                <p>Phantom is the primary supported wallet today. Any Solana wallet that implements <code>signAndSendTransaction</code> can integrate.</p>
               </div>
               
               <div className="faq-item">
                 <h4>How fast are payments?</h4>
-                <p>Payments confirm in 2-5 seconds on BNB Chain. Instant compared to traditional payment processors.</p>
+                <p>Payments confirm in 2-5 seconds on Solana. Instant compared to traditional payment processors.</p>
               </div>
               
               <div className="faq-item">
                 <h4>Can I accept other currencies?</h4>
-                <p>Currently we support native BNB payments on BNB Chain. Fast, secure, and low-cost transactions. Additional token support may be added based on community demand.</p>
+                <p>Currently we support native SOL payments on Solana. Additional token support may be added based on community demand.</p>
               </div>
               
               <div className="faq-item">
                 <h4>Is this production-ready?</h4>
-                <p>Yes! Vaultx402 is live on BNB Chain mainnet and ready for production use.</p>
+                <p>Yes! Vaultx402 is live on Solana mainnet and ready for production use.</p>
               </div>
               
               <div className="faq-item">
                 <h4>How do refunds work?</h4>
-                <p>Since payments go directly to your wallet, refunds must be handled manually. Send BNB back to the payer's address if needed.</p>
+                <p>Since payments go directly to your wallet, refunds must be handled manually. Send SOL back to the payer's address if needed.</p>
               </div>
               
               <div className="faq-item">

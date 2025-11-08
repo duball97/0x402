@@ -58,7 +58,7 @@ async function createPaywall() {
         </div>
         <div class="info-box">
           <p>🔗 Share this link to monetize your content</p>
-          <p>💰 Payments settle to your wallet on BNB Chain</p>
+          <p>💰 Payments settle to your wallet on Solana</p>
           <p>⚡ Instant payouts in USDC</p>
         </div>
       </div>
