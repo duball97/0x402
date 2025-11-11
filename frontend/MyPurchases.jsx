@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react';
 import { PublicKey } from '@solana/web3.js';
 import { isPhantomInstalled, connectPhantom } from './config';
+import { isValidZcashAddress, getZcashTxExplorerUrl } from './zcashUtils';
 import Header from './Header';
 import Footer from './Footer';
 
 function MyPurchases() {
   const [walletAddress, setWalletAddress] = useState(null);
+  const [walletNetwork, setWalletNetwork] = useState(null); // 'solana' or 'zcash'
+  const [zcashAddressInput, setZcashAddressInput] = useState('');
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
 
-  const connectWallet = async () => {
+  const connectSolanaWallet = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -24,7 +27,8 @@ function MyPurchases() {
 
       const publicKeyStr = await connectPhantom();
       setWalletAddress(publicKeyStr);
-      await fetchPurchases(publicKeyStr);
+      setWalletNetwork('solana');
+      await fetchPurchases(publicKeyStr, 'solana');
     } catch (err) {
       console.error('Wallet connection error:', err);
       setError(err.message || 'Failed to connect wallet');
@@ -33,14 +37,33 @@ function MyPurchases() {
     }
   };
 
-  const fetchPurchases = async (address) => {
+  const connectZcashWallet = () => {
+    setError(null);
+    const address = zcashAddressInput.trim();
+
+    if (!address) {
+      setError('Please enter a Zcash address');
+      return;
+    }
+
+    if (!isValidZcashAddress(address)) {
+      setError('Invalid Zcash address. Please enter a valid transparent or shielded address.');
+      return;
+    }
+
+    setWalletAddress(address);
+    setWalletNetwork('zcash');
+    fetchPurchases(address, 'zcash');
+  };
+
+  const fetchPurchases = async (address, network = 'solana') => {
     if (!address) return;
 
     try {
       setFetching(true);
       setError(null);
 
-      const response = await fetch(`/api/get-purchases?walletAddress=${address}`);
+      const response = await fetch(`/api/get-purchases?walletAddress=${address}&network=${network}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch purchases');
@@ -57,10 +80,10 @@ function MyPurchases() {
   };
 
   useEffect(() => {
-    if (walletAddress) {
-      fetchPurchases(walletAddress);
+    if (walletAddress && walletNetwork) {
+      fetchPurchases(walletAddress, walletNetwork);
     }
-  }, [walletAddress]);
+  }, [walletAddress, walletNetwork]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -73,7 +96,12 @@ function MyPurchases() {
     });
   };
 
-  const getExplorerUrl = (txHash) => `https://solscan.io/tx/${txHash}`;
+  const getExplorerUrl = (txHash) => {
+    if (walletNetwork === 'zcash') {
+      return getZcashTxExplorerUrl(txHash);
+    }
+    return `https://solscan.io/tx/${txHash}`;
+  };
 
   return (
     <>
@@ -90,36 +118,51 @@ function MyPurchases() {
           </header>
 
           {!walletAddress ? (
-            <section className="my-purchases-panel wallet-connect-panel">
-              <div className="wallet-connect-copy">
-                <h3>Connect a wallet</h3>
-                <p>
-                  Choose the network you used to unlock content. We&apos;ll surface every purchase tied to that address.
-                </p>
-              </div>
-
-              <div className="wallet-connect-options">
+            <section className="connect-section">
+              <h3>Connect Wallet</h3>
+              
+              {/* Solana */}
+              <div className="connect-box">
+                <div className="connect-label">
+                  <strong>Phantom (Solana)</strong>
+                </div>
                 <button
-                  onClick={connectWallet}
+                  onClick={connectSolanaWallet}
                   disabled={loading}
-                  className="wallet-option"
+                  className="connect-btn"
                 >
-                  <div className="wallet-option-main">
-                    <span className="wallet-option-label">Phantom</span>
-                    <span className="wallet-option-sub">Solana</span>
-                  </div>
-                  <span className="wallet-option-action">
-                    {loading ? 'Connecting...' : 'Connect'}
-                  </span>
+                  {loading ? 'Connecting...' : 'Connect Wallet'}
                 </button>
               </div>
 
-              <p className="wallet-connect-hint">
-                Connect your Phantom wallet to restore purchases tied to your Solana address. We only read your public key.
-              </p>
+              {/* Zcash */}
+              <div className="connect-box">
+                <div className="connect-label">
+                  <strong>Zcash</strong>
+                  <span>Enter your address</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Enter Zcash address"
+                  value={zcashAddressInput}
+                  onChange={(e) => setZcashAddressInput(e.target.value)}
+                  className="zcash-input"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      connectZcashWallet();
+                    }
+                  }}
+                />
+                <button
+                  onClick={connectZcashWallet}
+                  className="connect-btn"
+                >
+                  Connect
+                </button>
+              </div>
 
               {error && (
-                <div className="validation-error wallet-connect-error">
+                <div className="error-box">
                   {error}
                 </div>
               )}
@@ -135,11 +178,13 @@ function MyPurchases() {
                 </div>
                 <div className="wallet-summary-actions">
                   <span className="wallet-network-pill">
-                    Solana
+                    {walletNetwork === 'zcash' ? 'Zcash' : 'Solana'}
                   </span>
                   <button
                     onClick={() => {
                       setWalletAddress(null);
+                      setWalletNetwork(null);
+                      setZcashAddressInput('');
                       setPurchases([]);
                     }}
                     className="cta-secondary wallet-disconnect-btn"
@@ -169,52 +214,27 @@ function MyPurchases() {
                 <div className="purchases-list">
                   {purchases.map((purchase) => (
                     <div key={purchase.id} className="purchase-card">
-                      <div className="purchase-header">
-                        <div className="purchase-heading">
-                          <h3 className="purchase-title">
-                            {purchase.paywall?.description || `Paywall ${purchase.paywallId}`}
-                          </h3>
-                          <p className="purchase-date">
-                            Purchased {formatDate(purchase.purchasedAt)}
-                          </p>
-                        </div>
-                        <div className="purchase-meta">
-                          <span className="purchase-amount">
-                            {purchase.amountPaid} {purchase.currency}
-                          </span>
-                          <span className="purchase-network">Solana</span>
-                        </div>
+                      <div className="purchase-title">
+                        {purchase.paywall?.description || `Paywall ${purchase.paywallId}`}
                       </div>
-
+                      <div className="purchase-date">
+                        {formatDate(purchase.purchasedAt)}
+                      </div>
+                      <div className="purchase-amount">
+                        {purchase.amountPaid} {purchase.currency}
+                      </div>
+                      <div className="purchase-network">
+                        {purchase.network || (walletNetwork === 'zcash' ? 'Zcash' : 'Solana')}
+                      </div>
                       {purchase.paywall && (
-                        <div className="purchase-body">
-                          <p className="purchase-detail">
-                            <span className="purchase-label">Content URL</span>
-                            <a
-                              href={purchase.paywall.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="purchase-link"
-                            >
-                              {purchase.paywall.url}
-                            </a>
-                          </p>
-                          <p className="purchase-detail">
-                            <span className="purchase-label">Paywall ID</span>
-                            <code className="purchase-code">{purchase.paywallId}</code>
-                          </p>
-                          <p className="purchase-detail">
-                            <span className="purchase-label">Transaction</span>
-                            <a
-                              href={getExplorerUrl(purchase.transactionHash)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="purchase-link"
-                            >
-                              {purchase.transactionHash.slice(0, 8)}...{purchase.transactionHash.slice(-8)}
-                            </a>
-                          </p>
-                        </div>
+                        <a
+                          href={purchase.paywall.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="purchase-link"
+                        >
+                          View
+                        </a>
                       )}
                     </div>
                   ))}

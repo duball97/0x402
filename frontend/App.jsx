@@ -77,14 +77,6 @@ function App() {
         <div className="hero-grid-overlay"></div>
 
         <div className="hero-content-v2">
-          <div className="hero-badge" data-animate id="hero-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" strokeWidth="2"
-                    strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Built on HTTP 402 Protocol
-          </div>
-
           <h1 className="hero-title-v2" data-animate id="hero-title">
             Buy and sell
             <br />
@@ -123,49 +115,22 @@ function App() {
 
           <div className="hero-stats-v2" data-animate id="hero-stats">
             <div className="stat-box-v2">
-              <div className="stat-icon-v2">⚡</div>
               <div className="stat-content-v2">
                 <div className="stat-value-v2">2-5s</div>
                 <div className="stat-label-v2">Settlement Time</div>
               </div>
             </div>
             <div className="stat-box-v2">
-              <div className="stat-icon-v2">💎</div>
               <div className="stat-content-v2">
                 <div className="stat-value-v2">0%</div>
                 <div className="stat-label-v2">Platform Fees</div>
               </div>
             </div>
             <div className="stat-box-v2">
-              <div className="stat-icon-v2">🔒</div>
               <div className="stat-content-v2">
                 <div className="stat-value-v2">100%</div>
                 <div className="stat-label-v2">Self-Custodial</div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-floating-cards">
-          <div className="floating-card floating-card-1">
-            <div className="card-glow"></div>
-            <div className="card-content-mini">
-              <div className="card-mini-header">Payment Received ✓</div>
-              <div className="card-mini-amount">0.05 SOL</div>
-            </div>
-          </div>
-          <div className="floating-card floating-card-2">
-            <div className="card-glow"></div>
-            <div className="card-content-mini">
-              <div className="card-mini-header">Transaction</div>
-              <div className="card-mini-status">Confirmed in 2.3s</div>
-            </div>
-          </div>
-          <div className="floating-card floating-card-3">
-            <div className="card-glow"></div>
-            <div className="card-content-mini">
-              <div className="card-mini-header">Gas Fee</div>
-              <div className="card-mini-amount">$0.008</div>
             </div>
           </div>
         </div>
@@ -301,8 +266,6 @@ function App() {
         </div>
 
         <div className="workflow-container">
-          <div className="workflow-line"></div>
-
           <div className="workflow-step" data-animate id="workflow-1">
             <div className="workflow-card">
               <div className="workflow-number">01</div>
@@ -311,17 +274,8 @@ function App() {
               </div>
               <h3 className="workflow-step-title">Create Your Paywall</h3>
               <p className="workflow-step-desc">
-                Enter your content URL, set your price in SOL, add your wallet
-                address. Takes less than 60 seconds.
+                Enter your content URL, set your price in SOL, add your wallet address. Takes less than 60 seconds.
               </p>
-              <div className="workflow-visual">
-                <div className="mini-form">
-                  <div className="mini-input">Content URL</div>
-                  <div className="mini-input">Price: 0.01 SOL</div>
-                  <div className="mini-input">Wallet Address</div>
-                  <div className="mini-button">Create Paywall</div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -333,20 +287,8 @@ function App() {
               </div>
               <h3 className="workflow-step-title">Share Your Link</h3>
               <p className="workflow-step-desc">
-                Get a unique paywall link. Share it on social media, embed on your website,
-                or send directly to customers.
+                Get a unique paywall link. Share it on social media, embed on your website, or send directly to customers.
               </p>
-              <div className="workflow-visual">
-                <div className="share-preview">
-                  <div className="share-link">stealthpayx402.com/p/abc123</div>
-                  <div className="share-icons">
-                    <div className="share-icon">🐦</div>
-                    <div className="share-icon">📧</div>
-                    <div className="share-icon">💬</div>
-                    <div className="share-icon">📋</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -358,19 +300,9 @@ function App() {
               </div>
               <h3 className="workflow-step-title">Get Paid Instantly</h3>
               <p className="workflow-step-desc">
-                Customers pay with their wallet, funds arrive in yours within seconds.
-                No middlemen, no delays, no fees.
+                Customers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, no fees.
               </p>
-              <div className="workflow-visual">
-                <div className="payment-flow">
-                  <div className="flow-box">Customer 👤</div>
-                  <div className="flow-arrow">→</div>
-                  <div className="flow-box">Blockchain ⛓️</div>
-                  <div className="flow-arrow">→</div>
-                  <div className="flow-box success">You 💎</div>
-                </div>
-                <div className="payment-time">⚡ 2-5 seconds</div>
-              </div>
+              <div className="payment-time">⚡ 2-5 seconds</div>
             </div>
           </div>
         </div>

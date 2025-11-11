@@ -41,6 +41,13 @@ function Marketplace() {
     return paywalls
       .filter((paywall) => {
         const normalizedNetwork = (paywall.network || 'Solana').toLowerCase();
+        const normalizedCurrency = (paywall.currency || '').toLowerCase();
+        
+        // Exclude BNB and BNB Chain paywalls
+        if (normalizedNetwork.includes('bnb') || normalizedCurrency.includes('bnb')) {
+          return false;
+        }
+        
         const matchesNetwork = networkFilter === 'all' ||
           normalizedNetwork === networkFilter ||
           (networkFilter === 'zcash' && (normalizedNetwork.includes('zcash') || normalizedNetwork.includes('zec')));
@@ -67,10 +74,19 @@ function Marketplace() {
     let solanaCount = 0;
     let zcashVolume = 0;
     let zcashCount = 0;
+    let totalListings = 0;
 
     paywalls.forEach((item) => {
-      const price = parseFloat(item.price) || 0;
       const network = (item.network || 'Solana').toLowerCase();
+      const currency = (item.currency || '').toLowerCase();
+      
+      // Exclude BNB and BNB Chain paywalls from stats
+      if (network.includes('bnb') || currency.includes('bnb')) {
+        return;
+      }
+      
+      totalListings += 1;
+      const price = parseFloat(item.price) || 0;
 
       if (network.includes('sol')) {
         solanaVolume += price;
@@ -82,7 +98,7 @@ function Marketplace() {
     });
 
     return {
-      listings: paywalls.length,
+      listings: totalListings,
       solanaVolume,
       solanaCount,
       zcashVolume,
@@ -90,7 +106,13 @@ function Marketplace() {
     };
   }, [paywalls]);
 
-  const hasAny = paywalls.length > 0;
+  const hasAny = useMemo(() => {
+    return paywalls.some((paywall) => {
+      const network = (paywall.network || 'Solana').toLowerCase();
+      const currency = (paywall.currency || '').toLowerCase();
+      return !network.includes('bnb') && !currency.includes('bnb');
+    });
+  }, [paywalls]);
   const hasFiltered = filteredPaywalls.length > 0;
 
   const resetFilters = () => {
