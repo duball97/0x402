@@ -86,9 +86,9 @@ function App() {
           </div>
 
           <h1 className="hero-title-v2" data-animate id="hero-title">
-            Your Cat
+            Buy and sell
             <br />
-            <span className="hero-gradient-text">Deserves Better</span>
+            <span className="hero-gradient-text">Links Privately</span>
           </h1>
 
           <p className="hero-description-v2" data-animate id="hero-desc">
