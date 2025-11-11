@@ -5,13 +5,13 @@ function Footer() {
       <div className="footer-content">
         <div className="footer-section">
           <img src="/newlogo.png" alt="Vaultx402" className="footer-logo" />
-          <p>Crypto-native paywalls powered by Solana and the x402 protocol</p>
+          <p>Crypto-native paywalls powered by Solana, Zcash shielded payments, and the x402 protocol</p>
         </div>
         <div className="footer-section">
           <h4>Features</h4>
           <ul>
-            <li>Native SOL Payments</li>
-            <li>Instant Settlements</li>
+            <li>SOL & ZEC Payments</li>
+            <li>Shielded Privacy</li>
             <li>Non-custodial Wallets</li>
             <li>Zero Platform Fees</li>
           </ul>
@@ -19,9 +19,9 @@ function Footer() {
         <div className="footer-section">
           <h4>Technology</h4>
           <ul>
-            <li>Built on Solana</li>
-            <li>Web3 Integration</li>
-            <li>MetaMask Compatible</li>
+            <li>Solana & Zcash</li>
+            <li>Shielded Pools</li>
+            <li>Phantom & Zecwallet</li>
             <li>HTTP 402 Protocol</li>
           </ul>
         </div>

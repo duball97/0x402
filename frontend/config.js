@@ -4,10 +4,23 @@ export const CHAIN_CONFIG = {
   SOLANA_EXPLORER: 'https://solscan.io',
   SOLANA_DEVNET_EXPLORER: 'https://solscan.io?cluster=devnet',
   SOLANA_NETWORK_NAME: 'Solana',
+  ZCASH_API_BASE: 'https://api.blockchair.com/zcash',
+  ZCASH_EXPLORER: 'https://blockchair.com/zcash',
+  ZCASH_NETWORK_NAME: 'Zcash',
 };
 
 export const getCurrentNetwork = (network = 'Solana') => {
   const normalized = (network || '').toLowerCase();
+
+  if (normalized.includes('zcash') || normalized.includes('zec')) {
+    return {
+      name: CHAIN_CONFIG.ZCASH_NETWORK_NAME,
+      apiBase: CHAIN_CONFIG.ZCASH_API_BASE,
+      explorer: CHAIN_CONFIG.ZCASH_EXPLORER,
+      network: 'Zcash',
+    };
+  }
+
   if (normalized === 'devnet') {
     return {
       name: `${CHAIN_CONFIG.SOLANA_NETWORK_NAME} Devnet`,

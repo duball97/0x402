@@ -41,7 +41,9 @@ function Marketplace() {
     return paywalls
       .filter((paywall) => {
         const normalizedNetwork = (paywall.network || 'Solana').toLowerCase();
-        const matchesNetwork = networkFilter === 'all' || normalizedNetwork === networkFilter;
+        const matchesNetwork = networkFilter === 'all' ||
+          normalizedNetwork === networkFilter ||
+          (networkFilter === 'zcash' && (normalizedNetwork.includes('zcash') || normalizedNetwork.includes('zec')));
         const matchesTerm = term
           ? [paywall.id, paywall.description, paywall.currency]
               .filter(Boolean)
@@ -63,6 +65,8 @@ function Marketplace() {
   const stats = useMemo(() => {
     let solanaVolume = 0;
     let solanaCount = 0;
+    let zcashVolume = 0;
+    let zcashCount = 0;
 
     paywalls.forEach((item) => {
       const price = parseFloat(item.price) || 0;
@@ -71,6 +75,9 @@ function Marketplace() {
       if (network.includes('sol')) {
         solanaVolume += price;
         solanaCount += 1;
+      } else if (network.includes('zcash') || network.includes('zec')) {
+        zcashVolume += price;
+        zcashCount += 1;
       }
     });
 
@@ -78,6 +85,8 @@ function Marketplace() {
       listings: paywalls.length,
       solanaVolume,
       solanaCount,
+      zcashVolume,
+      zcashCount,
     };
   }, [paywalls]);
 
@@ -123,6 +132,11 @@ function Marketplace() {
               <span className="metric-chip-value">{stats.solanaVolume.toFixed(3)} SOL</span>
               <span className="metric-chip-footnote">{stats.solanaCount} paywalls</span>
             </div>
+            <div className="metric-chip">
+              <span className="metric-chip-label">ZEC volume</span>
+              <span className="metric-chip-value">{stats.zcashVolume.toFixed(4)} ZEC</span>
+              <span className="metric-chip-footnote">{stats.zcashCount} paywalls</span>
+            </div>
           </div>
         </section>
 
@@ -147,6 +161,7 @@ function Marketplace() {
               {[
                 { id: 'all', label: 'All' },
                 { id: 'solana', label: 'Solana' },
+                { id: 'zcash', label: 'Zcash' },
               ].map((chip) => (
                 <button
                   key={chip.id}

@@ -93,7 +93,7 @@ function App() {
 
           <p className="hero-description-v2" data-animate id="hero-desc">
             Transform your content into revenue with blockchain-powered paywalls.
-            Zero fees. Instant settlements. Complete control. Built for creators,
+            Zero fees. Instant settlements. Shielded privacy. Built for creators,
             developers, and AI agents.
           </p>
 
@@ -188,8 +188,8 @@ function App() {
             <div className="bento-icon-large">⚡</div>
             <h3 className="bento-title">Lightning Fast Settlements</h3>
             <p className="bento-desc">
-              Payments settle in 2-5 seconds on Solana. No waiting days for
-              traditional processors. Your money arrives instantly.
+              Payments settle in seconds on Solana and Zcash. No waiting days for
+              traditional processors. Your money arrives instantly with optional privacy.
             </p>
             <div className="bento-metric-showcase">
               <div className="metric-bar">
@@ -263,11 +263,12 @@ function App() {
             <div className="bento-icon">🌐</div>
             <h3 className="bento-title">Multi-Chain Support</h3>
             <p className="bento-desc">
-              Runs on Solana. More chains coming soon.
+              Runs on Solana and Zcash shielded pools. Privacy-first payments supported.
             </p>
             <div className="chain-badges">
               <div className="chain-badge">SOL</div>
-              <div className="chain-badge chain-badge-soon">More Chains Soon</div>
+              <div className="chain-badge">ZEC 🛡️</div>
+              <div className="chain-badge chain-badge-soon">More Soon</div>
             </div>
           </div>
 
@@ -391,7 +392,7 @@ function App() {
               <span className="counting-number">2.4</span>s
             </div>
             <div className="stat-large-label">Average Settlement</div>
-            <p className="stat-large-desc">Lightning fast payments on Solana</p>
+            <p className="stat-large-desc">Lightning fast payments on Solana & Zcash</p>
           </div>
 
           <div className="stat-card-large" data-animate id="stat-3">

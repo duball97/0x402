@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { getCurrentNetwork, isPhantomInstalled, connectPhantom, CHAIN_CONFIG } from './config';
+import { openZcashWallet, verifyZcashTransaction, getZcashTxExplorerUrl } from './zcashUtils';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -11,8 +12,15 @@ function Paywall() {
   const [error, setError] = useState(null);
   const [paywallData, setPaywallData] = useState(null);
   const [paid, setPaid] = useState(false);
-  const resolvedNetwork = (paywallData?.network && paywallData.network.toLowerCase().includes('sol')) ? 'Solana' : 'Solana';
-  const resolvedCurrency = 'SOL';
+  const [txHash, setTxHash] = useState('');
+  const [verifying, setVerifying] = useState(false);
+  const resolvedNetwork = (() => {
+    if (!paywallData?.network) return 'Solana';
+    const net = paywallData.network.toLowerCase();
+    if (net.includes('zcash') || net.includes('zec')) return 'Zcash';
+    return 'Solana';
+  })();
+  const resolvedCurrency = resolvedNetwork === 'Zcash' ? 'ZEC' : 'SOL';
 
   useEffect(() => {
     // Fetch paywall data from API
@@ -36,6 +44,62 @@ function Paywall() {
     fetchPaywall();
   }, [id]);
 
+  const handleVerifyZcashTx = async () => {
+    if (!txHash || !txHash.trim()) {
+      setError('Please enter a transaction hash');
+      return;
+    }
+
+    try {
+      setVerifying(true);
+      setError(null);
+
+      console.log('Verifying Zcash transaction:', txHash);
+
+      // Verify the transaction
+      const txData = await verifyZcashTransaction(txHash.trim());
+
+      if (!txData.confirmed) {
+        setError('Transaction not found or not yet confirmed. Please wait a few minutes and try again.');
+        setVerifying(false);
+        return;
+      }
+
+      console.log('Transaction verified:', txData);
+      
+      // For shielded transactions, we can't verify the exact amount on-chain
+      if (txData.shielded) {
+        console.log('Shielded transaction detected - amount verification skipped');
+      }
+
+      // Record the purchase
+      try {
+        await fetch('/api/record-purchase', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paywallId: id,
+            buyerWalletAddress: 'zcash-user',
+            transactionHash: txHash.trim(),
+            network: 'Zcash',
+            amountPaid: txData.amount,
+            currency: 'ZEC'
+          })
+        });
+        console.log('Purchase recorded successfully');
+      } catch (err) {
+        console.warn('Failed to record purchase (non-critical):', err);
+      }
+
+      setPaid(true);
+      setVerifying(false);
+    } catch (err) {
+      console.error('Verification error:', err);
+      setError(err.message || 'Failed to verify transaction. Please try again.');
+      setVerifying(false);
+    }
+  };
+
   const handlePayment = async () => {
     try {
       setLoading(true);
@@ -49,11 +113,12 @@ function Paywall() {
         return;
       }
 
-      const network = (paywallData?.network || 'Solana').toLowerCase().includes('sol') ? 'Solana' : 'Solana';
-
-      if (network !== 'Solana') {
-        setError('This paywall currently only supports Solana payments.');
+      // Handle Zcash payment
+      if (resolvedNetwork === 'Zcash') {
+        console.log('Starting Zcash payment...');
+        openZcashWallet(paywallData.walletAddress, priceNum, `Paywall: ${id}`);
         setLoading(false);
+        setError(null);
         return;
       }
 
@@ -337,19 +402,91 @@ function Paywall() {
             </div>
           )}
 
-          <button
-            onClick={handlePayment}
-              disabled={loading}
-            style={{ marginTop: '32px' }}
-          >
-              {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Phantom')}
-          </button>
+          {resolvedNetwork === 'Zcash' ? (
+            <>
+              <button
+                onClick={handlePayment}
+                disabled={loading}
+                style={{ marginTop: '32px' }}
+              >
+                {loading ? 'Opening wallet...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Open Zcash Wallet')}
+              </button>
 
-          <div className="info-box" style={{ marginTop: '32px' }}>
-            <p>⚡ Instant settlement on {resolvedNetwork}</p>
-            <p>🔐 Secure Web3 payment</p>
-            <p>💰 Pay with SOL via Phantom</p>
-          </div>
+              <div className="info-box" style={{ marginTop: '24px', background: '#1a1a1a', padding: '20px', borderRadius: '8px' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#fff' }}>Payment Instructions</h4>
+                <ol style={{ margin: '0', paddingLeft: '20px', fontSize: '13px', color: '#aaa', lineHeight: '1.6' }}>
+                  <li>Click "Open Zcash Wallet" to launch your wallet app</li>
+                  <li>Send exactly {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} ZEC to the address below</li>
+                  <li>After sending, paste your transaction hash below</li>
+                  <li>Click "Verify Payment" to unlock content</li>
+                </ol>
+              </div>
+
+              <div style={{ marginTop: '24px', padding: '16px', background: '#0a0a0a', border: '1px solid #222', borderRadius: '8px' }}>
+                <div style={{ marginBottom: '12px' }}>
+                  <label htmlFor="txHashInput" style={{ display: 'block', fontSize: '13px', color: '#aaa', marginBottom: '8px' }}>
+                    Transaction Hash
+                  </label>
+                  <input
+                    type="text"
+                    id="txHashInput"
+                    placeholder="Enter your Zcash transaction hash"
+                    value={txHash}
+                    onChange={(e) => setTxHash(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      background: '#111',
+                      border: '1px solid #333',
+                      borderRadius: '6px',
+                      color: '#fff',
+                      fontSize: '13px',
+                      fontFamily: 'monospace'
+                    }}
+                  />
+                </div>
+                <button
+                  onClick={handleVerifyZcashTx}
+                  disabled={verifying || !txHash}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: verifying || !txHash ? '#333' : 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    cursor: verifying || !txHash ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {verifying ? 'Verifying...' : 'Verify Payment'}
+                </button>
+              </div>
+
+              <div className="info-box" style={{ marginTop: '24px' }}>
+                <p>🛡️ Shielded privacy payments</p>
+                <p>🔐 Secure blockchain verification</p>
+                <p>💰 Pay with any Zcash wallet</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handlePayment}
+                disabled={loading}
+                style={{ marginTop: '32px' }}
+              >
+                {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Phantom')}
+              </button>
+
+              <div className="info-box" style={{ marginTop: '32px' }}>
+                <p>⚡ Instant settlement on {resolvedNetwork}</p>
+                <p>🔐 Secure Web3 payment</p>
+                <p>💰 Pay with SOL via Phantom</p>
+              </div>
+            </>
+          )}
 
           {paywallData?.walletAddress && (
             <div className="result-section" style={{ marginTop: '24px' }}>
@@ -368,7 +505,7 @@ function Paywall() {
             HTTP/1.1 402 Payment Required<br/>
                    X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {resolvedCurrency}<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
-            X-Payment-Network: solana
+            X-Payment-Network: {resolvedNetwork.toLowerCase()}
           </code>
         </div>
       </section>

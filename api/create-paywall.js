@@ -2,6 +2,30 @@ import { supabase } from './supabase.js';
 import { Keypair, PublicKey } from '@solana/web3.js';
 import { ethers } from 'ethers';
 
+// Zcash address validation (supports transparent and shielded addresses)
+function isValidZcashAddress(address) {
+  if (!address || typeof address !== 'string') return false;
+
+  // Transparent addresses: t1 (mainnet) or t2 (testnet) - 35 chars
+  const transparentRegex = /^t[12][a-zA-Z0-9]{33}$/;
+  
+  // Sapling shielded addresses: zs1 (mainnet) or ztestsapling (testnet) - variable length
+  const saplingRegex = /^zs1[a-z0-9]{75}$/;
+  const testnetSaplingRegex = /^ztestsapling1[a-z0-9]{64}$/;
+  
+  // Sprout shielded addresses: zc (legacy, ~95 chars)
+  const sproutRegex = /^zc[a-zA-Z0-9]{93}$/;
+  
+  // Unified addresses: u1 (mainnet) - variable length, can be 141+ chars
+  const unifiedRegex = /^u1[a-z0-9]{100,}$/;
+  
+  return transparentRegex.test(address) || 
+         saplingRegex.test(address) || 
+         testnetSaplingRegex.test(address) ||
+         sproutRegex.test(address) ||
+         unifiedRegex.test(address);
+}
+
 // Helper function to create a wallet
 function createWallet(network = 'BNB Chain') {
   if (network === 'Solana') {
@@ -64,9 +88,13 @@ export default async function handler(req, res) {
   
   const id = paywallId;
 
-  // If no wallet provided, create a new one
+  // If no wallet provided, create a new one (except for Zcash which requires manual address)
   let wallet;
   if (!walletAddress) {
+    const network = selectedNetwork || 'BNB Chain';
+    if (network === 'Zcash') {
+      return res.status(400).json({ error: "A Zcash address is required. Zcash addresses cannot be auto-generated." });
+    }
     wallet = createWallet(selectedNetwork);
   } else {
     // Validate wallet address based on network
@@ -78,13 +106,18 @@ export default async function handler(req, res) {
       } catch (err) {
         return res.status(400).json({ error: "Invalid Solana wallet address" });
       }
+    } else if (network === 'Zcash') {
+      // Validate Zcash address (transparent or shielded)
+      if (!isValidZcashAddress(walletAddress)) {
+        return res.status(400).json({ error: "Invalid Zcash address. Please enter a valid shielded (zs1, u1) or transparent (t1) address." });
+      }
     } else {
       // Validate BNB Chain address (Ethereum format)
       if (!ethers.isAddress(walletAddress)) {
         return res.status(400).json({ error: "Invalid BNB Chain wallet address" });
       }
     }
-    
+
     wallet = {
       walletAddress: walletAddress,
       network: network,
@@ -119,12 +152,19 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error. Please contact support.' });
   }
 
+  // Determine currency based on network
+  const getCurrency = (network) => {
+    if (network === 'Solana') return 'SOL';
+    if (network === 'Zcash') return 'ZEC';
+    return 'BNB';
+  };
+
   const paywallData = {
     id,
     url,
     description: description || null,
     price: parseFloat(price),
-    currency: selectedNetwork === 'Solana' ? 'SOL' : 'BNB',
+    currency: getCurrency(selectedNetwork),
     status: "created",
     wallet_address: wallet.walletAddress,
     network: wallet.network,
@@ -161,7 +201,7 @@ export default async function handler(req, res) {
     paywall_id: id,
     paywall_link: paywallLink,
     price,
-    currency: selectedNetwork === 'Solana' ? 'SOL' : 'BNB',
+    currency: getCurrency(selectedNetwork),
     status: "created",
     walletAddress: wallet.walletAddress,
     network: wallet.network,

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import { isValidZcashAddress } from './zcashUtils';
 
 function Create() {
   const [url, setUrl] = useState('');
@@ -12,8 +13,7 @@ function Create() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState(null);
-
-  const network = 'Solana';
+  const [network, setNetwork] = useState('Solana');
 
   const createPaywall = async (e) => {
     e.preventDefault();
@@ -33,6 +33,14 @@ function Create() {
     }
     if (!/^[a-zA-Z0-9-_]+$/.test(paywallId)) {
       setValidationError('Paywall ID can only contain letters, numbers, hyphens, and underscores');
+      return;
+    }
+    if (network === 'Zcash' && !walletAddress) {
+      setValidationError('A Zcash address is required for Zcash paywalls');
+      return;
+    }
+    if (network === 'Zcash' && walletAddress && !isValidZcashAddress(walletAddress)) {
+      setValidationError('Invalid Zcash address. Please enter a valid Zcash address (shielded or transparent)');
       return;
     }
 
@@ -121,8 +129,8 @@ function Create() {
     }
   };
 
-  const paywallCurrencyLabel = 'SOL';
-  const paywallNetworkLabel = 'Solana';
+  const paywallCurrencyLabel = network === 'Zcash' ? 'ZEC' : 'SOL';
+  const paywallNetworkLabel = network;
   const previewDomain = (() => {
     if (!url) return 'your-url.com';
     try {
@@ -194,7 +202,7 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Access destination</h3>
-                  <p>Enter the URL buyers unlock plus the readable ID used in your Vaultx402 link.</p>
+                  <p>Enter the URL buyers unlock plus a unique ID for your Vaultx402 paywall link.</p>
                 </div>
               </div>
               <div className="field-grid">
@@ -233,18 +241,30 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Settlement settings</h3>
-                  <p>Set your Solana price and payout recipient. Leave the wallet blank to auto-generate one.</p>
+                  <p>Choose your blockchain network, set your price, and specify the payout recipient.</p>
                 </div>
               </div>
 
               <div className="network-toggle" role="tablist" aria-label="Network selector">
                 <div
-                  className="network-option network-option-active"
+                  className={`network-option ${network === 'Solana' ? 'network-option-active' : ''}`}
                   role="tab"
-                  aria-selected="true"
+                  aria-selected={network === 'Solana'}
+                  onClick={() => setNetwork('Solana')}
+                  style={{ cursor: 'pointer' }}
                 >
                   <span className="option-label">Solana</span>
                   <span className="option-footnote">Phantom · SOL</span>
+                </div>
+                <div
+                  className={`network-option ${network === 'Zcash' ? 'network-option-active' : ''}`}
+                  role="tab"
+                  aria-selected={network === 'Zcash'}
+                  onClick={() => setNetwork('Zcash')}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="option-label">Zcash</span>
+                  <span className="option-footnote">Shielded · ZEC</span>
                 </div>
               </div>
 
@@ -269,11 +289,15 @@ function Create() {
                   <input
                     type="text"
                     id="walletAddress"
-                    placeholder="Enter a Solana address"
+                    placeholder={network === 'Zcash' ? 'Enter a Zcash shielded address (zs1..., u1...)' : 'Enter a Solana address'}
                     value={walletAddress}
                     onChange={(e) => setWalletAddress(e.target.value)}
                   />
-                  <p className="input-hint">Leave blank to auto-generate a non-custodial Vaultx402 wallet for this paywall.</p>
+                  <p className="input-hint">
+                    {network === 'Zcash'
+                      ? 'Enter a shielded Zcash address (zs1, u1, or transparent t1). Required for Zcash paywalls.'
+                      : 'Leave blank to auto-generate a non-custodial Vaultx402 wallet for this paywall.'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -412,7 +436,7 @@ function Create() {
                     </div>
                     <p className="preview-copy">{description || 'Describe the value buyers receive once they complete payment.'}</p>
                     <button className="preview-pay-btn" type="button" disabled>
-                      Pay with Phantom
+                      {network === 'Zcash' ? 'Pay with Zcash wallet' : 'Pay with Phantom'}
                     </button>
                     <div className="preview-flags">
                       <span>⚡ Instant settlement</span>

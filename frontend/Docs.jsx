@@ -40,13 +40,13 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              Vaultx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on Solana with first-class Phantom integration, Vaultx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              Vaultx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on Solana and Zcash with shielded privacy support, Vaultx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
             </p>
             <div className="info-card">
               <div className="info-card-icon">💡</div>
               <div>
                 <strong>What makes Vaultx402 unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, Vaultx402 enables instant, permissionless payments using native SOL on Solana. No middlemen, no platform fees, no accounts needed.</p>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, Vaultx402 enables instant, permissionless payments using SOL (Solana) or ZEC (Zcash shielded pools). No middlemen, no platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -200,8 +200,8 @@ await connection.confirmTransaction(signature, 'confirmed');
             
             <div className="feature-list">
               <div className="feature-detail">
-                <h3>🪙 Native SOL Payments</h3>
-                <p>Accept payments in native SOL on Solana. No token contracts, no wrapping, no complexity. Pure, simple cryptocurrency payments with sub-second finality.</p>
+                <h3>🪙 Native SOL & ZEC Payments</h3>
+                <p>Accept payments in native SOL (Solana) or shielded ZEC (Zcash). No token contracts, no wrapping, no complexity. Pure, simple cryptocurrency payments with optional privacy.</p>
               </div>
               
               <div className="feature-detail">
@@ -211,12 +211,12 @@ await connection.confirmTransaction(signature, 'confirmed');
               
               <div className="feature-detail">
                 <h3>⚡ Instant Settlements</h3>
-                <p>Solana's lightning-fast finality means payments confirm in seconds. No waiting periods, no settlement delays, no payment processors.</p>
+                <p>Solana and Zcash provide lightning-fast finality. Payments confirm in seconds. No waiting periods, no settlement delays, no payment processors.</p>
               </div>
               
               <div className="feature-detail">
                 <h3>💰 Zero Platform Fees</h3>
-                <p>We take <strong>0%</strong> of your revenue. The only costs are Solana network fees (typically fractions of a cent per transaction).</p>
+                <p>We take <strong>0%</strong> of your revenue. The only costs are minimal network fees (Solana or Zcash, typically fractions of a cent per transaction).</p>
               </div>
               
               <div className="feature-detail">
@@ -241,10 +241,10 @@ await connection.confirmTransaction(signature, 'confirmed');
                 <strong>Frontend:</strong> React + Vite
               </div>
               <div className="tech-item">
-                <strong>Blockchain:</strong> Solana
+                <strong>Blockchain:</strong> Solana & Zcash
               </div>
               <div className="tech-item">
-                <strong>Web3:</strong> @solana/web3.js + Phantom
+                <strong>Web3:</strong> @solana/web3.js + Phantom & Zcash shielded pools
               </div>
               <div className="tech-item">
                 <strong>Backend:</strong> Vercel Serverless Functions
