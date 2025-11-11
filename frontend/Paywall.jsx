@@ -351,15 +351,15 @@ function Paywall() {
                   display: 'block',
                   textAlign: 'center',
                   padding: '14px 28px',
-                  background: 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)',
-                  color: 'white',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%)',
+                  color: '#000000',
                   borderRadius: '8px',
                   textDecoration: 'none',
                   fontWeight: '500',
                   transition: 'background 0.2s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0198d8 0%, #01c3f3 100%)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%)'}
               >
                 Access Content →
               </a>
@@ -451,8 +451,8 @@ function Paywall() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: verifying || !txHash ? '#333' : 'linear-gradient(135deg, #0178c8 0%, #01c3f3 100%)',
-                    color: 'white',
+                    background: verifying || !txHash ? '#333' : 'linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%)',
+                    color: verifying || !txHash ? 'white' : '#000000',
                     border: 'none',
                     borderRadius: '6px',
                     fontSize: '14px',
