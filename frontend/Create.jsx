@@ -156,7 +156,7 @@ function Create() {
       <main className="builder-shell">
         <section className="builder-overview">
           <div className="overview-main">
-            <span className="pill-gradient">Vaultx402 Builder</span>
+            <span className="pill-gradient">StealthPayx402 Builder</span>
             <h1 className="builder-title">Compose a paywall flow from scratch</h1>
             <p className="builder-subtitle">
               Route any link through an HTTP 402-compatible checkout, accept instant crypto settlement, and keep custody of every token.
@@ -202,7 +202,7 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Access destination</h3>
-                  <p>Enter the URL buyers unlock plus a unique ID for your Vaultx402 paywall link.</p>
+                  <p>Enter the URL buyers unlock plus a unique ID for your StealthPayx402 paywall link.</p>
                 </div>
               </div>
               <div className="field-grid">
@@ -227,12 +227,12 @@ function Create() {
                   <input
                     type="text"
                     id="paywallIdInput"
-                    placeholder="vaultx402-demo"
+                    placeholder="stealthpayx402-demo"
                     value={paywallId}
                     onChange={(e) => setPaywallId(e.target.value.toLowerCase())}
                     pattern="[a-zA-Z0-9-_]+"
                   />
-                  <p className="input-hint">Appears as vaultx402.io/paywall/&lt;id&gt;. Keep it short and memorable.</p>
+                  <p className="input-hint">Appears as stealthpayx402.io/paywall/&lt;id&gt;. Keep it short and memorable.</p>
                 </div>
               </div>
             </div>
@@ -296,7 +296,7 @@ function Create() {
                   <p className="input-hint">
                     {network === 'Zcash'
                       ? 'Enter a shielded Zcash address (zs1, u1, or transparent t1). Required for Zcash paywalls.'
-                      : 'Leave blank to auto-generate a non-custodial Vaultx402 wallet for this paywall.'}
+                      : 'Leave blank to auto-generate a non-custodial StealthPayx402 wallet for this paywall.'}
                   </p>
                 </div>
               </div>
@@ -331,7 +331,7 @@ function Create() {
                   <>Deploy paywall</>
                 )}
               </button>
-              <p className="form-helper">Funds settle instantly on {paywallNetworkLabel}. Vaultx402 never takes custody.</p>
+              <p className="form-helper">Funds settle instantly on {paywallNetworkLabel}. StealthPayx402 never takes custody.</p>
             </div>
           </form>
 
@@ -423,7 +423,7 @@ function Create() {
                 <div className="aside-card preview-card">
                   <div className="card-heading">
                     <span className="pill-outline">Live preview</span>
-                    <h3>{paywallId || 'vaultx402/paywall'}</h3>
+                    <h3>{paywallId || 'stealthpayx402/paywall'}</h3>
                   </div>
                   <div className="preview-pane">
                     <div className="preview-price">

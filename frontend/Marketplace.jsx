@@ -106,10 +106,10 @@ function Marketplace() {
       <main className="market-shell">
         <section className="market-hero">
           <div className="market-hero-copy">
-            <span className="market-tag">Vaultx402 Marketplace</span>
+            <span className="market-tag">StealthPayx402 Marketplace</span>
             <h1>Explore paywalls built for instant crypto settlement</h1>
             <p>
-              Browse live Vaultx402 paywalls, compare pricing structures, and unlock access in seconds. Filter by chain, discover new
+              Browse live StealthPayx402 paywalls, compare pricing structures, and unlock access in seconds. Filter by chain, discover new
               revenue models, or clone a flow for your next launch.
             </p>
             <div className="market-cta">
@@ -210,7 +210,7 @@ function Marketplace() {
           <div className="market-placeholder empty">
             <div className="empty-icon">📦</div>
             <h3>No paywalls yet</h3>
-            <p>Be the first to deploy a Vaultx402 paywall and showcase it here.</p>
+            <p>Be the first to deploy a StealthPayx402 paywall and showcase it here.</p>
             <button className="gradient-btn" type="button" onClick={() => navigate('/create')}>
               Launch your first paywall
             </button>

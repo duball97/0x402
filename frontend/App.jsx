@@ -86,9 +86,9 @@ function App() {
           </div>
 
           <h1 className="hero-title-v2" data-animate id="hero-title">
-            The Future of Digital
+            Your Cat
             <br />
-            <span className="hero-gradient-text">Payments is Here</span>
+            <span className="hero-gradient-text">Deserves Better</span>
           </h1>
 
           <p className="hero-description-v2" data-animate id="hero-desc">
@@ -196,7 +196,7 @@ function App() {
                 <div className="metric-bar-fill" style={{width: '95%'}}></div>
               </div>
               <div className="metric-labels">
-                <span>Vaultx402: 2-5s</span>
+                <span>StealthPayx402: 2-5s</span>
                 <span className="metric-muted">Traditional: 3-7 days</span>
               </div>
             </div>
@@ -227,7 +227,7 @@ function App() {
             </p>
             <div className="fee-comparison">
               <div className="fee-row">
-                <span>Vaultx402</span>
+                <span>StealthPayx402</span>
                 <span className="fee-value success">0%</span>
               </div>
               <div className="fee-row muted">
@@ -338,7 +338,7 @@ function App() {
               </p>
               <div className="workflow-visual">
                 <div className="share-preview">
-                  <div className="share-link">vaultx402.com/p/abc123</div>
+                  <div className="share-link">stealthpayx402.com/p/abc123</div>
                   <div className="share-icons">
                     <div className="share-icon">🐦</div>
                     <div className="share-icon">📧</div>
@@ -418,7 +418,7 @@ function App() {
           <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
           <p className="section-desc-v2">
             Whether you're a solo creator or building the next big platform,
-            Vaultx402 scales with you.
+            StealthPayx402 scales with you.
           </p>
         </div>
 

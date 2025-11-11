@@ -1,6 +1,6 @@
-# Vaultx402 Setup Guide 🚀
+# StealthPayx402 Setup Guide 🚀
 
-Turn any link into instant crypto revenue with Vaultx402!
+Turn any link into instant crypto revenue with StealthPayx402!
 
 ## TL;DR - Quickest Start
 
@@ -96,7 +96,7 @@ curl http://localhost:8080/
 You should see:
 ```json
 {
-  "message": "Vaultx402 API is live",
+  "message": "StealthPayx402 API is live",
   "version": "1.0.0",
   "powered_by": "@CoinbaseDev + x402"
 }

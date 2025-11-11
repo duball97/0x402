@@ -1,11 +1,11 @@
-# Vaultx402
+# StealthPayx402
 
-> Crypto-native paywalls powered by BNB Chain and the HTTP 402 protocol
+> Crypto-native paywalls powered by Solana, Zcash, and the HTTP 402 protocol
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![BNB Chain](https://img.shields.io/badge/Chain-BNB-yellow.svg)](https://www.bnbchain.org/)
 
-Vaultx402 is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant BNB payments. Built on the HTTP 402 "Payment Required" protocol, Vaultx402 makes payments programmable for AI agents and automated systems.
+StealthPayx402 is a decentralized paywall platform that enables creators, developers, and businesses to monetize digital content with instant SOL and ZEC payments. Built on the HTTP 402 "Payment Required" protocol, StealthPayx402 makes payments programmable for AI agents and automated systems.
 
 ## ✨ Features
 
@@ -45,8 +45,8 @@ Vaultx402 is a decentralized paywall platform that enables creators, developers,
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/vaultx402.git
-cd vaultx402
+git clone https://github.com/yourusername/stealthpayx402.git
+cd stealthpayx402
 ```
 
 2. **Install dependencies**
@@ -139,7 +139,7 @@ Visit `http://localhost:3000` to see your app running!
 
 ### HTTP 402 Protocol
 
-Vaultx402 implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
+StealthPayx402 implements the HTTP 402 "Payment Required" standard, making payments discoverable by machines:
 
 ```http
 HTTP/1.1 402 Payment Required
@@ -155,7 +155,7 @@ This enables AI agents and automated systems to:
 
 ## 🎨 Design Philosophy
 
-Vaultx402 follows modern web design principles inspired by Vercel:
+StealthPayx402 follows modern web design principles inspired by Vercel:
 
 - **Minimalism** - Clean, uncluttered interfaces
 - **Clarity** - Clear information hierarchy
@@ -268,10 +268,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Website:** [vaultx402.io](https://vaultx402.io)
-- **Documentation:** [vaultx402.io/docs](https://vaultx402.io/docs)
+- **Website:** [stealthpayx402.io](https://stealthpayx402.io)
+- **Documentation:** [stealthpayx402.io/docs](https://stealthpayx402.io/docs)
 - **Twitter/X:** [@vaultx402sol](https://x.com/vaultx402sol?s=21)
-- **GitHub:** [github.com/vaultx402](https://github.com/vaultx402)
+- **GitHub:** [github.com/stealthpayx402](https://github.com/stealthpayx402)
 
 ## 🙏 Acknowledgments
 
@@ -282,9 +282,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Discord:** [Join our community](https://discord.gg/vaultx402)
+- **Discord:** [Join our community](https://discord.gg/stealthpayx402)
 - **Twitter:** [@vaultx402sol](https://x.com/vaultx402sol?s=21)
-- **Email:** support@vaultx402.io
+- **Email:** support@stealthpayx402.io
 
 ---
 

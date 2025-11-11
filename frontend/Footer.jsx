@@ -4,7 +4,7 @@ function Footer() {
     <footer>
       <div className="footer-content">
         <div className="footer-section">
-          <img src="/newlogo.png" alt="Vaultx402" className="footer-logo" />
+          <img src="/newlogo.png" alt="StealthPayx402" className="footer-logo" />
           <p>Crypto-native paywalls powered by Solana, Zcash shielded payments, and the x402 protocol</p>
         </div>
         <div className="footer-section">
@@ -36,7 +36,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2025 Vaultx402. MIT License.</p>
+        <p>&copy; 2025 StealthPayx402. MIT License.</p>
       </div>
     </footer>
   );

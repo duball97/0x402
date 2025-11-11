@@ -16,7 +16,7 @@ function Header({ transparent = false }) {
     <nav className={transparent ? 'nav-transparent' : ''}>
       <div className="nav-logo">
         <Link to="/" onClick={closeMenu}>
-          <img src="/newlogo.png" alt="Vaultx402" />
+          <img src="/newlogo.png" alt="StealthPayx402" />
         </Link>
       </div>
       <button 
@@ -32,8 +32,8 @@ function Header({ transparent = false }) {
           )}
           <defs>
             <linearGradient id="hamburgerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#01c3f3" />
-              <stop offset="100%" stopColor="#0178c8" />
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="100%" stopColor="#a3a3a3" />
             </linearGradient>
           </defs>
         </svg>
