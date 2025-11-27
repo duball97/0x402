@@ -118,37 +118,6 @@ function Marketplace() {
       <Header />
 
       <main className="market-shell">
-        <section className="market-hero">
-          <div className="market-hero-copy">
-            <span className="market-tag">MonPay Marketplace</span>
-            <h1>Explore paywalls built for instant crypto settlement</h1>
-            <p>
-              Browse live MonPay paywalls on Monad chain, compare pricing structures, and unlock access in seconds. Discover new
-              revenue models powered by MON tokens.
-            </p>
-            <div className="market-cta">
-              <button type="button" className="gradient-btn" onClick={() => navigate('/create')}>
-                Launch a paywall
-              </button>
-              <button type="button" className="tertiary-btn" onClick={() => navigate('/docs')}>
-                View docs
-              </button>
-            </div>
-          </div>
-
-          <div className="market-metrics">
-            <div className="metric-chip metric-chip--accent">
-              <span className="metric-chip-label">Live listings</span>
-              <span className="metric-chip-value">{stats.listings}</span>
-            </div>
-            <div className="metric-chip">
-              <span className="metric-chip-label">MonPay volume</span>
-              <span className="metric-chip-value">{stats.monadVolume.toFixed(3)} MON</span>
-              <span className="metric-chip-footnote">{stats.monadCount} paywalls</span>
-            </div>
-          </div>
-        </section>
-
         <section className="market-controls">
           <div className="market-search">
             <span className="search-icon">⌕</span>
@@ -231,7 +200,7 @@ function Marketplace() {
               <div className="market-grid-heading">
                 <h2>All paywalls</h2>
                 <p>
-                  Filter and sort to find the perfect monetization model. Reset filters anytime to see the full inventory.
+                  Filter and sort to find the perfect monetization model. Reset filters anytime to explore the full inventory.
                 </p>
               </div>
 

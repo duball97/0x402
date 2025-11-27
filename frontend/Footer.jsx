@@ -5,7 +5,7 @@ function Footer() {
       <div className="footer-content">
         <div className="footer-section">
           <img src="/logo.png" alt="MonPay" className="footer-logo" />
-          <p>Crypto-native paywalls powered by Monad chain, MON token payments, and the x402 protocol</p>
+          <p>Crypto native paywalls powered by Monad chain, MON token payments, and the x402 protocol</p>
         </div>
         <div className="footer-section">
           <h4>Features</h4>

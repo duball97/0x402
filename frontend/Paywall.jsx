@@ -16,12 +16,58 @@ function Paywall() {
   const resolvedNetwork = 'Monad';
   const resolvedCurrency = 'MON';
 
+  // Validate and sanitize URL
+  const validateUrl = (url) => {
+    if (!url || typeof url !== 'string') return null;
+    
+    const trimmed = url.trim();
+    if (!trimmed) return null;
+    
+    // Block suspicious/malicious domains
+    const blockedDomains = ['bedpage.com', 'bedpage', 'porn', 'xxx', 'adult'];
+    const lowerUrl = trimmed.toLowerCase();
+    if (blockedDomains.some(domain => lowerUrl.includes(domain))) {
+      return null;
+    }
+    
+    try {
+      // Ensure URL has protocol
+      let urlToValidate = trimmed;
+      if (!urlToValidate.match(/^https?:\/\//i)) {
+        urlToValidate = `https://${urlToValidate}`;
+      }
+      
+      const urlObj = new URL(urlToValidate);
+      
+      // Only allow http and https
+      if (!['http:', 'https:'].includes(urlObj.protocol)) {
+        return null;
+      }
+      
+      return urlObj.href;
+    } catch (err) {
+      return null;
+    }
+  };
+
   useEffect(() => {
     // Fetch paywall data from API
     const fetchPaywall = async () => {
       try {
         const response = await fetch(`/api/get-paywall?id=${id}`);
         const data = await response.json();
+        
+        // Validate and sanitize the URL
+        if (data?.url) {
+          const validatedUrl = validateUrl(data.url);
+          if (!validatedUrl) {
+            setError('Invalid or blocked URL in paywall. Please contact the paywall creator.');
+            setLoading(false);
+            return;
+          }
+          data.url = validatedUrl;
+        }
+        
         setPaywallData(data);
         // Auto-unlock if free
         const priceNum = parseFloat(data?.price ?? '0');
@@ -141,6 +187,13 @@ function Paywall() {
         return;
       }
 
+      // Prevent self-payment
+      if (userAddress.toLowerCase() === paywallData.walletAddress.toLowerCase()) {
+        setError('You cannot pay yourself. This paywall is set to your own wallet address.');
+        setLoading(false);
+        return;
+      }
+
       // Get provider and signer
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
@@ -160,7 +213,7 @@ function Paywall() {
               method: 'wallet_addEthereumChain',
               params: [{
                 chainId: `0x${config.chainId.toString(16)}`,
-                chainName: 'Monad',
+                chainName: 'Monad Mainnet',
                 nativeCurrency: {
                   name: 'MON',
                   symbol: 'MON',
@@ -209,6 +262,17 @@ function Paywall() {
         // Handle insufficient funds
         if (err.message && err.message.includes('insufficient')) {
           setError('Insufficient balance to complete this transaction.');
+          setLoading(false);
+          return;
+        }
+        
+        // Handle self-payment error (same from/to address)
+        if (err.code === 'CALL_EXCEPTION' || (err.message && err.message.includes('revert data'))) {
+          if (userAddress.toLowerCase() === paywallData.walletAddress.toLowerCase()) {
+            setError('You cannot pay yourself. This paywall is set to your own wallet address.');
+          } else {
+            setError('Transaction failed. Please check that you have sufficient balance and are on the correct network.');
+          }
           setLoading(false);
           return;
         }
@@ -302,9 +366,9 @@ function Paywall() {
             <div className="success-icon">✓</div>
             <h3>{parseFloat(paywallData?.price ?? '0') <= 0 ? 'Free Access' : 'Payment Complete!'}</h3>
             <div className="info-box">
-              <p style={{ textAlign: 'center', fontSize: '16px', marginBottom: '24px' }}>🔓 Content unlocked!</p>
+              <p style={{ textAlign: 'center', fontSize: '16px', marginBottom: '24px' }}>Content unlocked</p>
               <a
-                href={paywallData.url}
+                href={paywallData.url && validateUrl(paywallData.url) ? validateUrl(paywallData.url) : '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -385,9 +449,9 @@ function Paywall() {
         </div>
         
         <div style={{ marginTop: '32px', padding: '24px', background: '#111', border: '1px solid #1a1a1a', borderRadius: '12px' }}>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#ccc' }}>🔗 HTTP 402 Protocol Support</h4>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#ccc' }}>HTTP 402 Protocol Support</h4>
           <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#888' }}>
-            This paywall implements the HTTP 402 "Payment Required" protocol, enabling AI agents and automated systems to discover payment requirements programmatically.
+            This paywall implements the HTTP 402 Payment Required protocol, enabling AI agents and automated systems to discover payment requirements programmatically.
           </p>
           <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>

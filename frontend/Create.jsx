@@ -35,17 +35,65 @@ function Create() {
       setValidationError('Paywall ID can only contain letters, numbers, hyphens, and underscores');
       return;
     }
-    // Monad address validation can be added here if needed
+    if (!walletAddress || !walletAddress.trim()) {
+      setValidationError('Please enter a Monad wallet address');
+      return;
+    }
+    // Validate Monad address format (0x followed by 40 hex characters)
+    if (!/^0x[a-fA-F0-9]{40}$/.test(walletAddress.trim())) {
+      setValidationError('Please enter a valid Monad wallet address (0x followed by 40 hexadecimal characters)');
+      return;
+    }
 
     setLoading(true);
     setError(null);
     setValidationError(null);
     setResult(null);
 
-    // Auto-add https:// if protocol is missing
+    // Validate and process URL
     let processedUrl = url.trim();
-    if (!processedUrl.match(/^https?:\/\//i)) {
-      processedUrl = `https://${processedUrl}`;
+    
+    // Remove any whitespace
+    processedUrl = processedUrl.replace(/\s+/g, '');
+    
+    // Block suspicious/malicious domains
+    const blockedDomains = ['bedpage.com', 'bedpage', 'porn', 'xxx', 'adult'];
+    const lowerUrl = processedUrl.toLowerCase();
+    if (blockedDomains.some(domain => lowerUrl.includes(domain))) {
+      setValidationError('This URL contains blocked content. Please use a valid URL.');
+      setLoading(false);
+      return;
+    }
+    
+    // Validate URL format
+    try {
+      // Auto-add https:// if protocol is missing
+      if (!processedUrl.match(/^https?:\/\//i)) {
+        processedUrl = `https://${processedUrl}`;
+      }
+      
+      // Validate URL is properly formatted
+      const urlObj = new URL(processedUrl);
+      
+      // Ensure it's http or https
+      if (!['http:', 'https:'].includes(urlObj.protocol)) {
+        setValidationError('URL must use http:// or https:// protocol');
+        setLoading(false);
+        return;
+      }
+      
+      // Block localhost and private IPs in production
+      const hostname = urlObj.hostname.toLowerCase();
+      if (hostname === 'localhost' || hostname.startsWith('127.') || hostname.startsWith('192.168.') || hostname.startsWith('10.') || hostname.startsWith('172.')) {
+        setValidationError('Localhost and private IP addresses are not allowed');
+        setLoading(false);
+        return;
+      }
+      
+    } catch (err) {
+      setValidationError('Please enter a valid URL (e.g., https://example.com/page)');
+      setLoading(false);
+      return;
     }
 
     try {
@@ -57,7 +105,7 @@ function Create() {
           price,
           description,
           paywallId,
-          walletAddress: walletAddress || null,
+          walletAddress: walletAddress.trim(),
           network,
         }),
       });
@@ -79,19 +127,14 @@ function Create() {
       });
       
       // Validate that we have the required data
-      if (!data || !data.paywall_link) {
-        console.error('Invalid API response - missing paywall_link:', data);
-        // If we have a paywall_id, construct a fallback link
-        if (data?.paywall_id) {
-          const fallbackLink = `${window.location.origin}/paywall/${data.paywall_id}`;
-          console.warn('Using fallback link:', fallbackLink);
-          setResult({ ...data, paywall_link: fallbackLink });
-          return;
-        }
-        throw new Error('Invalid response from server. Paywall link not found.');
+      if (!data || !data.paywall_id) {
+        throw new Error('Invalid response from server. Paywall ID not found.');
       }
 
-      setResult(data);
+      // Always use current origin for paywall link to prevent redirects
+      // Ignore paywall_link from API and construct it ourselves for security
+      const safePaywallLink = `${window.location.origin}/paywall/${data.paywall_id}`;
+      setResult({ ...data, paywall_link: safePaywallLink });
     } catch (err) {
       console.error('Error creating paywall:', err);
       setError(err.message || 'Failed to create paywall. Please try again.');
@@ -140,46 +183,21 @@ function Create() {
     return parsed.toFixed(4);
   })();
 
-  const resolvedResultLink = (result && (result.paywall_link || (result.paywall_id ? `${window.location.origin}/paywall/${result.paywall_id}` : null))) || null;
+  // Always construct paywall link using current origin to prevent redirects
+  const resolvedResultLink = (result && result.paywall_id ? `${window.location.origin}/paywall/${result.paywall_id}` : null) || null;
 
   return (
     <>
       <Header />
 
       <main className="builder-shell">
-        <section className="builder-overview">
-          <div className="overview-main">
-            <span className="pill-gradient">MonPay Builder</span>
-            <h1 className="builder-title">Compose a paywall flow from scratch</h1>
-            <p className="builder-subtitle">
-              Route any link through an HTTP 402-compatible checkout, accept instant MON token settlement on Monad, and keep custody of every token.
+        <section className="builder-header">
+          <div className="builder-header-content">
+            <h1 className="builder-main-title">Create Your Paywall</h1>
+            <p className="builder-main-subtitle">
+              Monetize any content in seconds. Set your price, share your link, start earning.
             </p>
-
-            <div className="builder-steps">
-              <div className="builder-step">
-                <span className="step-index">01</span>
-                <div>
-                  <h4>Define access</h4>
-                  <p>Point to the content you want to protect and choose a friendly ID.</p>
-                </div>
-              </div>
-              <div className="builder-step">
-                <span className="step-index">02</span>
-                <div>
-                  <h4>Set settlement</h4>
-                  <p>Choose your MON token price and where the funds should land on Monad.</p>
-                </div>
-              </div>
-              <div className="builder-step">
-                <span className="step-index">03</span>
-                <div>
-                  <h4>Preview & publish</h4>
-                  <p>Review the real-time preview, then copy your live paywall link.</p>
-                </div>
-              </div>
-            </div>
           </div>
-
         </section>
 
         <section className="builder-layout">
@@ -193,16 +211,7 @@ function Create() {
 
             <div className="form-cluster">
               <div className="cluster-header">
-                <div className="cluster-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3>Access destination</h3>
-                  <p>Enter the URL buyers unlock plus a unique ID for your paywall link.</p>
-                </div>
+                <h3>Content & Link</h3>
               </div>
               <div className="field-grid">
                 <div className="input-group wide">
@@ -231,23 +240,14 @@ function Create() {
                     onChange={(e) => setPaywallId(e.target.value.toLowerCase())}
                     pattern="[a-zA-Z0-9-_]+"
                   />
-                  <p className="input-hint">Appears as monpay.io/paywall/&lt;id&gt;. Keep it short and memorable.</p>
+                  <p className="input-hint">Your paywall will be available at /paywall/{paywallId || 'your-id'}</p>
                 </div>
               </div>
             </div>
 
             <div className="form-cluster">
               <div className="cluster-header">
-                <div className="cluster-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="1" x2="12" y2="23"/>
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3>Settlement settings</h3>
-                  <p>Set your MON token price on Monad chain and specify the payout recipient.</p>
-                </div>
+                <h3>Pricing & Wallet</h3>
               </div>
 
               <div className="network-badge">
@@ -272,16 +272,19 @@ function Create() {
                 </div>
 
                 <div className="input-group">
-                  <label htmlFor="walletAddress">Settlement wallet</label>
+                  <label htmlFor="walletAddress">
+                    Wallet to receive the payment <span className="required">*</span>
+                  </label>
                   <input
                     type="text"
                     id="walletAddress"
                     placeholder="Enter a Monad wallet address (0x...)"
                     value={walletAddress}
                     onChange={(e) => setWalletAddress(e.target.value)}
+                    required
                   />
                   <p className="input-hint">
-                    Leave blank to auto-generate a non-custodial wallet for this paywall on Monad.
+                    Your Monad wallet address where payments will be received.
                   </p>
                 </div>
               </div>
@@ -289,25 +292,13 @@ function Create() {
 
             <div className="form-cluster">
               <div className="cluster-header">
-                <div className="cluster-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/>
-                    <line x1="16" y1="17" x2="8" y2="17"/>
-                    <polyline points="10 9 9 9 8 9"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3>Buyer messaging</h3>
-                  <p>Help visitors understand what they unlock. Be direct and value focused.</p>
-                </div>
+                <h3>Description</h3>
               </div>
               <div className="input-group wide">
-                <label htmlFor="descriptionInput">Description (optional)</label>
+                <label htmlFor="descriptionInput">What buyers unlock (optional)</label>
                 <textarea
                   id="descriptionInput"
-                  placeholder="Example: Unlock the full research dossier, code samples, and API credits."
+                  placeholder="Describe what buyers receive when they pay..."
                   rows="3"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -405,7 +396,7 @@ function Create() {
                   <h4>Next steps</h4>
                   <ul className="insight-list">
                     <li>Embed the link behind your website CTAs or share it directly with your audience.</li>
-                    <li>Use `/my-purchases` so buyers can reconnect wallets and revisit unlocked links.</li>
+                    <li>Use the my purchases page so buyers can reconnect wallets and revisit unlocked links.</li>
                     <li>Clone this paywall with alternate pricing for bundles, upgrades, or limited drops.</li>
                   </ul>
                 </div>

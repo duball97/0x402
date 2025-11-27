@@ -1,8 +1,8 @@
 export const CHAIN_CONFIG = {
   MONAD_MAINNET_RPC: import.meta.env?.VITE_MONAD_RPC_URL || 'https://monad-mainnet.g.alchemy.com/v2/M87svOeOrOhMsnQWJXB8iQECjn8MJNW0',
   MONAD_EXPLORER: 'https://monad.xyz',
-  MONAD_NETWORK_NAME: 'Monad',
-  CHAIN_ID: 10143, // Monad mainnet chain ID
+  MONAD_NETWORK_NAME: 'Monad Mainnet',
+  CHAIN_ID: 143, // Monad mainnet chain ID (0x8F in hex)
 };
 
 export const getCurrentNetwork = (network = 'Monad') => {

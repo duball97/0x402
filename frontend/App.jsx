@@ -87,7 +87,7 @@ function App() {
           <p className="hero-description-v2" data-animate id="hero-desc">
             Transform your content into revenue with MonPay on Monad chain.
             Zero fees. Instant settlements. Native MON token payments. Built for creators,
-            developers, and AI agents on the fastest EVM-compatible blockchain.
+            developers, and AI agents on the fastest EVM compatible blockchain.
           </p>
 
           <div className="hero-cta-v2" data-animate id="hero-cta">
@@ -151,7 +151,7 @@ function App() {
           <h2 className="section-title-v2">Everything You Need, Nothing You Don't</h2>
           <p className="section-desc-v2">
             Built for speed, security, and simplicity. Every feature designed to help you
-            monetize faster and earn more.
+            monetize faster and maximize earnings.
           </p>
         </div>
 
@@ -166,7 +166,7 @@ function App() {
             <h3 className="bento-title">Lightning Fast Settlements</h3>
             <p className="bento-desc">
               Payments settle in seconds on Monad chain. No waiting days for
-              traditional processors. Your MonPay tokens arrive instantly with EVM compatibility.
+              traditional processors. Your MON tokens arrive instantly with full EVM compatibility.
             </p>
             <div className="bento-metric-showcase">
               <div className="metric-bar">
@@ -211,7 +211,7 @@ function App() {
             </div>
             <h3 className="bento-title">Zero Platform Fees</h3>
             <p className="bento-desc">
-              Keep 100% of your revenue. Only pay minimal gas fees on Monad (typically &lt;$0.01).
+              Keep 100% of your revenue. Only pay minimal gas fees on Monad, typically under one cent per transaction.
             </p>
             <div className="fee-comparison">
               <div className="fee-row">
@@ -236,10 +236,10 @@ function App() {
                 <path d="M9 18h6"/>
               </svg>
             </div>
-            <h3 className="bento-title">Built for AI Agents & Automation</h3>
+            <h3 className="bento-title">Built for AI Agents and Automation</h3>
             <p className="bento-desc">
               HTTP 402 protocol enables autonomous agents to discover payment requirements
-              and transact programmatically on Monad. The future of machine-to-machine commerce.
+              and transact programmatically on Monad. The future of machine to machine commerce.
             </p>
             <div className="code-preview">
               <div className="code-line">
@@ -264,7 +264,7 @@ function App() {
             </div>
             <h3 className="bento-title">Monad Native</h3>
             <p className="bento-desc">
-              Built for Monad chain with EVM compatibility. Fast, efficient, and scalable payments.
+              Built for Monad chain with full EVM compatibility. Fast, efficient, and scalable payments.
             </p>
             <div className="chain-badges">
               <div className="chain-badge">MON</div>
@@ -304,7 +304,7 @@ function App() {
           <span className="section-label">SIMPLE PROCESS</span>
           <h2 className="section-title-v2">From Idea to Revenue in 3 Steps</h2>
           <p className="section-desc-v2">
-            No complex setup, no technical knowledge required. Create, share, and start earning.
+            No complex setup, no technical knowledge required. Create, share, and start earning instantly.
           </p>
         </div>
 
@@ -322,7 +322,7 @@ function App() {
                 </div>
                 <h3 className="workflow-step-title">Create Your Paywall</h3>
                 <p className="workflow-step-desc">
-                  Enter your content URL, set your price in MON tokens, add your wallet address. Takes less than 60 seconds.
+                  Enter your content URL, set your price in MON tokens, add your wallet address. Takes less than 60 seconds to deploy.
                 </p>
               </div>
             </div>
@@ -339,7 +339,7 @@ function App() {
                 </div>
                 <h3 className="workflow-step-title">Share Your Link</h3>
                 <p className="workflow-step-desc">
-                  Get a unique paywall link. Share it on social media, embed on your website, or send directly to customers.
+                  Get a unique paywall link. Share it on social media, embed on your website, or send directly to your audience.
                 </p>
               </div>
             </div>
@@ -356,7 +356,7 @@ function App() {
                 </div>
                 <h3 className="workflow-step-title">Get Paid Instantly</h3>
                 <p className="workflow-step-desc">
-                  Customers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, no fees.
+                  Buyers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, zero platform fees.
                 </p>
                 <div className="payment-time">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}>
@@ -405,10 +405,10 @@ function App() {
       <section className="use-cases-section-v2" data-animate id="use-cases">
         <div className="section-header-v2">
           <span className="section-label">USE CASES</span>
-          <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
+          <h2 className="section-title-v2">Perfect for Every Creator and Developer</h2>
           <p className="section-desc-v2">
             Whether you're a solo creator or building the next big platform,
-            MonPay scales with you on Monad.
+            MonPay scales with you on Monad chain.
           </p>
         </div>
 
@@ -430,7 +430,7 @@ function App() {
             <h3 className="use-case-title-v2">Premium Content & Media</h3>
             <p className="use-case-desc-v2">
               Monetize articles, videos, podcasts, research papers, exclusive tutorials,
-              and more. One-time payments or recurring access.
+              and more. One time payments or recurring access models.
             </p>
             <div className="use-case-examples">
               <div className="example-tag">Articles</div>
@@ -452,8 +452,8 @@ function App() {
             </div>
             <h3 className="use-case-title-v2">API & Service Monetization</h3>
             <p className="use-case-desc-v2">
-              Per-request pricing for AI models, data feeds, compute resources,
-              and developer tools. Perfect for automation and high-volume use.
+              Per request pricing for AI models, data feeds, compute resources,
+              and developer tools. Perfect for automation and high volume use cases.
             </p>
             <div className="use-case-examples">
               <div className="example-tag">AI APIs</div>
@@ -505,7 +505,7 @@ function App() {
             <h3 className="use-case-title-v2">Autonomous Agent Payments</h3>
             <p className="use-case-desc-v2">
               Enable AI agents to discover, negotiate, and pay for services autonomously.
-              HTTP 402 native for machine-to-machine commerce.
+              HTTP 402 native for machine to machine commerce.
             </p>
             <div className="use-case-examples">
               <div className="example-tag">AI Agents</div>
@@ -540,7 +540,7 @@ function App() {
             <p className="cta-desc-v2">
               No signup. No credit card. No technical knowledge required.
               <br />
-              Just create your paywall and start monetizing your content today.
+              Create your paywall and start monetizing your content today.
             </p>
 
             <div className="cta-buttons-v2">

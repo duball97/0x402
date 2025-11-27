@@ -40,7 +40,7 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              MonPay is a decentralized paywall protocol that enables instant monetization of any web content through native MON token payments. Built on Monad chain with EVM compatibility, MonPay brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              MonPay is a decentralized paywall protocol that enables instant monetization of any web content through native MON token payments. Built on Monad chain with full EVM compatibility, MonPay brings the vision of HTTP 402 Payment Required to life in the Web3 era.
             </p>
             <div className="info-card">
               <div className="info-card-icon">
@@ -58,7 +58,7 @@ function Docs() {
               </div>
               <div>
                 <strong>What makes MonPay unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, MonPay enables instant, permissionless payments using MON tokens on Monad chain. No middlemen, no platform fees, no accounts needed.</p>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, MonPay enables instant, permissionless payments using MON tokens on Monad chain. No middlemen, zero platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -67,7 +67,7 @@ function Docs() {
           <section id="http-402" className="docs-section">
             <h2>HTTP 402 Protocol</h2>
             <p>
-              The HTTP 402 status code was reserved in 1997 for future use as "Payment Required" but remained largely unimplemented for decades. MonPay brings this protocol to life for the blockchain era on Monad.
+              The HTTP 402 status code was reserved in 1997 for future use as Payment Required but remained largely unimplemented for decades. MonPay brings this protocol to life for the blockchain era on Monad.
             </p>
             
             <h3>Protocol Specification</h3>
@@ -235,7 +235,7 @@ const signer = await provider.getSigner();
 // Switch to Monad network
 await window.ethereum.request({
   method: 'wallet_switchEthereumChain',
-  params: [{ chainId: '0x2797' }], // Monad mainnet chain ID
+  params: [{ chainId: '0x8F' }], // Monad mainnet chain ID (143)
 });
 
 // Send payment
@@ -622,7 +622,7 @@ const address = await signer.getAddress();`}</code></pre>
             <div className="faq-list">
               <div className="faq-item">
                 <h4>What are the fees?</h4>
-                <p>MonPay charges <strong>0% platform fees</strong>. The only costs are Monad network fees (typically fractions of a cent per transaction).</p>
+                <p>MonPay charges zero platform fees. The only costs are Monad network fees, typically fractions of a cent per transaction.</p>
               </div>
               
               <div className="faq-item">
