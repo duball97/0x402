@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   /* Purple Monad theme colors */
@@ -28,13 +28,15 @@
 }
 
 body {
-  font-family: 'Chakra Petch', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: var(--bg-primary);
   color: var(--text-secondary);
   margin: 0;
   padding: 0;
   min-height: 100vh;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4,
@@ -49,8 +51,11 @@ h1, h2, h3, h4,
 .docs-section h2,
 .docs-section h3,
 .marketplace-hero h1 {
-  font-family: 'Orbitron', 'Chakra Petch', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Background removed - dark background only */
@@ -83,11 +88,13 @@ nav.nav-transparent {
 nav h1 {
   margin: 0;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
   display: flex;
   align-items: center;
   gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .nav-logo {
@@ -192,6 +199,9 @@ nav h1 {
     border-bottom: 1px solid var(--border-secondary);
     font-size: 16px;
     color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
   }
   
   .nav-link:hover {
@@ -233,10 +243,12 @@ nav h1 {
 
 .nav-link {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #e5e5e5;
   text-decoration: none;
   transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   padding: 8px 16px;
   border-radius: 6px;
   position: relative;
@@ -654,16 +666,21 @@ nav h1 {
 
 .preview-pay-btn {
   align-self: flex-start;
-  padding: 12px 20px;
+  padding: 20px 32px;
   border-radius: 14px;
   border: none;
   background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 18px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: not-allowed;
   opacity: 0.85;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .preview-flags {
@@ -1177,14 +1194,19 @@ button:disabled {
 
 .link-box .copy-btn {
   width: auto;
-  padding: 12px 20px;
+  padding: 18px 28px;
   background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-tertiary) 50%, var(--accent-deep) 100%);
   border: none;
   border-radius: 16px;
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 700;
   box-shadow: 
     0 2px 8px rgba(255, 255, 255, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .link-box .copy-btn:hover {
@@ -1274,9 +1296,11 @@ footer {
 
 .footer-section h4 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
   margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .footer-section p {
@@ -1284,6 +1308,9 @@ footer {
   color: #888;
   line-height: 1.6;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
 }
 
 .footer-section ul {
@@ -1296,6 +1323,9 @@ footer {
   margin-bottom: 12px;
   font-size: 14px;
   color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
 }
 
 .footer-section ul li a {
@@ -1318,6 +1348,9 @@ footer {
   margin: 0;
   font-size: 13px;
   color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
 }
 
 @media (max-width: 1024px) {
@@ -3097,6 +3130,29 @@ footer {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Single Sentence Section */
+.single-sentence-section {
+  padding: 80px 60px;
+  background: var(--bg-secondary);
+  text-align: center;
+  position: relative;
+}
+
+.single-sentence-text {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Landing Features */
 .landing-features {
   max-width: 1400px;
@@ -4350,7 +4406,7 @@ footer {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 140px 60px 100px;
   overflow: hidden;
   background: var(--bg-secondary);
@@ -4442,7 +4498,9 @@ footer {
   position: relative;
   z-index: 2;
   max-width: 900px;
-  text-align: center;
+  text-align: left;
+  margin-left: 50px;
+  margin-right: auto;
   animation: fadeInUp 1s ease-out;
 }
 
@@ -4474,6 +4532,7 @@ footer {
   color: #ffffff;
   opacity: 0;
   animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  text-align: left;
 }
 
 .hero-gradient-text {
@@ -4495,8 +4554,9 @@ footer {
   color: rgba(255, 255, 255, 0.75);
   margin: 0 0 40px 0;
   max-width: 720px;
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
+  text-align: left;
   opacity: 0;
   animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
 }
@@ -4504,9 +4564,11 @@ footer {
 .hero-cta-v2 {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 60px;
+  margin-left: 0;
+  margin-right: auto;
   opacity: 0;
   animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
   flex-wrap: wrap;
@@ -4577,9 +4639,11 @@ footer {
 .hero-stats-v2 {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 32px;
   flex-wrap: wrap;
+  margin-left: 0;
+  margin-right: auto;
   animation: fadeInUp 1s ease-out 0.6s both;
 }
 
@@ -4988,6 +5052,123 @@ footer {
   position: relative;
 }
 
+/* Carousel Section */
+.carousel-section {
+  padding: 120px 60px;
+  background: var(--bg-secondary);
+  position: relative;
+}
+
+.carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.carousel-container::before,
+.carousel-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.carousel-slide .workflow-card {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.carousel-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  padding: 0;
+}
+
+.carousel-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.carousel-dot.active {
+  background: var(--accent-primary);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
 .workflow-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -5289,6 +5470,48 @@ footer {
 .use-cases-section-v2 {
   padding: 120px 60px;
   background: var(--bg-secondary);
+}
+
+/* Use Cases Carousel Section */
+.use-cases-carousel-section {
+  padding: 120px 60px;
+  background: var(--bg-secondary);
+  position: relative;
+}
+
+.use-cases-carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.use-cases-carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.use-cases-carousel-slide {
+  min-width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.use-cases-carousel-slide .use-case-card-v2 {
+  max-width: 800px;
+  width: 100%;
+}
+
+.use-cases-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
 }
 
 .use-cases-grid-v2 {
@@ -5722,8 +5945,9 @@ footer {
 
 /* Compact Button Style */
 .btn-compact {
-  padding: 8px 14px !important;
-  font-size: 13px !important;
+  padding: 16px 24px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
   min-width: auto !important;
   white-space: nowrap !important;
   gap: 6px !important;
@@ -5767,7 +5991,7 @@ footer {
     flex-direction: row !important;
     flex-wrap: wrap !important;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
   }
   
   .hero-cta-v2 .btn-primary-v2,
@@ -5799,7 +6023,7 @@ footer {
   }
 
   .bento-section,
-  .workflow-section,
+  .carousel-section,
   .stats-section,
   .use-cases-section-v2,
   .cta-section-v2 {
@@ -5861,12 +6085,37 @@ footer {
     margin-bottom: 50px;
   }
 
+  .single-sentence-section {
+    padding: 60px 20px;
+  }
+
+  .single-sentence-text {
+    font-size: clamp(28px, 6vw, 48px);
+  }
+
   .bento-section,
-  .workflow-section,
+  .single-sentence-section {
+    padding: 40px 20px;
+  }
+
+  .single-sentence-text {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .carousel-section,
   .stats-section,
   .use-cases-section-v2,
+  .use-cases-carousel-section,
   .cta-section-v2 {
     padding: 60px 20px;
+  }
+
+  .use-cases-carousel-container {
+    padding: 0 10px;
+  }
+
+  .use-cases-carousel-slide {
+    padding: 0 10px;
   }
 
   .bento-card,
@@ -5874,6 +6123,14 @@ footer {
   .stat-card-large,
   .use-case-card-v2 {
     padding: 24px;
+  }
+
+  .carousel-container {
+    padding: 0 10px;
+  }
+
+  .carousel-slide {
+    padding: 0 10px;
   }
 
   .workflow-number {

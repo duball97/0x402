@@ -7,6 +7,7 @@ function App() {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState({});
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -136,6 +137,13 @@ function App() {
         </div>
       </section>
 
+      {/* Single Sentence Section */}
+      <section className="single-sentence-section" data-animate id="single-sentence">
+        <p className="single-sentence-text">
+          The future of content monetization is here, powered by Monad blockchain.
+        </p>
+      </section>
+
       {/* Bento Grid Features Section */}
       <section className="bento-section" data-animate id="bento-section">
         <div className="section-header-v2">
@@ -207,7 +215,7 @@ function App() {
             </p>
             <div className="fee-comparison">
               <div className="fee-row">
-                <span>StealthPayx402</span>
+                <span>MonPay</span>
                 <span className="fee-value success">0%</span>
               </div>
               <div className="fee-row muted">
@@ -290,8 +298,8 @@ function App() {
         </div>
       </section>
 
-      {/* Visual How It Works Section */}
-      <section className="workflow-section" data-animate id="workflow">
+      {/* Carousel Section - Replaces workflow */}
+      <section className="carousel-section" data-animate id="workflow">
         <div className="section-header-v2">
           <span className="section-label">SIMPLE PROCESS</span>
           <h2 className="section-title-v2">From Idea to Revenue in 3 Steps</h2>
@@ -300,109 +308,104 @@ function App() {
           </p>
         </div>
 
-        <div className="workflow-container">
-          <div className="workflow-step" data-animate id="workflow-1">
-            <div className="workflow-card">
-              <div className="workflow-number">01</div>
-              <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        <div className="carousel-container">
+          <div className="carousel-wrapper" style={{ transform: `translateX(-${carouselIndex * 100}%)` }}>
+            <div className="carousel-slide">
+              <div className="workflow-card">
+                <div className="workflow-icon-wrapper">
+                  <div className="workflow-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="workflow-step-title">Create Your Paywall</h3>
+                <p className="workflow-step-desc">
+                  Enter your content URL, set your price in MonPay tokens, add your wallet address. Takes less than 60 seconds.
+                </p>
+              </div>
+            </div>
+
+            <div className="carousel-slide">
+              <div className="workflow-card">
+                <div className="workflow-icon-wrapper">
+                  <div className="workflow-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="workflow-step-title">Share Your Link</h3>
+                <p className="workflow-step-desc">
+                  Get a unique paywall link. Share it on social media, embed on your website, or send directly to customers.
+                </p>
+              </div>
+            </div>
+
+            <div className="carousel-slide">
+              <div className="workflow-card">
+                <div className="workflow-icon-wrapper">
+                  <div className="workflow-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="workflow-step-title">Get Paid Instantly</h3>
+                <p className="workflow-step-desc">
+                  Customers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, no fees.
+                </p>
+                <div className="payment-time">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}>
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                   </svg>
+                  2-5 seconds
                 </div>
               </div>
-              <h3 className="workflow-step-title">Create Your Paywall</h3>
-              <p className="workflow-step-desc">
-                Enter your content URL, set your price in MonPay tokens, add your wallet address. Takes less than 60 seconds.
-              </p>
             </div>
           </div>
 
-          <div className="workflow-step" data-animate id="workflow-2">
-            <div className="workflow-card">
-              <div className="workflow-number">02</div>
-              <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="workflow-step-title">Share Your Link</h3>
-              <p className="workflow-step-desc">
-                Get a unique paywall link. Share it on social media, embed on your website, or send directly to customers.
-              </p>
+          <div className="carousel-controls">
+            <button 
+              className="carousel-btn carousel-btn-prev"
+              onClick={() => setCarouselIndex((prev) => (prev === 0 ? 2 : prev - 1))}
+              aria-label="Previous slide"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+            <div className="carousel-dots">
+              {[0, 1, 2].map((index) => (
+                <button
+                  key={index}
+                  className={`carousel-dot ${carouselIndex === index ? 'active' : ''}`}
+                  onClick={() => setCarouselIndex(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
-          </div>
-
-          <div className="workflow-step" data-animate id="workflow-3">
-            <div className="workflow-card">
-              <div className="workflow-number">03</div>
-              <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="1" x2="12" y2="23"/>
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="workflow-step-title">Get Paid Instantly</h3>
-              <p className="workflow-step-desc">
-                Customers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, no fees.
-              </p>
-              <div className="payment-time">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}>
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-                2-5 seconds
-              </div>
-            </div>
+            <button 
+              className="carousel-btn carousel-btn-next"
+              onClick={() => setCarouselIndex((prev) => (prev === 2 ? 0 : prev + 1))}
+              aria-label="Next slide"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="stats-section" data-animate id="stats">
-        <div className="stats-grid">
-          <div className="stat-card-large" data-animate id="stat-1">
-            <div className="stat-card-bg"></div>
-            <div className="stat-large-number">$0</div>
-            <div className="stat-large-label">Setup Cost</div>
-            <p className="stat-large-desc">No signup fees, no monthly subscriptions, no hidden charges</p>
-          </div>
-
-          <div className="stat-card-large" data-animate id="stat-2">
-            <div className="stat-card-bg"></div>
-            <div className="stat-large-number">
-              <span className="counting-number">2.4</span>s
-            </div>
-            <div className="stat-large-label">Average Settlement</div>
-            <p className="stat-large-desc">Lightning fast payments on Monad</p>
-          </div>
-
-          <div className="stat-card-large" data-animate id="stat-3">
-            <div className="stat-card-bg"></div>
-            <div className="stat-large-number">100%</div>
-            <div className="stat-large-label">Revenue Kept</div>
-            <p className="stat-large-desc">Zero platform fees means you keep everything you earn</p>
-          </div>
-
-          <div className="stat-card-large" data-animate id="stat-4">
-            <div className="stat-card-bg"></div>
-            <div className="stat-large-number">&lt;60s</div>
-            <div className="stat-large-label">Setup Time</div>
-            <p className="stat-large-desc">From creation to your first paywall in under a minute</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Cards Section */}
+      {/* Use Cases Grid Section */}
       <section className="use-cases-section-v2" data-animate id="use-cases">
         <div className="section-header-v2">
           <span className="section-label">USE CASES</span>
-            <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
+          <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
           <p className="section-desc-v2">
             Whether you're a solo creator or building the next big platform,
             MonPay scales with you on Monad.
@@ -410,7 +413,7 @@ function App() {
         </div>
 
         <div className="use-cases-grid-v2">
-          <div className="use-case-card-v2" data-animate id="usecase-1">
+          <div className="use-case-card-v2">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
               <div className="use-case-icon-v2">
@@ -437,7 +440,7 @@ function App() {
             </div>
           </div>
 
-          <div className="use-case-card-v2" data-animate id="usecase-2">
+          <div className="use-case-card-v2">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
               <div className="use-case-icon-v2">
@@ -460,7 +463,7 @@ function App() {
             </div>
           </div>
 
-          <div className="use-case-card-v2" data-animate id="usecase-3">
+          <div className="use-case-card-v2">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
               <div className="use-case-icon-v2">
@@ -485,7 +488,7 @@ function App() {
             </div>
           </div>
 
-          <div className="use-case-card-v2" data-animate id="usecase-4">
+          <div className="use-case-card-v2">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
               <div className="use-case-icon-v2">
