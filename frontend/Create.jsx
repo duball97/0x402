@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import { isValidZcashAddress } from './zcashUtils';
+// Monad address validation utilities can be imported here if needed
 
 function Create() {
   const [url, setUrl] = useState('');
@@ -13,7 +13,7 @@ function Create() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState(null);
-  const [network, setNetwork] = useState('Solana');
+  const [network, setNetwork] = useState('Monad');
 
   const createPaywall = async (e) => {
     e.preventDefault();
@@ -35,14 +35,7 @@ function Create() {
       setValidationError('Paywall ID can only contain letters, numbers, hyphens, and underscores');
       return;
     }
-    if (network === 'Zcash' && !walletAddress) {
-      setValidationError('A Zcash address is required for Zcash paywalls');
-      return;
-    }
-    if (network === 'Zcash' && walletAddress && !isValidZcashAddress(walletAddress)) {
-      setValidationError('Invalid Zcash address. Please enter a valid Zcash address (shielded or transparent)');
-      return;
-    }
+    // Monad address validation can be added here if needed
 
     setLoading(true);
     setError(null);
@@ -129,7 +122,7 @@ function Create() {
     }
   };
 
-  const paywallCurrencyLabel = network === 'Zcash' ? 'ZEC' : 'SOL';
+  const paywallCurrencyLabel = 'MonPay';
   const paywallNetworkLabel = network;
   const previewDomain = (() => {
     if (!url) return 'your-url.com';
@@ -156,10 +149,10 @@ function Create() {
       <main className="builder-shell">
         <section className="builder-overview">
           <div className="overview-main">
-            <span className="pill-gradient">StealthPayx402 Builder</span>
+            <span className="pill-gradient">MonPay Builder</span>
             <h1 className="builder-title">Compose a paywall flow from scratch</h1>
             <p className="builder-subtitle">
-              Route any link through an HTTP 402-compatible checkout, accept instant crypto settlement, and keep custody of every token.
+              Route any link through an HTTP 402-compatible checkout, accept instant MonPay token settlement on Monad, and keep custody of every token.
             </p>
 
             <div className="builder-steps">
@@ -174,7 +167,7 @@ function Create() {
                 <span className="step-index">02</span>
                 <div>
                   <h4>Set settlement</h4>
-                  <p>Choose your Solana price and where the funds should land.</p>
+                  <p>Choose your MonPay token price and where the funds should land on Monad.</p>
                 </div>
               </div>
               <div className="builder-step">
@@ -202,7 +195,7 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Access destination</h3>
-                  <p>Enter the URL buyers unlock plus a unique ID for your StealthPayx402 paywall link.</p>
+                  <p>Enter the URL buyers unlock plus a unique ID for your MonPay paywall link.</p>
                 </div>
               </div>
               <div className="field-grid">
@@ -241,30 +234,18 @@ function Create() {
               <div className="cluster-header">
                 <div>
                   <h3>Settlement settings</h3>
-                  <p>Choose your blockchain network, set your price, and specify the payout recipient.</p>
+                  <p>Set your MonPay token price on Monad chain and specify the payout recipient.</p>
                 </div>
               </div>
 
               <div className="network-toggle" role="tablist" aria-label="Network selector">
                 <div
-                  className={`network-option ${network === 'Solana' ? 'network-option-active' : ''}`}
+                  className="network-option network-option-active"
                   role="tab"
-                  aria-selected={network === 'Solana'}
-                  onClick={() => setNetwork('Solana')}
-                  style={{ cursor: 'pointer' }}
+                  aria-selected={true}
                 >
-                  <span className="option-label">Solana</span>
-                  <span className="option-footnote">Phantom · SOL</span>
-                </div>
-                <div
-                  className={`network-option ${network === 'Zcash' ? 'network-option-active' : ''}`}
-                  role="tab"
-                  aria-selected={network === 'Zcash'}
-                  onClick={() => setNetwork('Zcash')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <span className="option-label">Zcash</span>
-                  <span className="option-footnote">Shielded · ZEC</span>
+                  <span className="option-label">Monad</span>
+                  <span className="option-footnote">EVM · MonPay</span>
                 </div>
               </div>
 
@@ -289,14 +270,12 @@ function Create() {
                   <input
                     type="text"
                     id="walletAddress"
-                    placeholder={network === 'Zcash' ? 'Enter a Zcash shielded address (zs1..., u1...)' : 'Enter a Solana address'}
+                    placeholder="Enter a Monad wallet address (0x...)"
                     value={walletAddress}
                     onChange={(e) => setWalletAddress(e.target.value)}
                   />
                   <p className="input-hint">
-                    {network === 'Zcash'
-                      ? 'Enter a shielded Zcash address (zs1, u1, or transparent t1). Required for Zcash paywalls.'
-                      : 'Leave blank to auto-generate a non-custodial StealthPayx402 wallet for this paywall.'}
+                    Leave blank to auto-generate a non-custodial MonPay wallet for this paywall on Monad.
                   </p>
                 </div>
               </div>
@@ -331,7 +310,7 @@ function Create() {
                   <>Deploy paywall</>
                 )}
               </button>
-              <p className="form-helper">Funds settle instantly on {paywallNetworkLabel}. StealthPayx402 never takes custody.</p>
+              <p className="form-helper">Funds settle instantly on Monad. MonPay never takes custody.</p>
             </div>
           </form>
 
@@ -423,7 +402,7 @@ function Create() {
                 <div className="aside-card preview-card">
                   <div className="card-heading">
                     <span className="pill-outline">Live preview</span>
-                    <h3>{paywallId || 'stealthpayx402/paywall'}</h3>
+                    <h3>{paywallId || 'monpay/paywall'}</h3>
                   </div>
                   <div className="preview-pane">
                     <div className="preview-price">
@@ -436,7 +415,7 @@ function Create() {
                     </div>
                     <p className="preview-copy">{description || 'Describe the value buyers receive once they complete payment.'}</p>
                     <button className="preview-pay-btn" type="button" disabled>
-                      {network === 'Zcash' ? 'Pay with Zcash wallet' : 'Pay with Phantom'}
+                      Pay with Web3 Wallet
                     </button>
                     <div className="preview-flags">
                       <span>⚡ Instant settlement</span>

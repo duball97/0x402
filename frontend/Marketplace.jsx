@@ -40,7 +40,7 @@ function Marketplace() {
     const term = searchTerm.trim().toLowerCase();
     return paywalls
       .filter((paywall) => {
-        const normalizedNetwork = (paywall.network || 'Solana').toLowerCase();
+        const normalizedNetwork = (paywall.network || 'Monad').toLowerCase();
         const normalizedCurrency = (paywall.currency || '').toLowerCase();
         
         // Exclude BNB and BNB Chain paywalls
@@ -77,7 +77,7 @@ function Marketplace() {
     let totalListings = 0;
 
     paywalls.forEach((item) => {
-      const network = (item.network || 'Solana').toLowerCase();
+      const network = (item.network || 'Monad').toLowerCase();
       const currency = (item.currency || '').toLowerCase();
       
       // Exclude BNB and BNB Chain paywalls from stats
@@ -108,7 +108,7 @@ function Marketplace() {
 
   const hasAny = useMemo(() => {
     return paywalls.some((paywall) => {
-      const network = (paywall.network || 'Solana').toLowerCase();
+      const network = (paywall.network || 'Monad').toLowerCase();
       const currency = (paywall.currency || '').toLowerCase();
       return !network.includes('bnb') && !currency.includes('bnb');
     });
@@ -128,11 +128,11 @@ function Marketplace() {
       <main className="market-shell">
         <section className="market-hero">
           <div className="market-hero-copy">
-            <span className="market-tag">StealthPayx402 Marketplace</span>
+            <span className="market-tag">MonPay Marketplace</span>
             <h1>Explore paywalls built for instant crypto settlement</h1>
             <p>
-              Browse live StealthPayx402 paywalls, compare pricing structures, and unlock access in seconds. Filter by chain, discover new
-              revenue models, or clone a flow for your next launch.
+              Browse live MonPay paywalls on Monad chain, compare pricing structures, and unlock access in seconds. Discover new
+              revenue models powered by MonPay tokens.
             </p>
             <div className="market-cta">
               <button type="button" className="gradient-btn" onClick={() => navigate('/create')}>
@@ -150,14 +150,9 @@ function Marketplace() {
               <span className="metric-chip-value">{stats.listings}</span>
             </div>
             <div className="metric-chip">
-              <span className="metric-chip-label">SOL volume</span>
-              <span className="metric-chip-value">{stats.solanaVolume.toFixed(3)} SOL</span>
+              <span className="metric-chip-label">MonPay volume</span>
+              <span className="metric-chip-value">{stats.solanaVolume.toFixed(3)} MonPay</span>
               <span className="metric-chip-footnote">{stats.solanaCount} paywalls</span>
-            </div>
-            <div className="metric-chip">
-              <span className="metric-chip-label">ZEC volume</span>
-              <span className="metric-chip-value">{stats.zcashVolume.toFixed(4)} ZEC</span>
-              <span className="metric-chip-footnote">{stats.zcashCount} paywalls</span>
             </div>
           </div>
         </section>
@@ -182,8 +177,7 @@ function Marketplace() {
             <div className="network-pills" role="tablist" aria-label="Network filters">
               {[
                 { id: 'all', label: 'All' },
-                { id: 'solana', label: 'Solana' },
-                { id: 'zcash', label: 'Zcash' },
+                { id: 'monad', label: 'Monad' },
               ].map((chip) => (
                 <button
                   key={chip.id}
@@ -232,7 +226,7 @@ function Marketplace() {
           <div className="market-placeholder empty">
             <div className="empty-icon">📦</div>
             <h3>No paywalls yet</h3>
-            <p>Be the first to deploy a StealthPayx402 paywall and showcase it here.</p>
+            <p>Be the first to deploy a MonPay paywall on Monad and showcase it here.</p>
             <button className="gradient-btn" type="button" onClick={() => navigate('/create')}>
               Launch your first paywall
             </button>
@@ -264,7 +258,7 @@ function Marketplace() {
                   {filteredPaywalls.map((paywall) => (
                     <article key={paywall.id} className="market-card">
                       <header className="market-card__header">
-                        <span className="market-chip">{paywall.network || 'Solana'}</span>
+                        <span className="market-chip">{paywall.network || 'Monad'}</span>
                         <span className="market-chip market-chip--outline">{paywall.currency}</span>
                       </header>
                       <div className="market-card__body">
@@ -278,7 +272,7 @@ function Marketplace() {
                         </div>
                         <div>
                           <dt>Network</dt>
-                          <dd>{paywall.network || 'Solana'}</dd>
+                          <dd>{paywall.network || 'Monad'}</dd>
                         </div>
                       </dl>
                       <footer className="market-card__footer">

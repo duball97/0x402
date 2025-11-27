@@ -11,7 +11,7 @@ function Docs() {
         <div className="docs-hero">
           <h1>Documentation</h1>
           <p className="docs-subtitle">
-            Everything you need to build, deploy, and monetize with StealthPayx402
+            Everything you need to build, deploy, and monetize with MonPay
           </p>
         </div>
 
@@ -40,13 +40,25 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              StealthPayx402 is a decentralized paywall protocol that enables instant monetization of any web content through native cryptocurrency payments. Built on Solana and Zcash with shielded privacy support, StealthPayx402 brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              MonPay is a decentralized paywall protocol that enables instant monetization of any web content through native MonPay token payments. Built on Monad chain with EVM compatibility, MonPay brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
             </p>
             <div className="info-card">
-              <div className="info-card-icon">💡</div>
+              <div className="info-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="3"/>
+                  <line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/>
+                  <line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  <circle cx="12" cy="12" r="5"/>
+                </svg>
+              </div>
               <div>
-                <strong>What makes StealthPayx402 unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, StealthPayx402 enables instant, permissionless payments using SOL (Solana) or ZEC (Zcash shielded pools). No middlemen, no platform fees, no accounts needed.</p>
+                <strong>What makes MonPay unique?</strong>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, MonPay enables instant, permissionless payments using MonPay tokens on Monad chain. No middlemen, no platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -55,7 +67,7 @@ function Docs() {
           <section id="http-402" className="docs-section">
             <h2>HTTP 402 Protocol</h2>
             <p>
-              The HTTP 402 status code was reserved in 1997 for future use as "Payment Required" but remained largely unimplemented for decades. StealthPayx402 brings this protocol to life for the blockchain era.
+              The HTTP 402 status code was reserved in 1997 for future use as "Payment Required" but remained largely unimplemented for decades. MonPay brings this protocol to life for the blockchain era on Monad.
             </p>
             
             <h3>Protocol Specification</h3>
@@ -65,31 +77,53 @@ function Docs() {
                 <span className="code-lang">HTTP</span>
               </div>
               <pre><code>{`HTTP/1.1 402 Payment Required
-X-Payment-Required: 0.01 SOL
-X-Payment-Address: 7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5
-X-Payment-Network: solana
+X-Payment-Required: 0.01 MonPay
+X-Payment-Address: 0x...
+X-Payment-Network: monad
 X-Payment-Memo: paywall-abc123`}</code></pre>
             </div>
 
             <h3>Why HTTP 402 Matters</h3>
             <div className="feature-grid">
               <div className="feature-item">
-                <div className="feature-icon">🤖</div>
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+                    <circle cx="9" cy="14" r="1"/>
+                    <circle cx="15" cy="14" r="1"/>
+                    <path d="M9 18h6"/>
+                  </svg>
+                </div>
                 <h4>AI Agent Payments</h4>
                 <p>AI agents can programmatically detect and fulfill payment requirements by parsing HTTP headers</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🔗</div>
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                </div>
                 <h4>Machine-Readable</h4>
                 <p>Standardized headers make payments discoverable and automatable across the web</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">⚡</div>
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                </div>
                 <h4>Instant Settlement</h4>
                 <p>Payments settle on-chain in 2-5 seconds with sub-cent gas fees</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🌐</div>
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
                 <h4>Universal Standard</h4>
                 <p>Works with any HTTP client, browser, or API that supports custom headers</p>
               </div>
@@ -114,7 +148,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <div className="step-number">2</div>
                 <div className="step-content">
                   <h4>Set Your Price</h4>
-                  <p>Choose your price in SOL. Most creators start between 0.01 and 0.05 SOL, but you can set any amount you like.</p>
+                  <p>Choose your price in MonPay tokens. Most creators start between 0.01 and 0.05 MonPay, but you can set any amount you like.</p>
                 </div>
               </div>
               
@@ -122,7 +156,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <div className="step-number">3</div>
                 <div className="step-content">
                   <h4>Add Wallet Address</h4>
-                  <p>Provide your Solana wallet address to receive payments. If omitted, we'll generate a non-custodial wallet for you.</p>
+                  <p>Provide your Monad wallet address to receive payments. If omitted, we'll generate a non-custodial wallet for you.</p>
                 </div>
               </div>
               
@@ -139,29 +173,48 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
           {/* How It Works */}
           <section id="how-it-works" className="docs-section">
             <h2>How It Works</h2>
-            <p>StealthPayx402 uses a simple but powerful architecture:</p>
+            <p>MonPay uses a simple but powerful architecture on Monad:</p>
             
             <div className="architecture-diagram">
               <div className="arch-step">
-                <div className="arch-icon">🌐</div>
+                <div className="arch-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
                 <h4>1. User Visits Link</h4>
                 <p>User clicks your paywall link</p>
               </div>
               <div className="arch-arrow">→</div>
               <div className="arch-step">
-                <div className="arch-icon">🔒</div>
+                <div className="arch-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
                 <h4>2. Paywall Displayed</h4>
                 <p>Shows price & payment button</p>
               </div>
               <div className="arch-arrow">→</div>
               <div className="arch-step">
-                <div className="arch-icon">💳</div>
+                <div className="arch-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                    <line x1="1" y1="10" x2="23" y2="10"/>
+                  </svg>
+                </div>
                 <h4>3. Phantom Opens</h4>
                 <p>User confirms transaction</p>
               </div>
               <div className="arch-arrow">→</div>
               <div className="arch-step">
-                <div className="arch-icon">✅</div>
+                <div className="arch-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
                 <h4>4. Content Unlocked</h4>
                 <p>Instant access after payment</p>
               </div>
@@ -200,32 +253,68 @@ await connection.confirmTransaction(signature, 'confirmed');
             
             <div className="feature-list">
               <div className="feature-detail">
-                <h3>🪙 Native SOL & ZEC Payments</h3>
-                <p>Accept payments in native SOL (Solana) or shielded ZEC (Zcash). No token contracts, no wrapping, no complexity. Pure, simple cryptocurrency payments with optional privacy.</p>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="6" x2="12" y2="18"/>
+                    <line x1="6" y1="12" x2="18" y2="12"/>
+                  </svg>
+                  Native MonPay Token Payments
+                </h3>
+                <p>Accept payments in native MonPay tokens on Monad chain. EVM compatible, fast, and efficient. Pure, simple cryptocurrency payments with instant settlement.</p>
               </div>
               
               <div className="feature-detail">
-                <h3>🔐 Non-Custodial Architecture</h3>
-                <p>StealthPayx402 <strong>never</strong> holds your funds. Payments go directly from payer to your wallet address. You retain full custody and control of your earnings at all times.</p>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  Non-Custodial Architecture
+                </h3>
+                <p>MonPay <strong>never</strong> holds your funds. Payments go directly from payer to your wallet address on Monad. You retain full custody and control of your earnings at all times.</p>
               </div>
               
               <div className="feature-detail">
-                <h3>⚡ Instant Settlements</h3>
-                <p>Solana and Zcash provide lightning-fast finality. Payments confirm in seconds. No waiting periods, no settlement delays, no payment processors.</p>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  Instant Settlements
+                </h3>
+                <p>Monad chain provides lightning-fast finality. Payments confirm in seconds. No waiting periods, no settlement delays, no payment processors.</p>
               </div>
               
               <div className="feature-detail">
-                <h3>💰 Zero Platform Fees</h3>
-                <p>We take <strong>0%</strong> of your revenue. The only costs are minimal network fees (Solana or Zcash, typically fractions of a cent per transaction).</p>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                  Zero Platform Fees
+                </h3>
+                <p>We take <strong>0%</strong> of your revenue. The only costs are minimal network fees on Monad (typically fractions of a cent per transaction).</p>
               </div>
               
               <div className="feature-detail">
-                <h3>🌍 Permissionless & Global</h3>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  Permissionless & Global
+                </h3>
                 <p>No KYC, no accounts, no bank connections required. If you have a wallet address, you can receive payments from anyone, anywhere in the world.</p>
               </div>
               
               <div className="feature-detail">
-                <h3>🔗 Standard HTTP Protocol</h3>
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}}>
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                  Standard HTTP Protocol
+                </h3>
                 <p>Built on HTTP 402 standard, making your paywalls machine-readable and compatible with AI agents, bots, and automated systems.</p>
               </div>
             </div>
@@ -241,10 +330,10 @@ await connection.confirmTransaction(signature, 'confirmed');
                 <strong>Frontend:</strong> React + Vite
               </div>
               <div className="tech-item">
-                <strong>Blockchain:</strong> Solana & Zcash
+                <strong>Blockchain:</strong> Monad
               </div>
               <div className="tech-item">
-                <strong>Web3:</strong> @solana/web3.js + Phantom & Zcash shielded pools
+                <strong>Web3:</strong> EVM-compatible wallets & MonPay tokens
               </div>
               <div className="tech-item">
                 <strong>Backend:</strong> Vercel Serverless Functions
@@ -260,33 +349,29 @@ await connection.confirmTransaction(signature, 'confirmed');
             <h3>Smart Contract Interaction</h3>
             <div className="code-block">
               <div className="code-header">
-                <span>Native SOL Transfer</span>
+                <span>MonPay Token Transfer</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`import {
-  Connection,
-  PublicKey,
-  SystemProgram,
-  Transaction,
-  LAMPORTS_PER_SOL,
-} from '@solana/web3.js';
+              <pre><code>{`import { ethers } from 'ethers';
 
-// Connect to Phantom
-const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-const fromPublicKey = window.solana.publicKey;
-const toPublicKey = new PublicKey('CreatorWalletPublicKey');
+// Connect to Monad
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
 
-const transaction = new Transaction().add(
-  SystemProgram.transfer({
-    fromPubkey: fromPublicKey,
-    toPubkey: toPublicKey,
-    lamports: Math.floor(0.01 * LAMPORTS_PER_SOL),
-  })
+// MonPay token contract address
+const monpayAddress = '0x...'; // MonPay token address on Monad
+const monpayABI = [...]; // ERC20 ABI
+
+const monpayContract = new ethers.Contract(monpayAddress, monpayABI, signer);
+
+// Transfer MonPay tokens
+const tx = await monpayContract.transfer(
+  'CreatorWalletAddress',
+  ethers.utils.parseEther('0.01')
 );
 
-const { signature } = await window.solana.signAndSendTransaction(transaction);
-await connection.confirmTransaction(signature, 'confirmed');
-console.log('Payment confirmed!', signature);`}</code></pre>
+await tx.wait();
+console.log('Payment confirmed!', tx.hash);`}</code></pre>
             </div>
           </section>
 
@@ -297,32 +382,35 @@ console.log('Payment confirmed!', signature);`}</code></pre>
             <h3>Network Configuration</h3>
             <div className="code-block">
               <div className="code-header">
-                <span>Solana Config</span>
+                <span>Monad Config</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`export const SOLANA_CONFIG = {
-  rpcUrl: import.meta.env.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
-  explorer: 'https://solscan.io'
+              <pre><code>{`export const MONAD_CONFIG = {
+  chainId: 0x...,
+  rpcUrl: import.meta.env.VITE_MONAD_RPC_URL || 'https://rpc.monad.xyz',
+  explorer: 'https://monad.xyz'
 };
 
-const connection = new Connection(SOLANA_CONFIG.rpcUrl, 'confirmed');`}</code></pre>
+const provider = new ethers.providers.JsonRpcProvider(MONAD_CONFIG.rpcUrl);`}</code></pre>
             </div>
 
-            <h3>Phantom Detection</h3>
+            <h3>Web3 Wallet Detection</h3>
             <div className="code-block">
               <div className="code-header">
                 <span>Check for Web3 Wallet</span>
                 <span className="code-lang">JavaScript</span>
               </div>
-              <pre><code>{`// Check if Phantom is installed
-if (!window.solana || !window.solana.isPhantom) {
-  alert('Please install Phantom to make payments');
+              <pre><code>{`// Check if Web3 wallet is installed
+if (!window.ethereum) {
+  alert('Please install a Web3 wallet (MetaMask, etc.) to make payments');
   return;
 }
 
 // Request account access
-const { publicKey } = await window.solana.connect();
-const address = publicKey.toString();`}</code></pre>
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+await provider.send('eth_requestAccounts', []);
+const signer = provider.getSigner();
+const address = await signer.getAddress();`}</code></pre>
             </div>
           </section>
 
@@ -356,12 +444,12 @@ const address = publicKey.toString();`}</code></pre>
               </div>
               <pre><code>{`{
   "paywall_id": "abc123",
-  "paywall_link": "https://stealthpayx402.io/paywall/abc123",
+  "paywall_link": "https://monpay.io/paywall/abc123",
   "price": "0.01",
-  "currency": "SOL",
+  "currency": "MonPay",
   "status": "created",
   "walletAddress": "7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5",
-  "network": "Solana"
+  "network": "Monad"
 }`}</code></pre>
             </div>
 
@@ -380,10 +468,10 @@ const address = publicKey.toString();`}</code></pre>
   "id": "abc123",
   "url": "https://example.com/premium-content",
   "price": "0.01",
-  "currency": "SOL",
+  "currency": "MonPay",
   "status": "active",
   "walletAddress": "7zQd9dJL...",
-  "network": "Solana",
+  "network": "Monad",
   "createdAt": "2025-10-31T12:00:00Z"
 }`}</code></pre>
             </div>
@@ -395,23 +483,45 @@ const address = publicKey.toString();`}</code></pre>
             
             <div className="security-grid">
               <div className="security-item">
-                <h4>🔐 Non-Custodial</h4>
-                <p>StealthPayx402 never holds or accesses your funds. All payments go directly to your wallet address.</p>
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '6px'}}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  Non-Custodial
+                </h4>
+                <p>MonPay never holds or accesses your funds. All payments go directly to your wallet address on Monad.</p>
               </div>
               
               <div className="security-item">
-                <h4>🛡️ Solana Security</h4>
-                <p>Built on Solana, secured by a high-performance proof-of-stake network with rapid finality.</p>
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '6px'}}>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  Solana Security
+                </h4>
+                <p>Built on Monad, secured by a high-performance EVM-compatible network with rapid finality.</p>
               </div>
               
               <div className="security-item">
-                <h4>✅ Verified Transactions</h4>
-                <p>All payments are transparent and verifiable on Solscan. No hidden fees, no opaque processing.</p>
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '6px'}}>
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  Verified Transactions
+                </h4>
+                <p>All payments are transparent and verifiable on Monad explorer. No hidden fees, no opaque processing.</p>
               </div>
               
               <div className="security-item">
-                <h4>🔒 Phantom Security</h4>
-                <p>Transactions require explicit user approval through Phantom. No automatic or hidden charges.</p>
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '6px'}}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  Web3 Wallet Security
+                </h4>
+                <p>Transactions require explicit user approval through your Web3 wallet. No automatic or hidden charges.</p>
               </div>
             </div>
 
@@ -419,9 +529,9 @@ const address = publicKey.toString();`}</code></pre>
             <ul className="best-practices">
               <li>Always verify the recipient address before sending payments</li>
               <li>Use hardware wallets (Ledger, Trezor) for large amounts</li>
-              <li>Double-check you're on the correct network (Solana mainnet)</li>
+              <li>Double-check you're on the correct network (Monad mainnet)</li>
               <li>Keep your seed phrase secure and never share it</li>
-              <li>Enable Phantom's transaction security features</li>
+              <li>Enable your Web3 wallet's transaction security features</li>
             </ul>
           </section>
 
@@ -431,37 +541,71 @@ const address = publicKey.toString();`}</code></pre>
             
             <div className="use-case-grid">
               <div className="use-case">
-                <div className="use-case-icon">📰</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+                    <path d="M18 14h-8"/>
+                    <path d="M15 18h-5"/>
+                    <path d="M10 6h8v4h-8z"/>
+                  </svg>
+                </div>
                 <h4>Premium Content</h4>
                 <p>Monetize articles, research papers, whitepapers, and long-form journalism</p>
               </div>
               
               <div className="use-case">
-                <div className="use-case-icon">🎥</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="23 7 16 12 23 17 23 7"/>
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                  </svg>
+                </div>
                 <h4>Video Content</h4>
                 <p>Sell access to educational videos, tutorials, courses, or entertainment</p>
               </div>
               
               <div className="use-case">
-                <div className="use-case-icon">🎵</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="18" r="4"/>
+                    <path d="M16 18V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v14"/>
+                  </svg>
+                </div>
                 <h4>Digital Downloads</h4>
                 <p>Music, ebooks, software, templates, and other downloadable files</p>
               </div>
               
               <div className="use-case">
-                <div className="use-case-icon">🔌</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
                 <h4>API Access</h4>
                 <p>Monetize API endpoints with per-request or subscription-based payments</p>
               </div>
               
               <div className="use-case">
-                <div className="use-case-icon">💼</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                </div>
                 <h4>B2B Services</h4>
                 <p>Sell access to data, analytics, reports, or specialized business tools</p>
               </div>
               
               <div className="use-case">
-                <div className="use-case-icon">🤖</div>
+                <div className="use-case-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+                    <circle cx="9" cy="14" r="1"/>
+                    <circle cx="15" cy="14" r="1"/>
+                    <path d="M9 18h6"/>
+                  </svg>
+                </div>
                 <h4>AI Agent Commerce</h4>
                 <p>Enable AI agents to autonomously purchase data, compute, or services</p>
               </div>
@@ -475,37 +619,37 @@ const address = publicKey.toString();`}</code></pre>
             <div className="faq-list">
               <div className="faq-item">
                 <h4>What are the fees?</h4>
-                <p>StealthPayx402 charges <strong>0% platform fees</strong>. The only costs are Solana network fees (typically fractions of a cent per transaction).</p>
+                <p>MonPay charges <strong>0% platform fees</strong>. The only costs are Monad network fees (typically fractions of a cent per transaction).</p>
               </div>
               
               <div className="faq-item">
                 <h4>Do I need an account?</h4>
-                <p>No. StealthPayx402 is completely permissionless. Just provide a wallet address and start earning.</p>
+                <p>No. MonPay is completely permissionless. Just provide a wallet address on Monad and start earning.</p>
               </div>
               
               <div className="faq-item">
                 <h4>Which wallets are supported?</h4>
-                <p>Phantom is the primary supported wallet today. Any Solana wallet that implements <code>signAndSendTransaction</code> can integrate.</p>
+                <p>Any EVM-compatible wallet works with MonPay on Monad. MetaMask, WalletConnect, and other Web3 wallets are supported.</p>
               </div>
               
               <div className="faq-item">
                 <h4>How fast are payments?</h4>
-                <p>Payments confirm in 2-5 seconds on Solana. Instant compared to traditional payment processors.</p>
+                <p>Payments confirm in 2-5 seconds on Monad. Instant compared to traditional payment processors.</p>
               </div>
               
               <div className="faq-item">
                 <h4>Can I accept other currencies?</h4>
-                <p>Currently we support native SOL payments on Solana. Additional token support may be added based on community demand.</p>
+                <p>Currently we support native MonPay token payments on Monad. Additional token support may be added based on community demand.</p>
               </div>
               
               <div className="faq-item">
                 <h4>Is this production-ready?</h4>
-                <p>Yes! StealthPayx402 is live on Solana mainnet and ready for production use.</p>
+                <p>Yes! MonPay is live on Monad chain and ready for production use.</p>
               </div>
               
               <div className="faq-item">
                 <h4>How do refunds work?</h4>
-                <p>Since payments go directly to your wallet, refunds must be handled manually. Send SOL back to the payer's address if needed.</p>
+                <p>Since payments go directly to your wallet, refunds must be handled manually. Send MonPay tokens back to the payer's address if needed.</p>
               </div>
               
               <div className="faq-item">

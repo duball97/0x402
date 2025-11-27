@@ -84,9 +84,9 @@ function App() {
           </h1>
 
           <p className="hero-description-v2" data-animate id="hero-desc">
-            Transform your content into revenue with blockchain-powered paywalls.
-            Zero fees. Instant settlements. Shielded privacy. Built for creators,
-            developers, and AI agents.
+            Transform your content into revenue with MonPay on Monad chain.
+            Zero fees. Instant settlements. Native MonPay token payments. Built for creators,
+            developers, and AI agents on the fastest EVM-compatible blockchain.
           </p>
 
           <div className="hero-cta-v2" data-animate id="hero-cta">
@@ -150,18 +150,22 @@ function App() {
         <div className="bento-grid">
           <div className="bento-card bento-large" data-animate id="bento-1">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon-large">⚡</div>
+            <div className="bento-icon-large">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
             <h3 className="bento-title">Lightning Fast Settlements</h3>
             <p className="bento-desc">
-              Payments settle in seconds on Solana and Zcash. No waiting days for
-              traditional processors. Your money arrives instantly with optional privacy.
+              Payments settle in seconds on Monad chain. No waiting days for
+              traditional processors. Your MonPay tokens arrive instantly with EVM compatibility.
             </p>
             <div className="bento-metric-showcase">
               <div className="metric-bar">
                 <div className="metric-bar-fill" style={{width: '95%'}}></div>
               </div>
               <div className="metric-labels">
-                <span>StealthPayx402: 2-5s</span>
+                <span>MonPay: 2-5s</span>
                 <span className="metric-muted">Traditional: 3-7 days</span>
               </div>
             </div>
@@ -169,7 +173,12 @@ function App() {
 
           <div className="bento-card" data-animate id="bento-2">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon">🔒</div>
+            <div className="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
             <h3 className="bento-title">100% Non-Custodial</h3>
             <p className="bento-desc">
               You own your wallet, you control your funds. We never touch your money.
@@ -185,10 +194,16 @@ function App() {
 
           <div className="bento-card" data-animate id="bento-3">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon">💎</div>
+            <div className="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 3h12l4 6-10 12L2 9z"/>
+                <path d="M11 3L8 9l4 12 4-12-3-6"/>
+                <path d="M2 9h20"/>
+              </svg>
+            </div>
             <h3 className="bento-title">Zero Platform Fees</h3>
             <p className="bento-desc">
-              Keep 100% of your revenue. Only pay minimal gas fees (typically &lt;$0.01).
+              Keep 100% of your revenue. Only pay minimal gas fees on Monad (typically &lt;$0.01).
             </p>
             <div className="fee-comparison">
               <div className="fee-row">
@@ -204,15 +219,23 @@ function App() {
 
           <div className="bento-card bento-wide" data-animate id="bento-4">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon">🤖</div>
+            <div className="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="8" width="18" height="12" rx="2"/>
+                <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+                <circle cx="9" cy="14" r="1"/>
+                <circle cx="15" cy="14" r="1"/>
+                <path d="M9 18h6"/>
+              </svg>
+            </div>
             <h3 className="bento-title">Built for AI Agents & Automation</h3>
             <p className="bento-desc">
               HTTP 402 protocol enables autonomous agents to discover payment requirements
-              and transact programmatically. The future of machine-to-machine commerce.
+              and transact programmatically on Monad. The future of machine-to-machine commerce.
             </p>
             <div className="code-preview">
               <div className="code-line">
-                <span className="code-comment">// AI agents can automatically detect and pay</span>
+                <span className="code-comment">// AI agents can automatically detect and pay with MonPay</span>
               </div>
               <div className="code-line">
                 <span className="code-keyword">const</span> paywall = <span className="code-keyword">await</span> <span className="code-function">detectPaywall</span>(<span className="code-string">url</span>);
@@ -225,21 +248,33 @@ function App() {
 
           <div className="bento-card" data-animate id="bento-5">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon">🌐</div>
-            <h3 className="bento-title">Multi-Chain Support</h3>
+            <div className="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <h3 className="bento-title">Monad Native</h3>
             <p className="bento-desc">
-              Runs on Solana and Zcash shielded pools. Privacy-first payments supported.
+              Built for Monad chain with EVM compatibility. Fast, efficient, and scalable payments.
             </p>
             <div className="chain-badges">
-              <div className="chain-badge">SOL</div>
-              <div className="chain-badge">ZEC 🛡️</div>
-              <div className="chain-badge chain-badge-soon">More Soon</div>
+              <div className="chain-badge">MonPay</div>
+              <div className="chain-badge">Monad</div>
+              <div className="chain-badge chain-badge-soon">EVM Compatible</div>
             </div>
           </div>
 
           <div className="bento-card" data-animate id="bento-6">
             <div className="bento-card-bg"></div>
-            <div className="bento-icon">🚀</div>
+            <div className="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+                <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+              </svg>
+            </div>
             <h3 className="bento-title">Setup in 60 Seconds</h3>
             <p className="bento-desc">
               No signup, no complex integration. Just create and share.
@@ -270,11 +305,16 @@ function App() {
             <div className="workflow-card">
               <div className="workflow-number">01</div>
               <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">✏️</div>
+                <div className="workflow-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="workflow-step-title">Create Your Paywall</h3>
               <p className="workflow-step-desc">
-                Enter your content URL, set your price in SOL, add your wallet address. Takes less than 60 seconds.
+                Enter your content URL, set your price in MonPay tokens, add your wallet address. Takes less than 60 seconds.
               </p>
             </div>
           </div>
@@ -283,7 +323,12 @@ function App() {
             <div className="workflow-card">
               <div className="workflow-number">02</div>
               <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">🔗</div>
+                <div className="workflow-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="workflow-step-title">Share Your Link</h3>
               <p className="workflow-step-desc">
@@ -296,13 +341,23 @@ function App() {
             <div className="workflow-card">
               <div className="workflow-number">03</div>
               <div className="workflow-icon-wrapper">
-                <div className="workflow-icon">💰</div>
+                <div className="workflow-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="workflow-step-title">Get Paid Instantly</h3>
               <p className="workflow-step-desc">
                 Customers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, no fees.
               </p>
-              <div className="payment-time">⚡ 2-5 seconds</div>
+              <div className="payment-time">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}>
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                2-5 seconds
+              </div>
             </div>
           </div>
         </div>
@@ -324,7 +379,7 @@ function App() {
               <span className="counting-number">2.4</span>s
             </div>
             <div className="stat-large-label">Average Settlement</div>
-            <p className="stat-large-desc">Lightning fast payments on Solana & Zcash</p>
+            <p className="stat-large-desc">Lightning fast payments on Monad</p>
           </div>
 
           <div className="stat-card-large" data-animate id="stat-3">
@@ -347,10 +402,10 @@ function App() {
       <section className="use-cases-section-v2" data-animate id="use-cases">
         <div className="section-header-v2">
           <span className="section-label">USE CASES</span>
-          <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
+            <h2 className="section-title-v2">Perfect for Every Creator & Developer</h2>
           <p className="section-desc-v2">
             Whether you're a solo creator or building the next big platform,
-            StealthPayx402 scales with you.
+            MonPay scales with you on Monad.
           </p>
         </div>
 
@@ -358,7 +413,15 @@ function App() {
           <div className="use-case-card-v2" data-animate id="usecase-1">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
-              <div className="use-case-icon-v2">📝</div>
+              <div className="use-case-icon-v2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <path d="M14 2v6h6"/>
+                  <path d="M16 13H8"/>
+                  <path d="M16 17H8"/>
+                  <path d="M10 9H8"/>
+                </svg>
+              </div>
               <span className="use-case-badge">Content Creators</span>
             </div>
             <h3 className="use-case-title-v2">Premium Content & Media</h3>
@@ -377,7 +440,11 @@ function App() {
           <div className="use-case-card-v2" data-animate id="usecase-2">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
-              <div className="use-case-icon-v2">⚡</div>
+              <div className="use-case-icon-v2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </div>
               <span className="use-case-badge">Developers</span>
             </div>
             <h3 className="use-case-title-v2">API & Service Monetization</h3>
@@ -396,7 +463,13 @@ function App() {
           <div className="use-case-card-v2" data-animate id="usecase-3">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
-              <div className="use-case-icon-v2">📦</div>
+              <div className="use-case-icon-v2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+              </div>
               <span className="use-case-badge">Merchants</span>
             </div>
             <h3 className="use-case-title-v2">Digital Products & Downloads</h3>
@@ -415,7 +488,15 @@ function App() {
           <div className="use-case-card-v2" data-animate id="usecase-4">
             <div className="use-case-bg"></div>
             <div className="use-case-header-v2">
-              <div className="use-case-icon-v2">🤖</div>
+              <div className="use-case-icon-v2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="8" width="18" height="12" rx="2"/>
+                  <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+                  <circle cx="9" cy="14" r="1"/>
+                  <circle cx="15" cy="14" r="1"/>
+                  <path d="M9 18h6"/>
+                </svg>
+              </div>
               <span className="use-case-badge">AI & Automation</span>
             </div>
             <h3 className="use-case-title-v2">Autonomous Agent Payments</h3>
@@ -516,7 +597,7 @@ function App() {
               </div>
               <div className="paywall-card-body">
                 <div className="paywall-card-title">Your Premium Content</div>
-                <div className="paywall-card-price">0.01 SOL</div>
+                <div className="paywall-card-price">0.01 MonPay</div>
                 <div className="paywall-card-button">Pay with Wallet</div>
                 <div className="paywall-card-features">
                   <div className="paywall-feature">
