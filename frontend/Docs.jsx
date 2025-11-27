@@ -40,7 +40,7 @@ function Docs() {
           <section id="introduction" className="docs-section">
             <h2>Introduction</h2>
             <p>
-              MonPay is a decentralized paywall protocol that enables instant monetization of any web content through native MonPay token payments. Built on Monad chain with EVM compatibility, MonPay brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
+              MonPay is a decentralized paywall protocol that enables instant monetization of any web content through native MON token payments. Built on Monad chain with EVM compatibility, MonPay brings the vision of HTTP 402 "Payment Required" to life in the Web3 era.
             </p>
             <div className="info-card">
               <div className="info-card-icon">
@@ -58,7 +58,7 @@ function Docs() {
               </div>
               <div>
                 <strong>What makes MonPay unique?</strong>
-                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, MonPay enables instant, permissionless payments using MonPay tokens on Monad chain. No middlemen, no platform fees, no accounts needed.</p>
+                <p>Unlike traditional paywalls that require accounts, subscriptions, and credit cards, MonPay enables instant, permissionless payments using MON tokens on Monad chain. No middlemen, no platform fees, no accounts needed.</p>
               </div>
             </div>
           </section>
@@ -77,7 +77,7 @@ function Docs() {
                 <span className="code-lang">HTTP</span>
               </div>
               <pre><code>{`HTTP/1.1 402 Payment Required
-X-Payment-Required: 0.01 MonPay
+X-Payment-Required: 0.01 MON
 X-Payment-Address: 0x...
 X-Payment-Network: monad
 X-Payment-Memo: paywall-abc123`}</code></pre>
@@ -148,7 +148,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <div className="step-number">2</div>
                 <div className="step-content">
                   <h4>Set Your Price</h4>
-                  <p>Choose your price in MonPay tokens. Most creators start between 0.01 and 0.05 MonPay, but you can set any amount you like.</p>
+                  <p>Choose your price in MON tokens. Most creators start between 0.01 and 0.05 MON, but you can set any amount you like.</p>
                 </div>
               </div>
               
@@ -262,9 +262,9 @@ await tx.wait();
                     <line x1="12" y1="6" x2="12" y2="18"/>
                     <line x1="6" y1="12" x2="18" y2="12"/>
                   </svg>
-                  Native MonPay Token Payments
+                  Native MON Token Payments
                 </h3>
-                <p>Accept payments in native MonPay tokens on Monad chain. EVM compatible, fast, and efficient. Pure, simple cryptocurrency payments with instant settlement.</p>
+                <p>Accept payments in native MON tokens on Monad chain. EVM compatible, fast, and efficient. Pure, simple cryptocurrency payments with instant settlement.</p>
               </div>
               
               <div className="feature-detail">
@@ -336,7 +336,7 @@ await tx.wait();
                 <strong>Blockchain:</strong> Monad
               </div>
               <div className="tech-item">
-                <strong>Web3:</strong> EVM-compatible wallets & MonPay tokens
+                <strong>Web3:</strong> EVM-compatible wallets & MON tokens
               </div>
               <div className="tech-item">
                 <strong>Backend:</strong> Vercel Serverless Functions
@@ -352,7 +352,7 @@ await tx.wait();
             <h3>Smart Contract Interaction</h3>
             <div className="code-block">
               <div className="code-header">
-                <span>MonPay Token Transfer</span>
+                <span>MON Token Transfer</span>
                 <span className="code-lang">JavaScript</span>
               </div>
               <pre><code>{`import { ethers } from 'ethers';
@@ -361,13 +361,13 @@ await tx.wait();
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 
-// MonPay token contract address
-const monpayAddress = '0x...'; // MonPay token address on Monad
-const monpayABI = [...]; // ERC20 ABI
+// MON token contract address
+const monAddress = '0x...'; // MON token address on Monad
+const monABI = [...]; // ERC20 ABI
 
-const monpayContract = new ethers.Contract(monpayAddress, monpayABI, signer);
+const monContract = new ethers.Contract(monAddress, monABI, signer);
 
-// Transfer MonPay tokens
+// Transfer MON tokens
 const tx = await monpayContract.transfer(
   'CreatorWalletAddress',
   ethers.utils.parseEther('0.01')
@@ -449,7 +449,7 @@ const address = await signer.getAddress();`}</code></pre>
   "paywall_id": "abc123",
   "paywall_link": "https://monpay.io/paywall/abc123",
   "price": "0.01",
-  "currency": "MonPay",
+  "currency": "MON",
   "status": "created",
   "walletAddress": "7zQd9dJLEu6v5iVtA9sMkvk9w1k7iXbK8GXWUfPz1VQ5",
   "network": "Monad"
@@ -471,7 +471,7 @@ const address = await signer.getAddress();`}</code></pre>
   "id": "abc123",
   "url": "https://example.com/premium-content",
   "price": "0.01",
-  "currency": "MonPay",
+  "currency": "MON",
   "status": "active",
   "walletAddress": "7zQd9dJL...",
   "network": "Monad",
@@ -642,7 +642,7 @@ const address = await signer.getAddress();`}</code></pre>
               
               <div className="faq-item">
                 <h4>Can I accept other currencies?</h4>
-                <p>Currently we support native MonPay token payments on Monad. Additional token support may be added based on community demand.</p>
+                <p>Currently we support native MON token payments on Monad. Additional token support may be added based on community demand.</p>
               </div>
               
               <div className="faq-item">
@@ -652,7 +652,7 @@ const address = await signer.getAddress();`}</code></pre>
               
               <div className="faq-item">
                 <h4>How do refunds work?</h4>
-                <p>Since payments go directly to your wallet, refunds must be handled manually. Send MonPay tokens back to the payer's address if needed.</p>
+                <p>Since payments go directly to your wallet, refunds must be handled manually. Send MON tokens back to the payer's address if needed.</p>
               </div>
               
               <div className="faq-item">

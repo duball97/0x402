@@ -124,7 +124,7 @@ function Marketplace() {
             <h1>Explore paywalls built for instant crypto settlement</h1>
             <p>
               Browse live MonPay paywalls on Monad chain, compare pricing structures, and unlock access in seconds. Discover new
-              revenue models powered by MonPay tokens.
+              revenue models powered by MON tokens.
             </p>
             <div className="market-cta">
               <button type="button" className="gradient-btn" onClick={() => navigate('/create')}>
@@ -143,7 +143,7 @@ function Marketplace() {
             </div>
             <div className="metric-chip">
               <span className="metric-chip-label">MonPay volume</span>
-              <span className="metric-chip-value">{stats.monadVolume.toFixed(3)} MonPay</span>
+              <span className="metric-chip-value">{stats.monadVolume.toFixed(3)} MON</span>
               <span className="metric-chip-footnote">{stats.monadCount} paywalls</span>
             </div>
           </div>

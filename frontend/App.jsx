@@ -86,7 +86,7 @@ function App() {
 
           <p className="hero-description-v2" data-animate id="hero-desc">
             Transform your content into revenue with MonPay on Monad chain.
-            Zero fees. Instant settlements. Native MonPay token payments. Built for creators,
+            Zero fees. Instant settlements. Native MON token payments. Built for creators,
             developers, and AI agents on the fastest EVM-compatible blockchain.
           </p>
 
@@ -173,7 +173,7 @@ function App() {
                 <div className="metric-bar-fill" style={{width: '95%'}}></div>
               </div>
               <div className="metric-labels">
-                <span>MonPay: 2-5s</span>
+                <span>MON: 2-5s</span>
                 <span className="metric-muted">Traditional: 3-7 days</span>
               </div>
             </div>
@@ -215,7 +215,7 @@ function App() {
             </p>
             <div className="fee-comparison">
               <div className="fee-row">
-                <span>MonPay</span>
+                <span>MON</span>
                 <span className="fee-value success">0%</span>
               </div>
               <div className="fee-row muted">
@@ -243,7 +243,7 @@ function App() {
             </p>
             <div className="code-preview">
               <div className="code-line">
-                <span className="code-comment">// AI agents can automatically detect and pay with MonPay</span>
+                <span className="code-comment">// AI agents can automatically detect and pay with MON</span>
               </div>
               <div className="code-line">
                 <span className="code-keyword">const</span> paywall = <span className="code-keyword">await</span> <span className="code-function">detectPaywall</span>(<span className="code-string">url</span>);
@@ -267,7 +267,7 @@ function App() {
               Built for Monad chain with EVM compatibility. Fast, efficient, and scalable payments.
             </p>
             <div className="chain-badges">
-              <div className="chain-badge">MonPay</div>
+              <div className="chain-badge">MON</div>
               <div className="chain-badge">Monad</div>
               <div className="chain-badge chain-badge-soon">EVM Compatible</div>
             </div>
@@ -322,7 +322,7 @@ function App() {
                 </div>
                 <h3 className="workflow-step-title">Create Your Paywall</h3>
                 <p className="workflow-step-desc">
-                  Enter your content URL, set your price in MonPay tokens, add your wallet address. Takes less than 60 seconds.
+                  Enter your content URL, set your price in MON tokens, add your wallet address. Takes less than 60 seconds.
                 </p>
               </div>
             </div>
@@ -600,7 +600,7 @@ function App() {
               </div>
               <div className="paywall-card-body">
                 <div className="paywall-card-title">Your Premium Content</div>
-                <div className="paywall-card-price">0.01 MonPay</div>
+                <div className="paywall-card-price">0.01 MON</div>
                 <div className="paywall-card-button">Pay with Wallet</div>
                 <div className="paywall-card-features">
                   <div className="paywall-feature">

@@ -122,7 +122,7 @@ function Create() {
     }
   };
 
-  const paywallCurrencyLabel = 'MonPay';
+  const paywallCurrencyLabel = 'MON';
   const paywallNetworkLabel = network;
   const previewDomain = (() => {
     if (!url) return 'your-url.com';
@@ -152,7 +152,7 @@ function Create() {
             <span className="pill-gradient">MonPay Builder</span>
             <h1 className="builder-title">Compose a paywall flow from scratch</h1>
             <p className="builder-subtitle">
-              Route any link through an HTTP 402-compatible checkout, accept instant MonPay token settlement on Monad, and keep custody of every token.
+              Route any link through an HTTP 402-compatible checkout, accept instant MON token settlement on Monad, and keep custody of every token.
             </p>
 
             <div className="builder-steps">
@@ -167,7 +167,7 @@ function Create() {
                 <span className="step-index">02</span>
                 <div>
                   <h4>Set settlement</h4>
-                  <p>Choose your MonPay token price and where the funds should land on Monad.</p>
+                  <p>Choose your MON token price and where the funds should land on Monad.</p>
                 </div>
               </div>
               <div className="builder-step">
@@ -193,9 +193,15 @@ function Create() {
 
             <div className="form-cluster">
               <div className="cluster-header">
+                <div className="cluster-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                </div>
                 <div>
                   <h3>Access destination</h3>
-                  <p>Enter the URL buyers unlock plus a unique ID for your MonPay paywall link.</p>
+                  <p>Enter the URL buyers unlock plus a unique ID for your paywall link.</p>
                 </div>
               </div>
               <div className="field-grid">
@@ -220,33 +226,33 @@ function Create() {
                   <input
                     type="text"
                     id="paywallIdInput"
-                    placeholder="stealthpayx402-demo"
+                    placeholder="my-paywall-id"
                     value={paywallId}
                     onChange={(e) => setPaywallId(e.target.value.toLowerCase())}
                     pattern="[a-zA-Z0-9-_]+"
                   />
-                  <p className="input-hint">Appears as stealthpayx402.io/paywall/&lt;id&gt;. Keep it short and memorable.</p>
+                  <p className="input-hint">Appears as monpay.io/paywall/&lt;id&gt;. Keep it short and memorable.</p>
                 </div>
               </div>
             </div>
 
             <div className="form-cluster">
               <div className="cluster-header">
+                <div className="cluster-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
                 <div>
                   <h3>Settlement settings</h3>
-                  <p>Set your MonPay token price on Monad chain and specify the payout recipient.</p>
+                  <p>Set your MON token price on Monad chain and specify the payout recipient.</p>
                 </div>
               </div>
 
-              <div className="network-toggle" role="tablist" aria-label="Network selector">
-                <div
-                  className="network-option network-option-active"
-                  role="tab"
-                  aria-selected={true}
-                >
-                  <span className="option-label">Monad</span>
-                  <span className="option-footnote">EVM · MonPay</span>
-                </div>
+              <div className="network-badge">
+                <span className="network-label">Monad</span>
+                <span className="network-tag">EVM · MON</span>
               </div>
 
               <div className="field-grid">
@@ -275,7 +281,7 @@ function Create() {
                     onChange={(e) => setWalletAddress(e.target.value)}
                   />
                   <p className="input-hint">
-                    Leave blank to auto-generate a non-custodial MonPay wallet for this paywall on Monad.
+                    Leave blank to auto-generate a non-custodial wallet for this paywall on Monad.
                   </p>
                 </div>
               </div>
@@ -283,6 +289,15 @@ function Create() {
 
             <div className="form-cluster">
               <div className="cluster-header">
+                <div className="cluster-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
                 <div>
                   <h3>Buyer messaging</h3>
                   <p>Help visitors understand what they unlock. Be direct and value focused.</p>

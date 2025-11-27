@@ -14,7 +14,7 @@ function Paywall() {
   const [txHash, setTxHash] = useState('');
   const [verifying, setVerifying] = useState(false);
   const resolvedNetwork = 'Monad';
-  const resolvedCurrency = 'MonPay';
+  const resolvedCurrency = 'MON';
 
   useEffect(() => {
     // Fetch paywall data from API
@@ -81,7 +81,7 @@ function Paywall() {
             transactionHash: txHash.trim(),
             network: 'Monad',
             amountPaid: parseFloat(paywallData?.price ?? '0'),
-            currency: 'MonPay'
+            currency: 'MON'
           })
         });
         console.log('Purchase recorded successfully');
@@ -162,8 +162,8 @@ function Paywall() {
                 chainId: `0x${config.chainId.toString(16)}`,
                 chainName: 'Monad',
                 nativeCurrency: {
-                  name: 'MonPay',
-                  symbol: 'MonPay',
+                  name: 'MON',
+                  symbol: 'MON',
                   decimals: 18
                 },
                 rpcUrls: [config.rpcUrl],
@@ -182,9 +182,9 @@ function Paywall() {
         }
       }
 
-      // Convert price to wei (assuming 18 decimals for MonPay token)
+      // Convert price to wei (assuming 18 decimals for MON token)
       const priceInWei = ethers.parseEther(priceNum.toString());
-      console.log(`Amount: ${priceNum} MonPay = ${priceInWei.toString()} wei`);
+      console.log(`Amount: ${priceNum} MON = ${priceInWei.toString()} wei`);
 
       // Create transaction
       console.log('Creating transaction...');
@@ -242,7 +242,7 @@ function Paywall() {
             transactionHash: tx.hash,
             network: 'Monad',
             amountPaid: priceNum,
-            currency: 'MonPay'
+            currency: 'MON'
           })
         });
         console.log('Purchase recorded successfully');
@@ -373,7 +373,7 @@ function Paywall() {
           <div className="info-box" style={{ marginTop: '32px' }}>
             <p>⚡ Instant settlement on {resolvedNetwork}</p>
             <p>🔐 Secure Web3 payment</p>
-            <p>💰 Pay with MonPay on Monad</p>
+            <p>💰 Pay with MON on Monad</p>
           </div>
 
           {paywallData?.walletAddress && (

@@ -16,7 +16,7 @@ function Header({ transparent = false }) {
     <nav className={transparent ? 'nav-transparent' : ''}>
       <div className="nav-logo">
         <Link to="/" onClick={closeMenu}>
-          <img src="/newlogo.png" alt="MonPay" />
+          <img src="/logo.png" alt="MonPay" />
         </Link>
       </div>
       <button 

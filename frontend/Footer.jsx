@@ -4,13 +4,13 @@ function Footer() {
     <footer>
       <div className="footer-content">
         <div className="footer-section">
-          <img src="/newlogo.png" alt="MonPay" className="footer-logo" />
-          <p>Crypto-native paywalls powered by Monad chain, MonPay token payments, and the x402 protocol</p>
+          <img src="/logo.png" alt="MonPay" className="footer-logo" />
+          <p>Crypto-native paywalls powered by Monad chain, MON token payments, and the x402 protocol</p>
         </div>
         <div className="footer-section">
           <h4>Features</h4>
           <ul>
-            <li>MonPay Token Payments</li>
+            <li>MON Token Payments</li>
             <li>EVM Compatible</li>
             <li>Non-custodial Wallets</li>
             <li>Zero Platform Fees</li>

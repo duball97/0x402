@@ -101,8 +101,8 @@ export default async function handler(req, res) {
 
   // Determine currency based on network
   const getCurrency = (network) => {
-    if (network === 'Monad') return 'MonPay';
-    return 'MonPay';
+    if (network === 'Monad') return 'MON';
+    return 'MON';
   };
 
   const paywallData = {
