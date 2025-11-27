@@ -49,8 +49,7 @@ function Marketplace() {
         }
         
         const matchesNetwork = networkFilter === 'all' ||
-          normalizedNetwork === networkFilter ||
-          (networkFilter === 'zcash' && (normalizedNetwork.includes('zcash') || normalizedNetwork.includes('zec')));
+          normalizedNetwork === networkFilter;
         const matchesTerm = term
           ? [paywall.id, paywall.description, paywall.currency]
               .filter(Boolean)
@@ -70,10 +69,8 @@ function Marketplace() {
   }, [paywalls, networkFilter, searchTerm, sortOption]);
 
   const stats = useMemo(() => {
-    let solanaVolume = 0;
-    let solanaCount = 0;
-    let zcashVolume = 0;
-    let zcashCount = 0;
+    let monadVolume = 0;
+    let monadCount = 0;
     let totalListings = 0;
 
     paywalls.forEach((item) => {
@@ -88,21 +85,16 @@ function Marketplace() {
       totalListings += 1;
       const price = parseFloat(item.price) || 0;
 
-      if (network.includes('sol')) {
-        solanaVolume += price;
-        solanaCount += 1;
-      } else if (network.includes('zcash') || network.includes('zec')) {
-        zcashVolume += price;
-        zcashCount += 1;
+      if (network.includes('monad') || network.includes('monpay')) {
+        monadVolume += price;
+        monadCount += 1;
       }
     });
 
     return {
       listings: totalListings,
-      solanaVolume,
-      solanaCount,
-      zcashVolume,
-      zcashCount,
+      monadVolume,
+      monadCount,
     };
   }, [paywalls]);
 
@@ -151,8 +143,8 @@ function Marketplace() {
             </div>
             <div className="metric-chip">
               <span className="metric-chip-label">MonPay volume</span>
-              <span className="metric-chip-value">{stats.solanaVolume.toFixed(3)} MonPay</span>
-              <span className="metric-chip-footnote">{stats.solanaCount} paywalls</span>
+              <span className="metric-chip-value">{stats.monadVolume.toFixed(3)} MonPay</span>
+              <span className="metric-chip-footnote">{stats.monadCount} paywalls</span>
             </div>
           </div>
         </section>

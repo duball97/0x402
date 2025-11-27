@@ -1,6 +1,6 @@
-import { Connection, PublicKey } from '@solana/web3.js';
+import { ethers } from 'ethers';
 
-const SOLANA_MAINNET_RPC = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
+const MONAD_RPC = process.env.MONAD_RPC_URL || 'https://monad-mainnet.g.alchemy.com/v2/M87svOeOrOhMsnQWJXB8iQECjn8MJNW0';
 
 export default async function handler(req, res) {
   // Add CORS headers
@@ -20,56 +20,43 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { txHash, network = 'BNB Chain' } = req.body;
+  const { txHash, network = 'Monad' } = req.body;
 
   try {
-    if (network === 'Solana') {
-      // Verify Solana transaction
-      const connection = new Connection(SOLANA_MAINNET_RPC, 'confirmed');
-      const signature = txHash;
-      
-      const tx = await connection.getTransaction(signature, {
-        commitment: 'confirmed'
-      });
+    // Verify Monad transaction (EVM-compatible)
+    const provider = new ethers.JsonRpcProvider(MONAD_RPC);
+    const tx = await provider.getTransaction(txHash);
 
-      if (!tx) {
-        return res.status(404).json({ 
-          error: "Transaction not found",
-          txHash: signature,
-          confirmed: false 
-        });
-      }
-
-      // Extract destination address from transaction
-      const transaction = tx.transaction;
-      const instructions = transaction.message.instructions;
-      let settledTo = null;
-
-      if (instructions.length > 0 && instructions[0].programId.equals(PublicKey.default)) {
-        const transferInstruction = instructions[0];
-        if (transferInstruction.keys && transferInstruction.keys.length >= 2) {
-          settledTo = transferInstruction.keys[1].pubkey.toString();
-        }
-      }
-
-      res.status(200).json({
-        txHash: signature,
-        confirmed: true,
-        network: "Solana",
-        settled_to: settledTo || "Unknown",
-        timestamp: new Date(tx.blockTime * 1000).toISOString(),
-        slot: tx.slot
-      });
-    } else {
-      // BNB Chain verification (placeholder - would need BSC RPC)
-      res.status(200).json({
-        txHash,
-        confirmed: true,
-        network: "BNB Chain",
-        settled_to: "0xWalletAddress...",
-        timestamp: new Date().toISOString()
+    if (!tx) {
+      return res.status(404).json({ 
+        error: "Transaction not found",
+        txHash: txHash,
+        confirmed: false 
       });
     }
+
+    // Get transaction receipt to check confirmation
+    const receipt = await provider.getTransactionReceipt(txHash);
+
+    if (!receipt) {
+      return res.status(200).json({
+        txHash: txHash,
+        confirmed: false,
+        network: "Monad",
+        settled_to: tx.to || "Unknown",
+        timestamp: new Date().toISOString(),
+        message: "Transaction pending confirmation"
+      });
+    }
+
+    res.status(200).json({
+      txHash: txHash,
+      confirmed: true,
+      network: "Monad",
+      settled_to: receipt.to || tx.to || "Unknown",
+      timestamp: new Date().toISOString(),
+      blockNumber: receipt.blockNumber
+    });
   } catch (error) {
     console.error('Verification error:', error);
     res.status(500).json({ 

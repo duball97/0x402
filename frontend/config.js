@@ -1,63 +1,44 @@
 export const CHAIN_CONFIG = {
-  SOLANA_MAINNET_RPC: import.meta.env?.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
-  SOLANA_DEVNET_RPC: 'https://api.devnet.solana.com',
-  SOLANA_EXPLORER: 'https://solscan.io',
-  SOLANA_DEVNET_EXPLORER: 'https://solscan.io?cluster=devnet',
-  SOLANA_NETWORK_NAME: 'Solana',
-  ZCASH_API_BASE: 'https://api.blockchair.com/zcash',
-  ZCASH_EXPLORER: 'https://blockchair.com/zcash',
-  ZCASH_NETWORK_NAME: 'Zcash',
+  MONAD_MAINNET_RPC: import.meta.env?.VITE_MONAD_RPC_URL || 'https://monad-mainnet.g.alchemy.com/v2/M87svOeOrOhMsnQWJXB8iQECjn8MJNW0',
+  MONAD_EXPLORER: 'https://monad.xyz',
+  MONAD_NETWORK_NAME: 'Monad',
+  CHAIN_ID: 10143, // Monad mainnet chain ID
 };
 
-export const getCurrentNetwork = (network = 'Solana') => {
+export const getCurrentNetwork = (network = 'Monad') => {
   const normalized = (network || '').toLowerCase();
 
-  if (normalized.includes('zcash') || normalized.includes('zec')) {
-    return {
-      name: CHAIN_CONFIG.ZCASH_NETWORK_NAME,
-      apiBase: CHAIN_CONFIG.ZCASH_API_BASE,
-      explorer: CHAIN_CONFIG.ZCASH_EXPLORER,
-      network: 'Zcash',
-    };
-  }
-
-  if (normalized === 'devnet') {
-    return {
-      name: `${CHAIN_CONFIG.SOLANA_NETWORK_NAME} Devnet`,
-      rpcUrl: CHAIN_CONFIG.SOLANA_DEVNET_RPC,
-      explorer: CHAIN_CONFIG.SOLANA_DEVNET_EXPLORER,
-      network: 'Solana',
-    };
-  }
-
   return {
-    name: CHAIN_CONFIG.SOLANA_NETWORK_NAME,
-    rpcUrl: CHAIN_CONFIG.SOLANA_MAINNET_RPC,
-    explorer: CHAIN_CONFIG.SOLANA_EXPLORER,
-    network: 'Solana',
+    name: CHAIN_CONFIG.MONAD_NETWORK_NAME,
+    rpcUrl: CHAIN_CONFIG.MONAD_MAINNET_RPC,
+    explorer: CHAIN_CONFIG.MONAD_EXPLORER,
+    network: 'Monad',
+    chainId: CHAIN_CONFIG.CHAIN_ID,
   };
 };
 
-// Check if Phantom wallet is installed
-export const isPhantomInstalled = () => {
-  return typeof window !== 'undefined' && window.solana && window.solana.isPhantom;
+// Check if MetaMask or other EVM wallet is installed
+export const isEVMWalletInstalled = () => {
+  return typeof window !== 'undefined' && (window.ethereum || window.web3);
 };
 
-// Connect to Phantom wallet
-export const connectPhantom = async () => {
-  if (!isPhantomInstalled()) {
-    throw new Error('Please install Phantom wallet. Get it at https://phantom.app/');
+// Connect to EVM wallet (MetaMask, etc.)
+export const connectEVMWallet = async () => {
+  if (!isEVMWalletInstalled()) {
+    throw new Error('Please install MetaMask or another EVM-compatible wallet.');
   }
   
   try {
-    // Check if already connected
-    if (window.solana.isConnected) {
-      return window.solana.publicKey.toString();
+    const provider = window.ethereum;
+    
+    // Request account access
+    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+    
+    if (accounts && accounts.length > 0) {
+      return accounts[0];
     }
     
-    // Connect to Phantom
-    const resp = await window.solana.connect({ onlyIfTrusted: false });
-    return resp.publicKey.toString();
+    throw new Error('No accounts found');
   } catch (err) {
     if (err.code === 4001) {
       throw new Error('User rejected the connection request');
@@ -65,7 +46,7 @@ export const connectPhantom = async () => {
     if (err.message) {
       throw new Error(err.message);
     }
-    throw new Error('Failed to connect to Phantom wallet');
+    throw new Error('Failed to connect to wallet');
   }
 };
 

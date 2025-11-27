@@ -1,50 +1,15 @@
 import { supabase } from './supabase.js';
-import { Keypair, PublicKey } from '@solana/web3.js';
 import { ethers } from 'ethers';
 
-// Zcash address validation (supports transparent and shielded addresses)
-function isValidZcashAddress(address) {
-  if (!address || typeof address !== 'string') return false;
-
-  // Transparent addresses: t1 (mainnet) or t2 (testnet) - 35 chars
-  const transparentRegex = /^t[12][a-zA-Z0-9]{33}$/;
-  
-  // Sapling shielded addresses: zs1 (mainnet) or ztestsapling (testnet) - variable length
-  const saplingRegex = /^zs1[a-z0-9]{75}$/;
-  const testnetSaplingRegex = /^ztestsapling1[a-z0-9]{64}$/;
-  
-  // Sprout shielded addresses: zc (legacy, ~95 chars)
-  const sproutRegex = /^zc[a-zA-Z0-9]{93}$/;
-  
-  // Unified addresses: u1 (mainnet) - variable length, can be 141+ chars
-  const unifiedRegex = /^u1[a-z0-9]{100,}$/;
-  
-  return transparentRegex.test(address) || 
-         saplingRegex.test(address) || 
-         testnetSaplingRegex.test(address) ||
-         sproutRegex.test(address) ||
-         unifiedRegex.test(address);
-}
-
 // Helper function to create a wallet
-function createWallet(network = 'BNB Chain') {
-  if (network === 'Solana') {
-    // Generate a proper Solana keypair
-    const keypair = Keypair.generate();
-    const publicKey = keypair.publicKey.toBase58();
-    return {
-      walletAddress: publicKey,
-      network: network,
-      nonCustodial: true
-    };
-  } else {
-    // Generate Ethereum-style address for BNB Chain
-    return {
-      walletAddress: `0x${Math.random().toString(16).slice(2, 42)}`,
-      network: network,
-      nonCustodial: true
-    };
-  }
+function createWallet(network = 'Monad') {
+  // Generate Ethereum-style address for Monad (EVM-compatible)
+  const wallet = ethers.Wallet.createRandom();
+  return {
+    walletAddress: wallet.address,
+    network: network,
+    nonCustodial: true
+  };
 }
 
 export default async function handler(req, res) {
@@ -88,34 +53,16 @@ export default async function handler(req, res) {
   
   const id = paywallId;
 
-  // If no wallet provided, create a new one (except for Zcash which requires manual address)
+  // If no wallet provided, create a new one
   let wallet;
   if (!walletAddress) {
-    const network = selectedNetwork || 'BNB Chain';
-    if (network === 'Zcash') {
-      return res.status(400).json({ error: "A Zcash address is required. Zcash addresses cannot be auto-generated." });
-    }
-    wallet = createWallet(selectedNetwork);
+    const network = selectedNetwork || 'Monad';
+    wallet = createWallet(network);
   } else {
-    // Validate wallet address based on network
-    const network = selectedNetwork || 'BNB Chain';
-    if (network === 'Solana') {
-      try {
-        // Validate Solana address
-        new PublicKey(walletAddress);
-      } catch (err) {
-        return res.status(400).json({ error: "Invalid Solana wallet address" });
-      }
-    } else if (network === 'Zcash') {
-      // Validate Zcash address (transparent or shielded)
-      if (!isValidZcashAddress(walletAddress)) {
-        return res.status(400).json({ error: "Invalid Zcash address. Please enter a valid shielded (zs1, u1) or transparent (t1) address." });
-      }
-    } else {
-      // Validate BNB Chain address (Ethereum format)
-      if (!ethers.isAddress(walletAddress)) {
-        return res.status(400).json({ error: "Invalid BNB Chain wallet address" });
-      }
+    // Validate wallet address (EVM format for Monad)
+    const network = selectedNetwork || 'Monad';
+    if (!ethers.isAddress(walletAddress)) {
+      return res.status(400).json({ error: "Invalid Monad wallet address. Please enter a valid EVM address (0x...)" });
     }
 
     wallet = {
@@ -154,9 +101,8 @@ export default async function handler(req, res) {
 
   // Determine currency based on network
   const getCurrency = (network) => {
-    if (network === 'Solana') return 'SOL';
-    if (network === 'Zcash') return 'ZEC';
-    return 'BNB';
+    if (network === 'Monad') return 'MonPay';
+    return 'MonPay';
   };
 
   const paywallData = {

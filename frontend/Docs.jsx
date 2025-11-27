@@ -205,7 +205,7 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                     <line x1="1" y1="10" x2="23" y2="10"/>
                   </svg>
                 </div>
-                <h4>3. Phantom Opens</h4>
+                <h4>3. Wallet Opens</h4>
                 <p>User confirms transaction</p>
               </div>
               <div className="arch-arrow">→</div>
@@ -227,21 +227,24 @@ X-Payment-Memo: paywall-abc123`}</code></pre>
                 <span className="code-lang">JavaScript</span>
               </div>
               <pre><code>{`// 1. User initiates payment
-const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-const fromPublicKey = window.solana.publicKey;
-const toPublicKey = new PublicKey(paywall.walletAddress);
-const lamports = Math.floor(paywall.price * LAMPORTS_PER_SOL);
+import { ethers } from 'ethers';
 
-const transaction = new Transaction().add(
-  SystemProgram.transfer({
-    fromPubkey: fromPublicKey,
-    toPubkey: toPublicKey,
-    lamports,
-  })
-);
+const provider = new ethers.BrowserProvider(window.ethereum);
+const signer = await provider.getSigner();
 
-const { signature } = await window.solana.signAndSendTransaction(transaction);
-await connection.confirmTransaction(signature, 'confirmed');
+// Switch to Monad network
+await window.ethereum.request({
+  method: 'wallet_switchEthereumChain',
+  params: [{ chainId: '0x2797' }], // Monad mainnet chain ID
+});
+
+// Send payment
+const tx = await signer.sendTransaction({
+  to: paywall.walletAddress,
+  value: ethers.parseEther(paywall.price.toString()),
+});
+
+await tx.wait();
 
 // Funds arrive in the creator's wallet within seconds`}</code></pre>
             </div>
@@ -498,7 +501,7 @@ const address = await signer.getAddress();`}</code></pre>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '6px'}}>
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   </svg>
-                  Solana Security
+                  Monad Security
                 </h4>
                 <p>Built on Monad, secured by a high-performance EVM-compatible network with rapid finality.</p>
               </div>

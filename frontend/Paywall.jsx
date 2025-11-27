@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { getCurrentNetwork, isPhantomInstalled, connectPhantom, CHAIN_CONFIG } from './config';
-import { openZcashWallet, verifyZcashTransaction, getZcashTxExplorerUrl } from './zcashUtils';
+import { ethers } from 'ethers';
+import { getCurrentNetwork, isEVMWalletInstalled, connectEVMWallet, CHAIN_CONFIG } from './config';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -14,13 +13,8 @@ function Paywall() {
   const [paid, setPaid] = useState(false);
   const [txHash, setTxHash] = useState('');
   const [verifying, setVerifying] = useState(false);
-  const resolvedNetwork = (() => {
-    if (!paywallData?.network) return 'Solana';
-    const net = paywallData.network.toLowerCase();
-    if (net.includes('zcash') || net.includes('zec')) return 'Zcash';
-    return 'Solana';
-  })();
-  const resolvedCurrency = resolvedNetwork === 'Zcash' ? 'ZEC' : 'SOL';
+  const resolvedNetwork = 'Monad';
+  const resolvedCurrency = 'MonPay';
 
   useEffect(() => {
     // Fetch paywall data from API
@@ -44,7 +38,7 @@ function Paywall() {
     fetchPaywall();
   }, [id]);
 
-  const handleVerifyZcashTx = async () => {
+  const handleVerifyTx = async () => {
     if (!txHash || !txHash.trim()) {
       setError('Please enter a transaction hash');
       return;
@@ -54,10 +48,19 @@ function Paywall() {
       setVerifying(true);
       setError(null);
 
-      console.log('Verifying Zcash transaction:', txHash);
+      console.log('Verifying transaction:', txHash);
 
-      // Verify the transaction
-      const txData = await verifyZcashTransaction(txHash.trim());
+      // Verify the transaction via API
+      const response = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          txHash: txHash.trim(),
+          network: 'Monad'
+        })
+      });
+
+      const txData = await response.json();
 
       if (!txData.confirmed) {
         setError('Transaction not found or not yet confirmed. Please wait a few minutes and try again.');
@@ -66,11 +69,6 @@ function Paywall() {
       }
 
       console.log('Transaction verified:', txData);
-      
-      // For shielded transactions, we can't verify the exact amount on-chain
-      if (txData.shielded) {
-        console.log('Shielded transaction detected - amount verification skipped');
-      }
 
       // Record the purchase
       try {
@@ -79,11 +77,11 @@ function Paywall() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             paywallId: id,
-            buyerWalletAddress: 'zcash-user',
+            buyerWalletAddress: txData.settled_to || 'unknown',
             transactionHash: txHash.trim(),
-            network: 'Zcash',
-            amountPaid: txData.amount,
-            currency: 'ZEC'
+            network: 'Monad',
+            amountPaid: parseFloat(paywallData?.price ?? '0'),
+            currency: 'MonPay'
           })
         });
         console.log('Purchase recorded successfully');
@@ -113,191 +111,153 @@ function Paywall() {
         return;
       }
 
-      // Handle Zcash payment
-      if (resolvedNetwork === 'Zcash') {
-        console.log('Starting Zcash payment...');
-        openZcashWallet(paywallData.walletAddress, priceNum, `Paywall: ${id}`);
+      // Handle Monad/EVM payment
+      console.log('Starting Monad payment...');
+      
+      if (!isEVMWalletInstalled()) {
+        setError('Please install MetaMask or another EVM-compatible wallet to make payments.');
         setLoading(false);
-        setError(null);
         return;
       }
 
-      // Handle Solana payment
-        console.log('Starting Solana payment...');
-        
-        if (!isPhantomInstalled()) {
-          setError('Please install Phantom wallet to make Solana payments. Get it at https://phantom.app/');
-          setLoading(false);
-          return;
-        }
+      console.log('EVM wallet is installed, connecting...');
 
-        console.log('Phantom is installed, connecting...');
-
-        // Connect to Phantom FIRST - this will open the wallet popup
-        let publicKeyStr;
-        try {
-          publicKeyStr = await connectPhantom();
-          console.log('Connected to Phantom:', publicKeyStr);
-        } catch (err) {
-          console.error('Phantom connection error:', err);
-          setError(err.message || 'Failed to connect to Phantom wallet. Please try again.');
-          setLoading(false);
-          return;
-        }
-
-        // Validate addresses
-        let fromPublicKey, toPublicKey;
-        try {
-          fromPublicKey = new PublicKey(publicKeyStr);
-          toPublicKey = new PublicKey(paywallData.walletAddress);
-          console.log('Addresses validated:', { from: fromPublicKey.toString(), to: toPublicKey.toString() });
-        } catch (err) {
-          setError(`Invalid address: ${err.message}`);
-          setLoading(false);
-          return;
-        }
-
-        // Calculate amount in lamports
-        const priceInLamports = Math.floor(priceNum * LAMPORTS_PER_SOL);
-        console.log(`Amount: ${priceNum} SOL = ${priceInLamports} lamports`);
-
-        // Create a connection for transaction creation (we'll skip balance check)
-        const connection = new Connection(CHAIN_CONFIG.SOLANA_MAINNET_RPC, 'confirmed');
-        
-        // Skip balance check - Phantom will handle it and show error if insufficient
-        // This avoids RPC rate limit issues blocking the payment flow
-        console.log('Skipping balance check - Phantom will handle it');
-
-        // Create transaction
-        console.log('Creating transaction...');
-        const transaction = new Transaction();
-
-        // Add transfer instruction
-        transaction.add(
-          SystemProgram.transfer({
-            fromPubkey: fromPublicKey,
-            toPubkey: toPublicKey,
-            lamports: priceInLamports,
-          })
-        );
-
-        // Get recent blockhash and set fee payer
-        console.log('Getting blockhash...');
-        let blockhash;
-        try {
-          const blockhashResult = await connection.getLatestBlockhash('finalized');
-          blockhash = blockhashResult.blockhash;
-        } catch (err) {
-          console.warn('Failed to get finalized blockhash, trying confirmed:', err.message);
-          try {
-            const blockhashResult = await connection.getLatestBlockhash('confirmed');
-            blockhash = blockhashResult.blockhash;
-          } catch (err2) {
-            console.error('Failed to get blockhash from both sources:', err2);
-            setError('Failed to connect to Solana network. Please try again.');
-            setLoading(false);
-            return;
-          }
-        }
-        transaction.recentBlockhash = blockhash;
-        transaction.feePayer = fromPublicKey;
-
-        console.log('Transaction prepared, requesting signature from Phantom...');
-        console.log('This should open Phantom wallet now...');
-
-        // Request signature and send from Phantom
-        // THIS IS WHERE PHANTOM SHOULD POP UP
-        let signature;
-        try {
-          // Phantom's signAndSendTransaction signs and sends the transaction
-          // It returns the signature as a string or wrapped in an object
-          console.log('Calling window.solana.signAndSendTransaction...');
-          const result = await window.solana.signAndSendTransaction(transaction);
-          console.log('Phantom returned:', result);
-          
-          // Phantom can return signature as string or { signature: string }
-          if (typeof result === 'string') {
-            signature = result;
-          } else if (result?.signature) {
-            signature = result.signature;
-          } else {
-            // Log the result to debug
-            console.error('Unexpected Phantom response:', result);
-            throw new Error('Unexpected response from Phantom wallet. Please try again.');
-          }
-          
-          console.log('Transaction signature:', signature);
-        } catch (err) {
-          console.error('Transaction error:', err);
-          
-          // Handle user rejection
-          if (err.code === 4001 || err.code === 'ACTION_REJECTED' || 
-              (err.message && err.message.toLowerCase().includes('user rejected'))) {
-            setError('Transaction was rejected. Please approve the transaction in Phantom.');
-            setLoading(false);
-            return;
-          }
-          
-          // Handle insufficient funds
-          if (err.message && (err.message.includes('insufficient') || err.message.includes('0x1'))) {
-            setError('Insufficient SOL balance to complete this transaction.');
-            setLoading(false);
-            return;
-          }
-          
-          // Generic error
-          setError(err.message || 'Failed to send transaction. Please check Phantom wallet and try again.');
-          setLoading(false);
-          return;
-        }
-        
-        const config = getCurrentNetwork('Solana');
-        console.log('Transaction submitted. View on explorer:', `${config.explorer}/tx/${signature}`);
-
-        // Wait for confirmation (optional - transaction is already sent)
-        try {
-          // Use a shorter timeout for confirmation
-          const confirmation = await Promise.race([
-            connection.confirmTransaction(signature, 'confirmed'),
-            new Promise((_, reject) => 
-              setTimeout(() => reject(new Error('Confirmation timeout')), 30000)
-            )
-          ]);
-          console.log('Transaction confirmed!', confirmation);
-        } catch (err) {
-          console.warn('Confirmation timeout or error:', err.message);
-          // Transaction is already submitted, continue
-          console.log('Transaction submitted but confirmation pending. Access granted.');
-        }
-
-        // Record purchase
-        try {
-          await fetch('/api/record-purchase', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              paywallId: id,
-              buyerWalletAddress: publicKeyStr,
-              transactionHash: signature,
-              network: 'Solana',
-              amountPaid: priceNum,
-              currency: 'SOL'
-            })
-          });
-          console.log('Purchase recorded successfully');
-        } catch (err) {
-          console.warn('Failed to record purchase (non-critical):', err);
-          // Don't block the user if purchase recording fails
-        }
-
-        setPaid(true);
+      // Connect to wallet
+      let userAddress;
+      try {
+        userAddress = await connectEVMWallet();
+        console.log('Connected to wallet:', userAddress);
+      } catch (err) {
+        console.error('Wallet connection error:', err);
+        setError(err.message || 'Failed to connect to wallet. Please try again.');
         setLoading(false);
+        return;
+      }
+
+      // Validate addresses
+      if (!ethers.isAddress(paywallData.walletAddress)) {
+        setError('Invalid recipient address');
+        setLoading(false);
+        return;
+      }
+
+      // Get provider and signer
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      
+      // Switch to Monad network if needed
+      const config = getCurrentNetwork('Monad');
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: `0x${config.chainId.toString(16)}` }],
+        });
+      } catch (switchError) {
+        // If chain doesn't exist, add it
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: `0x${config.chainId.toString(16)}`,
+                chainName: 'Monad',
+                nativeCurrency: {
+                  name: 'MonPay',
+                  symbol: 'MonPay',
+                  decimals: 18
+                },
+                rpcUrls: [config.rpcUrl],
+                blockExplorerUrls: [config.explorer]
+              }],
+            });
+          } catch (addError) {
+            setError('Failed to add Monad network. Please add it manually in your wallet.');
+            setLoading(false);
+            return;
+          }
+        } else {
+          setError('Failed to switch to Monad network.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Convert price to wei (assuming 18 decimals for MonPay token)
+      const priceInWei = ethers.parseEther(priceNum.toString());
+      console.log(`Amount: ${priceNum} MonPay = ${priceInWei.toString()} wei`);
+
+      // Create transaction
+      console.log('Creating transaction...');
+      let tx;
+      try {
+        tx = await signer.sendTransaction({
+          to: paywallData.walletAddress,
+          value: priceInWei,
+        });
+        console.log('Transaction sent:', tx.hash);
+      } catch (err) {
+        console.error('Transaction error:', err);
+        
+        // Handle user rejection
+        if (err.code === 4001 || err.code === 'ACTION_REJECTED' || 
+            (err.message && err.message.toLowerCase().includes('user rejected'))) {
+          setError('Transaction was rejected. Please approve the transaction in your wallet.');
+          setLoading(false);
+          return;
+        }
+        
+        // Handle insufficient funds
+        if (err.message && err.message.includes('insufficient')) {
+          setError('Insufficient balance to complete this transaction.');
+          setLoading(false);
+          return;
+        }
+        
+        // Generic error
+        setError(err.message || 'Failed to send transaction. Please try again.');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('Transaction submitted. View on explorer:', `${config.explorer}/tx/${tx.hash}`);
+
+      // Wait for confirmation
+      try {
+        const receipt = await tx.wait();
+        console.log('Transaction confirmed!', receipt);
+      } catch (err) {
+        console.warn('Confirmation error:', err.message);
+        // Transaction is already submitted, continue
+        console.log('Transaction submitted but confirmation pending. Access granted.');
+      }
+
+      // Record purchase
+      try {
+        await fetch('/api/record-purchase', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paywallId: id,
+            buyerWalletAddress: userAddress,
+            transactionHash: tx.hash,
+            network: 'Monad',
+            amountPaid: priceNum,
+            currency: 'MonPay'
+          })
+        });
+        console.log('Purchase recorded successfully');
+      } catch (err) {
+        console.warn('Failed to record purchase (non-critical):', err);
+      }
+
+      setPaid(true);
+      setLoading(false);
     } catch (err) {
       console.error('Payment error:', err);
       if (err.code === 'ACTION_REJECTED' || err.code === 4001) {
         setError('Transaction was rejected. Please try again.');
       } else if (err.code === 'INSUFFICIENT_FUNDS') {
-        setError('Insufficient SOL balance to complete payment.');
+        setError('Insufficient balance to complete payment.');
       } else {
         setError(err.message || 'Payment failed. Please try again.');
       }
@@ -402,91 +362,19 @@ function Paywall() {
             </div>
           )}
 
-          {resolvedNetwork === 'Zcash' ? (
-            <>
-              <button
-                onClick={handlePayment}
-                disabled={loading}
-                style={{ marginTop: '32px' }}
-              >
-                {loading ? 'Opening wallet...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Open Zcash Wallet')}
-              </button>
+          <button
+            onClick={handlePayment}
+            disabled={loading}
+            style={{ marginTop: '32px' }}
+          >
+            {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Wallet')}
+          </button>
 
-              <div className="info-box" style={{ marginTop: '24px', background: '#1a1a1a', padding: '20px', borderRadius: '8px' }}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#fff' }}>Payment Instructions</h4>
-                <ol style={{ margin: '0', paddingLeft: '20px', fontSize: '13px', color: '#aaa', lineHeight: '1.6' }}>
-                  <li>Click "Open Zcash Wallet" to launch your wallet app</li>
-                  <li>Send exactly {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} ZEC to the address below</li>
-                  <li>After sending, paste your transaction hash below</li>
-                  <li>Click "Verify Payment" to unlock content</li>
-                </ol>
-              </div>
-
-              <div style={{ marginTop: '24px', padding: '16px', background: '#0a0a0a', border: '1px solid #222', borderRadius: '8px' }}>
-                <div style={{ marginBottom: '12px' }}>
-                  <label htmlFor="txHashInput" style={{ display: 'block', fontSize: '13px', color: '#aaa', marginBottom: '8px' }}>
-                    Transaction Hash
-                  </label>
-                  <input
-                    type="text"
-                    id="txHashInput"
-                    placeholder="Enter your Zcash transaction hash"
-                    value={txHash}
-                    onChange={(e) => setTxHash(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      background: '#111',
-                      border: '1px solid #333',
-                      borderRadius: '6px',
-                      color: '#fff',
-                      fontSize: '13px',
-                      fontFamily: 'monospace'
-                    }}
-                  />
-                </div>
-                <button
-                  onClick={handleVerifyZcashTx}
-                  disabled={verifying || !txHash}
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    background: verifying || !txHash ? '#333' : 'linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%)',
-                    color: verifying || !txHash ? 'white' : '#000000',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    cursor: verifying || !txHash ? 'not-allowed' : 'pointer'
-                  }}
-                >
-                  {verifying ? 'Verifying...' : 'Verify Payment'}
-                </button>
-              </div>
-
-              <div className="info-box" style={{ marginTop: '24px' }}>
-                <p>🛡️ Shielded privacy payments</p>
-                <p>🔐 Secure blockchain verification</p>
-                <p>💰 Pay with any Zcash wallet</p>
-              </div>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={handlePayment}
-                disabled={loading}
-                style={{ marginTop: '32px' }}
-              >
-                {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Phantom')}
-              </button>
-
-              <div className="info-box" style={{ marginTop: '32px' }}>
-                <p>⚡ Instant settlement on {resolvedNetwork}</p>
-                <p>🔐 Secure Web3 payment</p>
-                <p>💰 Pay with SOL via Phantom</p>
-              </div>
-            </>
-          )}
+          <div className="info-box" style={{ marginTop: '32px' }}>
+            <p>⚡ Instant settlement on {resolvedNetwork}</p>
+            <p>🔐 Secure Web3 payment</p>
+            <p>💰 Pay with MonPay on Monad</p>
+          </div>
 
           {paywallData?.walletAddress && (
             <div className="result-section" style={{ marginTop: '24px' }}>
@@ -501,9 +389,9 @@ function Paywall() {
           <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#888' }}>
             This paywall implements the HTTP 402 "Payment Required" protocol, enabling AI agents and automated systems to discover payment requirements programmatically.
           </p>
-                 <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
+          <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>
-                   X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {resolvedCurrency}<br/>
+            X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {resolvedCurrency}<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
             X-Payment-Network: {resolvedNetwork.toLowerCase()}
           </code>

@@ -1,34 +1,30 @@
 import { useState, useEffect } from 'react';
-import { PublicKey } from '@solana/web3.js';
-import { isPhantomInstalled, connectPhantom } from './config';
-import { isValidZcashAddress, getZcashTxExplorerUrl } from './zcashUtils';
+import { ethers } from 'ethers';
+import { isEVMWalletInstalled, connectEVMWallet, getCurrentNetwork } from './config';
 import Header from './Header';
 import Footer from './Footer';
 
 function MyPurchases() {
   const [walletAddress, setWalletAddress] = useState(null);
-  const [walletNetwork, setWalletNetwork] = useState(null); // 'solana' or 'zcash'
-  const [zcashAddressInput, setZcashAddressInput] = useState('');
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
 
-  const connectSolanaWallet = async () => {
+  const connectWallet = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      if (!isPhantomInstalled()) {
-        setError('Please install Phantom wallet. Get it at https://phantom.app/');
+      if (!isEVMWalletInstalled()) {
+        setError('Please install MetaMask or another EVM-compatible wallet.');
         setLoading(false);
         return;
       }
 
-      const publicKeyStr = await connectPhantom();
-      setWalletAddress(publicKeyStr);
-      setWalletNetwork('solana');
-      await fetchPurchases(publicKeyStr, 'solana');
+      const address = await connectEVMWallet();
+      setWalletAddress(address);
+      await fetchPurchases(address, 'monad');
     } catch (err) {
       console.error('Wallet connection error:', err);
       setError(err.message || 'Failed to connect wallet');
@@ -37,26 +33,7 @@ function MyPurchases() {
     }
   };
 
-  const connectZcashWallet = () => {
-    setError(null);
-    const address = zcashAddressInput.trim();
-
-    if (!address) {
-      setError('Please enter a Zcash address');
-      return;
-    }
-
-    if (!isValidZcashAddress(address)) {
-      setError('Invalid Zcash address. Please enter a valid transparent or shielded address.');
-      return;
-    }
-
-    setWalletAddress(address);
-    setWalletNetwork('zcash');
-    fetchPurchases(address, 'zcash');
-  };
-
-  const fetchPurchases = async (address, network = 'solana') => {
+  const fetchPurchases = async (address, network = 'monad') => {
     if (!address) return;
 
     try {
@@ -80,10 +57,10 @@ function MyPurchases() {
   };
 
   useEffect(() => {
-    if (walletAddress && walletNetwork) {
-      fetchPurchases(walletAddress, walletNetwork);
+    if (walletAddress) {
+      fetchPurchases(walletAddress, 'monad');
     }
-  }, [walletAddress, walletNetwork]);
+  }, [walletAddress]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -97,10 +74,8 @@ function MyPurchases() {
   };
 
   const getExplorerUrl = (txHash) => {
-    if (walletNetwork === 'zcash') {
-      return getZcashTxExplorerUrl(txHash);
-    }
-    return `https://solscan.io/tx/${txHash}`;
+    const config = getCurrentNetwork('Monad');
+    return `${config.explorer}/tx/${txHash}`;
   };
 
   return (
@@ -121,43 +96,16 @@ function MyPurchases() {
             <section className="connect-section">
               <h3>Connect Wallet</h3>
               
-              {/* Solana */}
               <div className="connect-box">
                 <div className="connect-label">
-                  <strong>Phantom (Solana)</strong>
+                  <strong>EVM Wallet (Monad)</strong>
                 </div>
                 <button
-                  onClick={connectSolanaWallet}
+                  onClick={connectWallet}
                   disabled={loading}
                   className="connect-btn"
                 >
                   {loading ? 'Connecting...' : 'Connect Wallet'}
-                </button>
-              </div>
-
-              {/* Zcash */}
-              <div className="connect-box">
-                <div className="connect-label">
-                  <strong>Zcash</strong>
-                  <span>Enter your address</span>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Enter Zcash address"
-                  value={zcashAddressInput}
-                  onChange={(e) => setZcashAddressInput(e.target.value)}
-                  className="zcash-input"
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      connectZcashWallet();
-                    }
-                  }}
-                />
-                <button
-                  onClick={connectZcashWallet}
-                  className="connect-btn"
-                >
-                  Connect
                 </button>
               </div>
 
@@ -178,13 +126,11 @@ function MyPurchases() {
                 </div>
                 <div className="wallet-summary-actions">
                   <span className="wallet-network-pill">
-                    {walletNetwork === 'zcash' ? 'Zcash' : 'Solana'}
+                    Monad
                   </span>
                   <button
                     onClick={() => {
                       setWalletAddress(null);
-                      setWalletNetwork(null);
-                      setZcashAddressInput('');
                       setPurchases([]);
                     }}
                     className="cta-secondary wallet-disconnect-btn"
@@ -224,7 +170,7 @@ function MyPurchases() {
                         {purchase.amountPaid} {purchase.currency}
                       </div>
                       <div className="purchase-network">
-                        {purchase.network || (walletNetwork === 'zcash' ? 'Zcash' : 'Solana')}
+                        {purchase.network || 'Monad'}
                       </div>
                       {purchase.paywall && (
                         <a
