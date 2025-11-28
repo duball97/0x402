@@ -7,7 +7,7 @@ function App() {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState({});
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [featuresIndex, setFeaturesIndex] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -41,6 +41,15 @@ function App() {
       clearTimeout(timer);
       observer.disconnect();
     };
+  }, []);
+
+  // Auto-advance features carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFeaturesIndex((prev) => (prev === 5 ? 0 : prev + 1));
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -79,7 +88,7 @@ function App() {
 
         <div className="hero-content-v2">
           <h1 className="hero-title-v2" data-animate id="hero-title">
-            Monetize Any Link
+            <span>Monetize Any Link</span>
             <br />
             <span className="hero-gradient-text">In Seconds</span>
           </h1>
@@ -101,16 +110,70 @@ function App() {
                       strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
-            <button
-              onClick={() => navigate('/docs')}
-              className="btn-secondary-v2 btn-compact"
-              style={{ width: 'min(280px, 100%)' }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-              </svg>
-              <span>View Docs</span>
-            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Two Column Section */}
+      <section className="hero-actions-section" data-animate id="hero-actions">
+        <div className="hero-actions-container">
+          <div className="hero-actions-content">
+            <h2 className="hero-actions-title">Explore Marketplace</h2>
+            <p className="hero-actions-description">
+              Browse the marketplace to discover what others are building and find inspiration for your own paywalls.
+            </p>
+            <div className="hero-actions-buttons">
+              <button
+                onClick={() => navigate('/marketplace')}
+                className="hero-action-btn hero-action-btn-primary"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span>Marketplace</span>
+              </button>
+            </div>
+          </div>
+          <div className="hero-actions-image">
+            <div className="hero-actions-visual">
+              <div className="visual-card visual-card-marketplace">
+                <div className="visual-card-header">
+                  <div className="visual-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div className="visual-card-content">
+                  <div className="visual-icon">🛒</div>
+                  <div className="visual-title">Marketplace</div>
+                  <div className="visual-grid">
+                    <div className="visual-grid-item">
+                      <div className="grid-item-icon">💎</div>
+                      <div className="grid-item-title">Premium</div>
+                      <div className="grid-item-price">10 MON</div>
+                    </div>
+                    <div className="visual-grid-item">
+                      <div className="grid-item-icon">📰</div>
+                      <div className="grid-item-title">Article</div>
+                      <div className="grid-item-price">5 MON</div>
+                    </div>
+                    <div className="visual-grid-item">
+                      <div className="grid-item-icon">🎬</div>
+                      <div className="grid-item-title">Video</div>
+                      <div className="grid-item-price">15 MON</div>
+                    </div>
+                    <div className="visual-grid-item">
+                      <div className="grid-item-icon">📚</div>
+                      <div className="grid-item-title">Course</div>
+                      <div className="grid-item-price">50 MON</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -122,19 +185,15 @@ function App() {
         </p>
       </section>
 
-      {/* Bento Grid Features Section */}
-      <section className="bento-section" data-animate id="bento-section">
-        <div className="section-header-v2">
-          <span className="section-label">POWERFUL FEATURES</span>
-          <h2 className="section-title-v2">Everything You Need, Nothing You Don't</h2>
-          <p className="section-desc-v2">
-            Built for speed, security, and simplicity. Every feature designed to help you
-            monetize faster and maximize earnings.
-          </p>
-        </div>
-
-        <div className="bento-grid">
-          <div className="bento-card bento-large" data-animate id="bento-1">
+      {/* Full Screen Features Carousel */}
+      <section className="features-carousel-section" id="features-carousel">
+        <div className="features-carousel-container">
+          <div 
+            className="features-carousel-wrapper" 
+            style={{ transform: `translateX(-${featuresIndex * 100}%)` }}
+          >
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon-large">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -155,9 +214,11 @@ function App() {
                 <span className="metric-muted">Traditional: 3-7 days</span>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
-          <div className="bento-card" data-animate id="bento-2">
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -176,9 +237,11 @@ function App() {
               </svg>
               Self-Custodial
             </div>
-          </div>
+              </div>
+            </div>
 
-          <div className="bento-card" data-animate id="bento-3">
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -201,9 +264,11 @@ function App() {
                 <span className="fee-value">2-10%</span>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
-          <div className="bento-card bento-wide" data-animate id="bento-4">
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -230,9 +295,11 @@ function App() {
                 <span className="code-keyword">await</span> paywall.<span className="code-function">pay</span>();
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
-          <div className="bento-card" data-animate id="bento-5">
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -249,9 +316,11 @@ function App() {
               <div className="chain-badge">Monad</div>
               <div className="chain-badge chain-badge-soon">EVM Compatible</div>
             </div>
-          </div>
+              </div>
+            </div>
 
-          <div className="bento-card" data-animate id="bento-6">
+            <div className="features-carousel-slide">
+              <div className="features-carousel-card">
             <div className="bento-card-bg"></div>
             <div className="bento-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -272,12 +341,26 @@ function App() {
               <div className="step-arrow-mini">→</div>
               <div className="step-mini">3. Earn</div>
             </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Carousel Navigation Dots */}
+        <div className="features-carousel-dots">
+          {[0, 1, 2, 3, 4, 5].map((index) => (
+            <button
+              key={index}
+              className={`features-carousel-dot ${featuresIndex === index ? 'active' : ''}`}
+              onClick={() => setFeaturesIndex(index)}
+              aria-label={`Go to feature ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
-      {/* Carousel Section - Replaces workflow */}
-      <section className="carousel-section" data-animate id="workflow">
+      {/* Workflow Section - Purple Boxes */}
+      <section className="workflow-section-purple" data-animate id="workflow">
         <div className="section-header-v2">
           <span className="section-label">SIMPLE PROCESS</span>
           <h2 className="section-title-v2">From Idea to Revenue in 3 Steps</h2>
@@ -286,95 +369,53 @@ function App() {
           </p>
         </div>
 
-        <div className="carousel-container">
-          <div className="carousel-wrapper" style={{ transform: `translateX(-${carouselIndex * 100}%)` }}>
-            <div className="carousel-slide">
-              <div className="workflow-card">
-                <div className="workflow-icon-wrapper">
-                  <div className="workflow-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="workflow-step-title">Create Your Paywall</h3>
-                <p className="workflow-step-desc">
-                  Enter your content URL, set your price in MON tokens, add your wallet address. Takes less than 60 seconds to deploy.
-                </p>
-              </div>
+        <div className="workflow-boxes-purple">
+          <div className="workflow-box-purple">
+            <div className="workflow-box-number">01</div>
+            <div className="workflow-box-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
             </div>
-
-            <div className="carousel-slide">
-              <div className="workflow-card">
-                <div className="workflow-icon-wrapper">
-                  <div className="workflow-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="workflow-step-title">Share Your Link</h3>
-                <p className="workflow-step-desc">
-                  Get a unique paywall link. Share it on social media, embed on your website, or send directly to your audience.
-                </p>
-              </div>
-            </div>
-
-            <div className="carousel-slide">
-              <div className="workflow-card">
-                <div className="workflow-icon-wrapper">
-                  <div className="workflow-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="12" y1="1" x2="12" y2="23"/>
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="workflow-step-title">Get Paid Instantly</h3>
-                <p className="workflow-step-desc">
-                  Buyers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, zero platform fees.
-                </p>
-                <div className="payment-time">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}>
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                  </svg>
-                  2-5 seconds
-                </div>
-              </div>
-            </div>
+            <h3 className="workflow-box-title">Create Your Paywall</h3>
+            <p className="workflow-box-desc">
+              Enter your content URL, set your price in MON tokens, add your wallet address. Takes less than 60 seconds to deploy.
+            </p>
           </div>
 
-          <div className="carousel-controls">
-            <button 
-              className="carousel-btn carousel-btn-prev"
-              onClick={() => setCarouselIndex((prev) => (prev === 0 ? 2 : prev - 1))}
-              aria-label="Previous slide"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 18l-6-6 6-6"/>
+          <div className="workflow-box-purple">
+            <div className="workflow-box-number">02</div>
+            <div className="workflow-box-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
               </svg>
-            </button>
-            <div className="carousel-dots">
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${carouselIndex === index ? 'active' : ''}`}
-                  onClick={() => setCarouselIndex(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
             </div>
-            <button 
-              className="carousel-btn carousel-btn-next"
-              onClick={() => setCarouselIndex((prev) => (prev === 2 ? 0 : prev + 1))}
-              aria-label="Next slide"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M9 18l6-6-6-6"/>
+            <h3 className="workflow-box-title">Share Your Link</h3>
+            <p className="workflow-box-desc">
+              Get a unique paywall link. Share it on social media, embed on your website, or send directly to your audience.
+            </p>
+          </div>
+
+          <div className="workflow-box-purple">
+            <div className="workflow-box-number">03</div>
+            <div className="workflow-box-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
-            </button>
+            </div>
+            <h3 className="workflow-box-title">Get Paid Instantly</h3>
+            <p className="workflow-box-desc">
+              Buyers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, zero platform fees.
+            </p>
+            <div className="workflow-box-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              2-5 seconds
+            </div>
           </div>
         </div>
       </section>

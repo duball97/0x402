@@ -447,7 +447,7 @@ const address = await signer.getAddress();`}</code></pre>
               </div>
               <pre><code>{`{
   "paywall_id": "abc123",
-  "paywall_link": "https://monpay.io/paywall/abc123",
+  "paywall_link": "https://monadpay.io/paywall/abc123",
   "price": "0.01",
   "currency": "MON",
   "status": "created",

@@ -408,7 +408,7 @@ function Create() {
                 <div className="aside-card preview-card">
                   <div className="card-heading">
                     <span className="pill-outline">Live preview</span>
-                    <h3>{paywallId || 'monpay/paywall'}</h3>
+                    <h3>{paywallId || 'monadpay/paywall'}</h3>
                   </div>
                   <div className="preview-pane">
                     <div className="preview-price">

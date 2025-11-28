@@ -77,7 +77,7 @@ export default async function handler(req, res) {
   let rawBase = process.env.PUBLIC_SITE_URL ||
     process.env.NEXT_PUBLIC_BASE_URL ||
     process.env.BASE_DOMAIN ||
-    (isProd ? 'https://monpay.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
+    (isProd ? 'https://monadpay.io' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
 
   // Fallback: try to get from request headers if available
   if (!rawBase || rawBase === 'undefined' || rawBase === 'null') {
@@ -86,7 +86,7 @@ export default async function handler(req, res) {
     if (host) {
       rawBase = `${protocol}://${host}`;
     } else {
-      rawBase = 'https://monpay.io'; // Ultimate fallback
+      rawBase = 'https://monadpay.io'; // Ultimate fallback
     }
   }
 
