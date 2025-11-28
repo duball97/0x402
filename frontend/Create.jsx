@@ -396,7 +396,7 @@ function Create() {
                   <h4>Next steps</h4>
                   <ul className="insight-list">
                     <li>Embed the link behind your website CTAs or share it directly with your audience.</li>
-                    <li>Use the my purchases page so buyers can reconnect wallets and revisit unlocked links.</li>
+                    <li>Use the library page so buyers can reconnect wallets and revisit unlocked content.</li>
                     <li>Clone this paywall with alternate pricing for bundles, upgrades, or limited drops.</li>
                   </ul>
                 </div>

@@ -28,9 +28,9 @@ function Footer() {
         <div className="footer-section">
           <h4>Community</h4>
           <ul>
-            <li><Link to="/marketplace">Marketplace</Link></li>
+            <li><Link to="/marketplace">Explore</Link></li>
             <li><a href="https://x.com/monpay?s=21" target="_blank" rel="noopener noreferrer">Twitter/X</a></li>
-            <li><Link to="/docs">Documentation</Link></li>
+            <li><Link to="/docs">Docs</Link></li>
             <li><a href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">Buy Token</a></li>
           </ul>
         </div>

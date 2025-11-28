@@ -79,24 +79,23 @@ function App() {
 
         <div className="hero-content-v2">
           <h1 className="hero-title-v2" data-animate id="hero-title">
-            Buy and sell
+            Monetize Any Link
             <br />
-            <span className="hero-gradient-text">Links Privately</span>
+            <span className="hero-gradient-text">In Seconds</span>
           </h1>
 
           <p className="hero-description-v2" data-animate id="hero-desc">
-            Transform your content into revenue with MonPay on Monad chain.
-            Zero fees. Instant settlements. Native MON token payments. Built for creators,
-            developers, and AI agents on the fastest EVM compatible blockchain.
+            Turn any URL into a paywall. Accept instant MON payments on Monad.
+            Zero platform fees. Full custody. Built for the future of content.
           </p>
 
           <div className="hero-cta-v2" data-animate id="hero-cta">
             <button
               onClick={() => navigate('/create')}
               className="btn-primary-v2 btn-compact"
-              style={{ width: 'min(260px, 100%)' }}
+              style={{ width: 'min(280px, 100%)' }}
             >
-              <span>Create Paywall</span>
+              <span>Get Started</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"
                       strokeLinecap="round" strokeLinejoin="round"/>
@@ -105,34 +104,13 @@ function App() {
             <button
               onClick={() => navigate('/docs')}
               className="btn-secondary-v2 btn-compact"
-              style={{ width: 'min(260px, 100%)' }}
+              style={{ width: 'min(280px, 100%)' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
               </svg>
-              View Docs
+              <span>View Docs</span>
             </button>
-          </div>
-
-          <div className="hero-stats-v2" data-animate id="hero-stats">
-            <div className="stat-box-v2">
-              <div className="stat-content-v2">
-                <div className="stat-value-v2">2-5s</div>
-                <div className="stat-label-v2">Settlement Time</div>
-              </div>
-            </div>
-            <div className="stat-box-v2">
-              <div className="stat-content-v2">
-                <div className="stat-value-v2">0%</div>
-                <div className="stat-label-v2">Platform Fees</div>
-              </div>
-            </div>
-            <div className="stat-box-v2">
-              <div className="stat-content-v2">
-                <div className="stat-value-v2">100%</div>
-                <div className="stat-label-v2">Self-Custodial</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -545,7 +523,7 @@ function App() {
 
             <div className="cta-buttons-v2">
               <button onClick={() => navigate('/create')} className="cta-btn-primary-v2">
-                <span>Create Free Paywall</span>
+                <span>Create Paywall</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"
                         strokeLinecap="round" strokeLinejoin="round"/>
@@ -559,7 +537,7 @@ function App() {
                   <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                         strokeLinejoin="round"/>
                 </svg>
-                <span>Read Docs</span>
+                <span>View Docs</span>
               </button>
             </div>
 

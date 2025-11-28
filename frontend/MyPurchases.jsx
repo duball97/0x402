@@ -85,10 +85,10 @@ function MyPurchases() {
       <main className="my-purchases-page">
         <div className="my-purchases-shell">
           <header className="my-purchases-hero">
-            <span className="my-purchases-eyebrow">Your Library</span>
-            <h1>My Purchases</h1>
+            <span className="my-purchases-eyebrow">Your Content</span>
+            <h1>Library</h1>
             <p className="my-purchases-description">
-              View all the paywalls you've purchased
+              Access all your purchased content
             </p>
           </header>
 
@@ -153,7 +153,7 @@ function MyPurchases() {
                 <div className="purchases-empty">
                   <h4>No purchases yet</h4>
                   <p>
-                    Purchases made with this wallet will appear here. Head to the marketplace to discover new paywalls.
+                    Purchases made with this wallet will appear here. Head to Explore to discover new paywalls.
                   </p>
                 </div>
               ) : (

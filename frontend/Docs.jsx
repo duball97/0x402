@@ -9,9 +9,9 @@ function Docs() {
       <div className="docs-container">
         {/* Hero Section */}
         <div className="docs-hero">
-          <h1>Documentation</h1>
+          <h1>Docs</h1>
           <p className="docs-subtitle">
-            Everything you need to build, deploy, and monetize with MonPay
+            Everything you need to build, deploy, and monetize
           </p>
         </div>
 
@@ -666,7 +666,7 @@ const address = await signer.getAddress();`}</code></pre>
           <div className="docs-cta">
             <h2>Ready to Start?</h2>
             <p>Create your first paywall in seconds</p>
-            <a href="/" className="cta-button">Create Paywall</a>
+            <a href="/create" className="cta-button">Create</a>
           </div>
         </div>
       </div>

@@ -189,7 +189,7 @@ function Marketplace() {
             <h3>No paywalls yet</h3>
             <p>Be the first to deploy a MonPay paywall on Monad and showcase it here.</p>
             <button className="gradient-btn" type="button" onClick={() => navigate('/create')}>
-              Launch your first paywall
+              Create Your First Paywall
             </button>
           </div>
         )}
