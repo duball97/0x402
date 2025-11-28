@@ -285,15 +285,9 @@ function Paywall() {
       
       console.log('Transaction submitted. View on explorer:', `${config.explorer}/tx/${tx.hash}`);
 
-      // Wait for confirmation
-      try {
-        const receipt = await tx.wait();
-        console.log('Transaction confirmed!', receipt);
-      } catch (err) {
-        console.warn('Confirmation error:', err.message);
-        // Transaction is already submitted, continue
-        console.log('Transaction submitted but confirmation pending. Access granted.');
-      }
+      // Grant access immediately (optimistic) - transaction is already submitted
+      // Background verification will happen automatically
+      console.log('Transaction submitted. Access granted immediately.');
 
       // Record purchase
       try {

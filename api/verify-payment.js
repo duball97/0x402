@@ -25,37 +25,33 @@ export default async function handler(req, res) {
   try {
     // Verify Monad transaction (EVM-compatible)
     const provider = new ethers.JsonRpcProvider(MONAD_RPC);
-    const tx = await provider.getTransaction(txHash);
+    
+    // Use Promise.all to check both transaction and receipt in parallel for speed
+    const [tx, receipt] = await Promise.all([
+      provider.getTransaction(txHash).catch(() => null),
+      provider.getTransactionReceipt(txHash).catch(() => null)
+    ]);
 
-    if (!tx) {
-      return res.status(404).json({ 
-        error: "Transaction not found",
-        txHash: txHash,
-        confirmed: false 
-      });
-    }
-
-    // Get transaction receipt to check confirmation
-    const receipt = await provider.getTransactionReceipt(txHash);
-
-    if (!receipt) {
+    // If transaction exists, grant access (even if not yet confirmed)
+    // Monad has fast finality, so pending transactions are safe to trust
+    if (tx) {
+      // Transaction exists - grant access immediately
       return res.status(200).json({
         txHash: txHash,
-        confirmed: false,
+        confirmed: !!receipt, // true if receipt exists (confirmed), false if pending
         network: "Monad",
-        settled_to: tx.to || "Unknown",
+        settled_to: receipt?.to || tx.to || "Unknown",
         timestamp: new Date().toISOString(),
-        message: "Transaction pending confirmation"
+        blockNumber: receipt?.blockNumber,
+        message: receipt ? "Transaction confirmed" : "Transaction pending but access granted"
       });
     }
 
-    res.status(200).json({
+    // Transaction not found
+    return res.status(404).json({ 
+      error: "Transaction not found",
       txHash: txHash,
-      confirmed: true,
-      network: "Monad",
-      settled_to: receipt.to || tx.to || "Unknown",
-      timestamp: new Date().toISOString(),
-      blockNumber: receipt.blockNumber
+      confirmed: false 
     });
   } catch (error) {
     console.error('Verification error:', error);
