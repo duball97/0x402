@@ -6622,15 +6622,15 @@ footer {
     flex-direction: row !important;
     flex-wrap: wrap !important;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
   }
   
   .hero-cta-v2 .btn-primary-v2,
   .hero-cta-v2 .btn-secondary-v2 {
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 140px;
-    max-width: 200px;
-    width: auto;
+    max-width: 280px;
+    width: min(280px, 100%);
     justify-content: center;
   }
 
