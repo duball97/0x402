@@ -6610,7 +6610,7 @@ footer {
 
 @media (max-width: 768px) {
   .landing-hero-v2 {
-    padding: calc(80px + 20px) 30px 80px;
+    padding: calc(120px + 20px) 30px 80px;
     min-height: auto;
   }
 
@@ -6752,7 +6752,7 @@ footer {
 
 @media (max-width: 480px) {
   .landing-hero-v2 {
-    padding: 100px 20px 60px;
+    padding: 140px 20px 60px;
   }
 
   .section-header-v2 {
