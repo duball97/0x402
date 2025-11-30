@@ -176,28 +176,28 @@ function Paywall() {
       } catch (err) {
         console.error('Wallet connection error:', err);
         setError(err.message || 'Failed to connect to wallet. Please try again.');
-        setLoading(false);
-        return;
-      }
+          setLoading(false);
+          return;
+        }
 
       // Validate addresses
       if (!ethers.isAddress(paywallData.walletAddress)) {
         setError('Invalid recipient address');
-        setLoading(false);
-        return;
-      }
+          setLoading(false);
+          return;
+        }
 
       // Prevent self-payment
       if (userAddress.toLowerCase() === paywallData.walletAddress.toLowerCase()) {
         setError('You cannot pay yourself. This paywall is set to your own wallet address.');
-        setLoading(false);
-        return;
-      }
+          setLoading(false);
+          return;
+        }
 
       // Get provider and signer
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      
+
       // Switch to Monad network if needed
       const config = getCurrentNetwork('Monad');
       try {
@@ -248,24 +248,24 @@ function Paywall() {
           value: priceInWei,
         });
         console.log('Transaction sent:', tx.hash);
-      } catch (err) {
-        console.error('Transaction error:', err);
-        
-        // Handle user rejection
-        if (err.code === 4001 || err.code === 'ACTION_REJECTED' || 
-            (err.message && err.message.toLowerCase().includes('user rejected'))) {
+        } catch (err) {
+          console.error('Transaction error:', err);
+          
+          // Handle user rejection
+          if (err.code === 4001 || err.code === 'ACTION_REJECTED' || 
+              (err.message && err.message.toLowerCase().includes('user rejected'))) {
           setError('Transaction was rejected. Please approve the transaction in your wallet.');
-          setLoading(false);
-          return;
-        }
-        
-        // Handle insufficient funds
+            setLoading(false);
+            return;
+          }
+          
+          // Handle insufficient funds
         if (err.message && err.message.includes('insufficient')) {
           setError('Insufficient balance to complete this transaction.');
-          setLoading(false);
-          return;
-        }
-        
+            setLoading(false);
+            return;
+          }
+          
         // Handle self-payment error (same from/to address)
         if (err.code === 'CALL_EXCEPTION' || (err.message && err.message.includes('revert data'))) {
           if (userAddress.toLowerCase() === paywallData.walletAddress.toLowerCase()) {
@@ -289,27 +289,27 @@ function Paywall() {
       // Background verification will happen automatically
       console.log('Transaction submitted. Access granted immediately.');
 
-      // Record purchase
-      try {
-        await fetch('/api/record-purchase', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            paywallId: id,
+        // Record purchase
+        try {
+          await fetch('/api/record-purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paywallId: id,
             buyerWalletAddress: userAddress,
             transactionHash: tx.hash,
             network: 'Monad',
-            amountPaid: priceNum,
+              amountPaid: priceNum,
             currency: 'MON'
-          })
-        });
-        console.log('Purchase recorded successfully');
-      } catch (err) {
-        console.warn('Failed to record purchase (non-critical):', err);
-      }
+            })
+          });
+          console.log('Purchase recorded successfully');
+        } catch (err) {
+          console.warn('Failed to record purchase (non-critical):', err);
+        }
 
-      setPaid(true);
-      setLoading(false);
+        setPaid(true);
+        setLoading(false);
     } catch (err) {
       console.error('Payment error:', err);
       if (err.code === 'ACTION_REJECTED' || err.code === 4001) {
@@ -420,19 +420,19 @@ function Paywall() {
             </div>
           )}
 
-          <button
-            onClick={handlePayment}
-            disabled={loading}
-            style={{ marginTop: '32px' }}
-          >
+              <button
+                onClick={handlePayment}
+                disabled={loading}
+                style={{ marginTop: '32px' }}
+              >
             {loading ? 'Processing...' : (parseFloat(paywallData?.price ?? '0') <= 0 ? 'Access for Free' : 'Pay with Wallet')}
-          </button>
+              </button>
 
-          <div className="info-box" style={{ marginTop: '32px' }}>
-            <p>⚡ Instant settlement on {resolvedNetwork}</p>
-            <p>🔐 Secure Web3 payment</p>
+              <div className="info-box" style={{ marginTop: '32px' }}>
+                <p>⚡ Instant settlement on {resolvedNetwork}</p>
+                <p>🔐 Secure Web3 payment</p>
             <p>💰 Pay with MON on Monad</p>
-          </div>
+              </div>
 
           {paywallData?.walletAddress && (
             <div className="result-section" style={{ marginTop: '24px' }}>
@@ -447,9 +447,9 @@ function Paywall() {
           <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#888' }}>
             This paywall implements the HTTP 402 Payment Required protocol, enabling AI agents and automated systems to discover payment requirements programmatically.
           </p>
-          <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
+                 <code style={{ display: 'block', background: '#0a0a0a', padding: '12px', borderRadius: '6px', fontSize: '11px', color: '#0070f3' }}>
             HTTP/1.1 402 Payment Required<br/>
-            X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {resolvedCurrency}<br/>
+                   X-Payment-Required: {(!isNaN(parseFloat(paywallData?.price ?? '0')) ? parseFloat(paywallData?.price ?? '0').toFixed(4) : '0.0000')} {resolvedCurrency}<br/>
             X-Payment-Address: {paywallData?.walletAddress || 'Loading...'}<br/>
             X-Payment-Network: {resolvedNetwork.toLowerCase()}
           </code>

@@ -68,8 +68,8 @@ function Create() {
     // Validate URL format
     try {
       // Auto-add https:// if protocol is missing
-      if (!processedUrl.match(/^https?:\/\//i)) {
-        processedUrl = `https://${processedUrl}`;
+    if (!processedUrl.match(/^https?:\/\//i)) {
+      processedUrl = `https://${processedUrl}`;
       }
       
       // Validate URL is properly formatted

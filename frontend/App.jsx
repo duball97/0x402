@@ -123,17 +123,17 @@ function App() {
               Browse the marketplace to discover what others are building and find inspiration for your own paywalls.
             </p>
             <div className="hero-actions-buttons">
-              <button
+            <button
                 onClick={() => navigate('/marketplace')}
                 className="hero-action-btn hero-action-btn-primary"
-              >
+            >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              </svg>
                 <span>Marketplace</span>
-              </button>
+            </button>
             </div>
           </div>
           <div className="hero-actions-image">
@@ -144,8 +144,8 @@ function App() {
                     <span></span>
                     <span></span>
                     <span></span>
-                  </div>
-                </div>
+              </div>
+            </div>
                 <div className="visual-card-content">
                   <div className="visual-icon">🛒</div>
                   <div className="visual-title">Marketplace</div>
@@ -170,8 +170,8 @@ function App() {
                       <div className="grid-item-title">Course</div>
                       <div className="grid-item-price">50 MON</div>
                     </div>
-                  </div>
-                </div>
+              </div>
+            </div>
               </div>
             </div>
           </div>
@@ -213,9 +213,9 @@ function App() {
                 <span>MON: 2-5s</span>
                 <span className="metric-muted">Traditional: 3-7 days</span>
               </div>
-            </div>
               </div>
             </div>
+          </div>
 
             <div className="features-carousel-slide">
               <div className="features-carousel-card">
@@ -237,8 +237,8 @@ function App() {
               </svg>
               Self-Custodial
             </div>
-              </div>
             </div>
+          </div>
 
             <div className="features-carousel-slide">
               <div className="features-carousel-card">
@@ -263,9 +263,9 @@ function App() {
                 <span>Competitors</span>
                 <span className="fee-value">2-10%</span>
               </div>
-            </div>
               </div>
             </div>
+          </div>
 
             <div className="features-carousel-slide">
               <div className="features-carousel-card">
@@ -294,9 +294,9 @@ function App() {
               <div className="code-line">
                 <span className="code-keyword">await</span> paywall.<span className="code-function">pay</span>();
               </div>
-            </div>
               </div>
             </div>
+          </div>
 
             <div className="features-carousel-slide">
               <div className="features-carousel-card">
@@ -316,8 +316,8 @@ function App() {
               <div className="chain-badge">Monad</div>
               <div className="chain-badge chain-badge-soon">EVM Compatible</div>
             </div>
-              </div>
             </div>
+          </div>
 
             <div className="features-carousel-slide">
               <div className="features-carousel-card">
@@ -341,7 +341,7 @@ function App() {
               <div className="step-arrow-mini">→</div>
               <div className="step-mini">3. Earn</div>
             </div>
-              </div>
+          </div>
             </div>
           </div>
         </div>
@@ -405,11 +405,11 @@ function App() {
                 <line x1="12" y1="1" x2="12" y2="23"/>
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
-            </div>
+              </div>
             <h3 className="workflow-box-title">Get Paid Instantly</h3>
             <p className="workflow-box-desc">
               Buyers pay with their wallet, funds arrive in yours within seconds. No middlemen, no delays, zero platform fees.
-            </p>
+              </p>
             <div className="workflow-box-badge">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>

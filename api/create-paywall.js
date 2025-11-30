@@ -5,11 +5,11 @@ import { ethers } from 'ethers';
 function createWallet(network = 'Monad') {
   // Generate Ethereum-style address for Monad (EVM-compatible)
   const wallet = ethers.Wallet.createRandom();
-  return {
+    return {
     walletAddress: wallet.address,
-    network: network,
-    nonCustodial: true
-  };
+      network: network,
+      nonCustodial: true
+    };
 }
 
 export default async function handler(req, res) {
@@ -61,7 +61,7 @@ export default async function handler(req, res) {
   } else {
     // Validate wallet address (EVM format for Monad)
     const network = selectedNetwork || 'Monad';
-    if (!ethers.isAddress(walletAddress)) {
+      if (!ethers.isAddress(walletAddress)) {
       return res.status(400).json({ error: "Invalid Monad wallet address. Please enter a valid EVM address (0x...)" });
     }
 

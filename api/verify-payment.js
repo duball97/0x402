@@ -48,11 +48,11 @@ export default async function handler(req, res) {
     }
 
     // Transaction not found
-    return res.status(404).json({ 
-      error: "Transaction not found",
+        return res.status(404).json({ 
+          error: "Transaction not found",
       txHash: txHash,
-      confirmed: false 
-    });
+          confirmed: false 
+        });
   } catch (error) {
     console.error('Verification error:', error);
     res.status(500).json({ 
